@@ -3,8 +3,8 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from 'axios';
 
-const ACCESS_TOKEN_KEY = 'accessToken';
-const REFRESH_TOKEN_KEY = 'refreshToken';
+const ACCESS_TOKEN_KEY = 'zoho-accessToken';
+const REFRESH_TOKEN_KEY = 'zoho-refreshToken';
 
 export const tokenStorage = {
   getAccessToken: () => localStorage.getItem(ACCESS_TOKEN_KEY),
