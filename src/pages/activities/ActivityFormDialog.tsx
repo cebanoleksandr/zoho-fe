@@ -1,6 +1,7 @@
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,25 +13,27 @@ import MenuItem from '@mui/material/MenuItem';
 import { useCreateActivity } from '../../hooks/queries';
 import { ActivityType, CrmEntityType, type CreateActivityPayload } from '../../types';
 
-const schema = yup.object({
-  entityType: yup.mixed<CrmEntityType>().oneOf(Object.values(CrmEntityType)).required('Entity type is required'),
-  entityId: yup.string().required('Entity id is required'),
-  type: yup.mixed<ActivityType>().oneOf(Object.values(ActivityType)).required('Type is required'),
-  subject: yup.string().required('Subject is required'),
-  description: yup.string().optional(),
-  dueDate: yup.string().optional(),
-  ownerId: yup.string().optional(),
-});
-
-type ActivityFormValues = yup.InferType<typeof schema>;
-
 interface ActivityFormDialogProps {
   open: boolean;
   onClose: () => void;
 }
 
 function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
+  const { t } = useTranslation();
   const createActivity = useCreateActivity();
+
+  const schema = yup.object({
+    entityType: yup.mixed<CrmEntityType>().oneOf(Object.values(CrmEntityType)).required(t('activities.validation.entityTypeRequired')),
+    entityId: yup.string().required(t('activities.validation.entityIdRequired')),
+    type: yup.mixed<ActivityType>().oneOf(Object.values(ActivityType)).required(t('activities.validation.typeRequired')),
+    subject: yup.string().required(t('activities.validation.subjectRequired')),
+    description: yup.string().optional(),
+    dueDate: yup.string().optional(),
+    ownerId: yup.string().optional(),
+  });
+
+  type ActivityFormValues = yup.InferType<typeof schema>;
+
   const {
     register,
     control,
@@ -50,12 +53,12 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>New Activity</DialogTitle>
+      <DialogTitle>{t('activities.form.title')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
             <TextField
-              label="Subject"
+              label={t('activities.form.subject')}
               fullWidth
               {...register('subject')}
               error={!!errors.subject}
@@ -66,10 +69,18 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
               control={control}
               defaultValue={undefined}
               render={({ field }) => (
-                <TextField select label="Type" fullWidth {...field} value={field.value ?? ''} error={!!errors.type} helperText={errors.type?.message}>
-                  {Object.values(ActivityType).map((t) => (
-                    <MenuItem key={t} value={t}>
-                      {t}
+                <TextField
+                  select
+                  label={t('activities.form.type')}
+                  fullWidth
+                  {...field}
+                  value={field.value ?? ''}
+                  error={!!errors.type}
+                  helperText={errors.type?.message}
+                >
+                  {Object.values(ActivityType).map((ty) => (
+                    <MenuItem key={ty} value={ty}>
+                      {ty}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -83,23 +94,23 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
                 render={({ field }) => (
                   <TextField
                     select
-                    label="Related to"
+                    label={t('activities.form.relatedTo')}
                     fullWidth
                     {...field}
                     value={field.value ?? ''}
                     error={!!errors.entityType}
                     helperText={errors.entityType?.message}
                   >
-                    {Object.values(CrmEntityType).map((t) => (
-                      <MenuItem key={t} value={t}>
-                        {t}
+                    {Object.values(CrmEntityType).map((ty) => (
+                      <MenuItem key={ty} value={ty}>
+                        {ty}
                       </MenuItem>
                     ))}
                   </TextField>
                 )}
               />
               <TextField
-                label="Record ID"
+                label={t('activities.form.recordId')}
                 fullWidth
                 {...register('entityId')}
                 error={!!errors.entityId}
@@ -107,19 +118,19 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
               />
             </Stack>
             <TextField
-              label="Due date"
+              label={t('activities.form.dueDate')}
               type="date"
               fullWidth
               slotProps={{ inputLabel: { shrink: true } }}
               {...register('dueDate')}
             />
-            <TextField label="Description" fullWidth multiline minRows={2} {...register('description')} />
+            <TextField label={t('common.description')} fullWidth multiline minRows={2} {...register('description')} />
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>{t('common.cancel')}</Button>
           <Button type="submit" variant="contained" disabled={createActivity.isPending}>
-            {createActivity.isPending ? 'Saving…' : 'Create'}
+            {createActivity.isPending ? t('common.saving') : t('common.create')}
           </Button>
         </DialogActions>
       </form>

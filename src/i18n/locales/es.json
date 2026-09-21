@@ -1,0 +1,289 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "create": "Crear",
+    "saving": "Guardando…",
+    "creating": "Creando…",
+    "delete": "Eliminar",
+    "revoke": "Revocar",
+    "close": "Cerrar",
+    "search": "Buscar",
+    "actions": "Acciones",
+    "loading": "Cargando…",
+    "errorLoading": "No se pudieron cargar los datos.",
+    "noRecords": "No se encontraron registros.",
+    "cannotBeUndone": "Esta acción no se puede deshacer.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "title": "Cargo",
+    "description": "Descripción",
+    "notFound": "No se encontró: {{entity}}."
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "leads": "Prospectos",
+    "contacts": "Contactos",
+    "accounts": "Empresas",
+    "deals": "Negocios",
+    "activities": "Actividades",
+    "pipelines": "Embudos",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
+  "auth": {
+    "invalidCredentials": "Correo electrónico o contraseña incorrectos.",
+    "registrationFailed": "No se pudo completar el registro. Inténtalo de nuevo.",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "organizationName": "Nombre de la organización",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "signIn": "Iniciar sesión",
+    "signingIn": "Iniciando sesión…",
+    "signUp": "Regístrate",
+    "createAccount": "Crear cuenta",
+    "creatingAccount": "Creando cuenta…",
+    "noAccount": "¿No tienes una cuenta?",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "validation": {
+      "emailInvalid": "Correo electrónico no válido",
+      "emailRequired": "El correo electrónico es obligatorio",
+      "passwordRequired": "La contraseña es obligatoria",
+      "passwordMinLength": "Mínimo 8 caracteres",
+      "organizationNameRequired": "El nombre de la organización es obligatorio",
+      "firstNameRequired": "El nombre es obligatorio",
+      "lastNameRequired": "El apellido es obligatorio"
+    }
+  },
+  "dashboard": {
+    "title": "Panel",
+    "subtitle": "Resumen de la actividad de tu CRM",
+    "openLeads": "Prospectos abiertos",
+    "activeDeals": "Negocios activos",
+    "accounts": "Empresas",
+    "pendingActivities": "Actividades pendientes"
+  },
+  "leads": {
+    "title": "Prospectos",
+    "subtitle": "Clientes potenciales aún no convertidos",
+    "new": "Nuevo prospecto",
+    "searchPlaceholder": "Buscar prospectos…",
+    "empty": "No se encontraron prospectos.",
+    "columns": {
+      "name": "Nombre",
+      "company": "Empresa",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "status": "Estado"
+    },
+    "form": {
+      "title": "Nuevo prospecto",
+      "company": "Empresa",
+      "source": "Origen",
+      "notes": "Notas"
+    },
+    "detail": {
+      "convert": "Convertir",
+      "source": "Origen",
+      "notes": "Notas",
+      "activities": "Actividades",
+      "noActivities": "Aún no hay actividades registradas.",
+      "status": "Estado",
+      "deleteTitle": "¿Eliminar prospecto?",
+      "notFound": "Prospecto no encontrado."
+    },
+    "validation": {
+      "firstNameRequired": "El nombre es obligatorio",
+      "lastNameRequired": "El apellido es obligatorio"
+    }
+  },
+  "contacts": {
+    "title": "Contactos",
+    "subtitle": "Personas asociadas a tus empresas",
+    "new": "Nuevo contacto",
+    "searchPlaceholder": "Buscar contactos…",
+    "empty": "No se encontraron contactos.",
+    "columns": {
+      "name": "Nombre",
+      "title": "Cargo",
+      "email": "Correo electrónico",
+      "phone": "Teléfono"
+    },
+    "form": {
+      "title": "Nuevo contacto",
+      "notes": "Notas"
+    },
+    "detail": {
+      "account": "Empresa",
+      "notes": "Notas",
+      "deleteTitle": "¿Eliminar contacto?",
+      "notFound": "Contacto no encontrado."
+    },
+    "validation": {
+      "firstNameRequired": "El nombre es obligatorio",
+      "lastNameRequired": "El apellido es obligatorio"
+    }
+  },
+  "accounts": {
+    "title": "Empresas",
+    "subtitle": "Empresas con las que haces negocios",
+    "new": "Nueva empresa",
+    "searchPlaceholder": "Buscar empresas…",
+    "empty": "No se encontraron empresas.",
+    "columns": {
+      "name": "Nombre",
+      "industry": "Sector",
+      "website": "Sitio web",
+      "phone": "Teléfono"
+    },
+    "form": {
+      "title": "Nueva empresa",
+      "industry": "Sector",
+      "website": "Sitio web",
+      "billingAddress": "Dirección de facturación"
+    },
+    "detail": {
+      "website": "Sitio web",
+      "phone": "Teléfono",
+      "billingAddress": "Dirección de facturación",
+      "description": "Descripción",
+      "contactsCount": "Contactos ({{count}})",
+      "dealsCount": "Negocios ({{count}})",
+      "deleteTitle": "¿Eliminar empresa?",
+      "notFound": "Empresa no encontrada."
+    },
+    "validation": {
+      "nameRequired": "El nombre es obligatorio"
+    }
+  },
+  "deals": {
+    "title": "Negocios",
+    "subtitle": "Oportunidades de venta en tu embudo",
+    "new": "Nuevo negocio",
+    "searchPlaceholder": "Buscar negocios…",
+    "empty": "No se encontraron negocios.",
+    "columns": {
+      "name": "Nombre",
+      "amount": "Importe",
+      "stage": "Etapa",
+      "expectedClose": "Cierre previsto"
+    },
+    "form": {
+      "title": "Nuevo negocio",
+      "amount": "Importe",
+      "currency": "Moneda",
+      "pipeline": "Embudo",
+      "stage": "Etapa",
+      "expectedCloseDate": "Fecha de cierre prevista"
+    },
+    "detail": {
+      "expectedCloseDate": "Fecha de cierre prevista",
+      "closedAt": "Cerrado el",
+      "description": "Descripción",
+      "stageOf": "Etapa ({{pipeline}})",
+      "deleteTitle": "¿Eliminar negocio?",
+      "notFound": "Negocio no encontrado."
+    },
+    "validation": {
+      "nameRequired": "El nombre es obligatorio",
+      "pipelineRequired": "El embudo es obligatorio",
+      "stageRequired": "La etapa es obligatoria",
+      "amountNumber": "Debe ser un número"
+    }
+  },
+  "activities": {
+    "title": "Actividades",
+    "subtitle": "Llamadas, reuniones, tareas, correos y notas",
+    "new": "Nueva actividad",
+    "empty": "No se encontraron actividades.",
+    "tabs": {
+      "all": "Todas",
+      "pending": "Pendientes",
+      "completed": "Completadas"
+    },
+    "columns": {
+      "subject": "Asunto",
+      "type": "Tipo",
+      "relatedTo": "Relacionado con",
+      "due": "Vencimiento",
+      "status": "Estado"
+    },
+    "markComplete": "Marcar como completada",
+    "form": {
+      "title": "Nueva actividad",
+      "subject": "Asunto",
+      "type": "Tipo",
+      "relatedTo": "Relacionado con",
+      "recordId": "ID del registro",
+      "dueDate": "Fecha de vencimiento"
+    },
+    "validation": {
+      "entityTypeRequired": "El tipo de entidad es obligatorio",
+      "entityIdRequired": "El ID de la entidad es obligatorio",
+      "typeRequired": "El tipo es obligatorio",
+      "subjectRequired": "El asunto es obligatorio"
+    }
+  },
+  "pipelines": {
+    "title": "Embudos",
+    "subtitle": "Etapas de venta usadas para seguir el progreso de los negocios",
+    "errorLoading": "No se pudieron cargar los embudos.",
+    "empty": "No hay embudos configurados.",
+    "default": "Predeterminado"
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Gestiona el acceso a la API y las integraciones",
+    "tabs": {
+      "apiKeys": "Claves API",
+      "webhooks": "Webhooks"
+    },
+    "apiKeys": {
+      "new": "Nueva clave API",
+      "newKeyCreated": "Se creó una nueva clave API — cópiala ahora, no volverá a mostrarse:",
+      "empty": "Aún no hay claves API.",
+      "columns": {
+        "name": "Nombre",
+        "prefix": "Prefijo",
+        "scopes": "Permisos",
+        "created": "Creada"
+      },
+      "form": {
+        "title": "Nueva clave API",
+        "scopes": "Permisos (separados por comas)"
+      },
+      "revokeTitle": "¿Revocar clave API?",
+      "revokeDescription": "Las aplicaciones que usan esta clave perderán el acceso de inmediato.",
+      "validation": {
+        "nameRequired": "El nombre es obligatorio",
+        "scopesRequired": "Se requiere al menos un permiso"
+      }
+    },
+    "webhooks": {
+      "new": "Nuevo webhook",
+      "empty": "No hay webhooks configurados.",
+      "columns": {
+        "url": "URL",
+        "events": "Eventos",
+        "active": "Activo"
+      },
+      "form": {
+        "title": "Nuevo webhook",
+        "url": "URL",
+        "events": "Eventos"
+      },
+      "deleteTitle": "¿Eliminar webhook?",
+      "validation": {
+        "urlInvalid": "Debe ser una URL válida",
+        "urlRequired": "La URL es obligatoria",
+        "eventsRequired": "Selecciona al menos un evento"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Página no encontrada.",
+    "backToDashboard": "Volver al panel"
+  }
+}

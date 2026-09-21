@@ -1,9 +1,11 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 function NotFound() {
+  const { t } = useTranslation();
   return (
     <Box
       sx={{
@@ -16,11 +18,11 @@ function NotFound() {
       }}
     >
       <Typography variant="h3" sx={{ fontWeight: 700 }}>
-        404
+        {t('notFound.title')}
       </Typography>
-      <Typography color="text.secondary">Page not found.</Typography>
+      <Typography color="text.secondary">{t('notFound.subtitle')}</Typography>
       <Button component={RouterLink} to="/app" variant="contained">
-        Back to Dashboard
+        {t('notFound.backToDashboard')}
       </Button>
     </Box>
   );

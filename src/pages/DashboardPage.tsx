@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -9,32 +10,32 @@ import ActivitiesIcon from '@mui/icons-material/EventNoteOutlined';
 import PageHeader from '../components/common/PageHeader';
 import { useLeads, useDeals, useAccounts, useActivities } from '../hooks/queries';
 
-const STAT_CARDS = [
-  { key: 'leads', label: 'Open Leads', icon: <LeadsIcon />, color: '#dc2626' },
-  { key: 'deals', label: 'Active Deals', icon: <DealsIcon />, color: '#2563eb' },
-  { key: 'accounts', label: 'Accounts', icon: <AccountsIcon />, color: '#16a34a' },
-  { key: 'activities', label: 'Pending Activities', icon: <ActivitiesIcon />, color: '#d97706' },
-] as const;
-
 function DashboardPage() {
+  const { t } = useTranslation();
   const leads = useLeads({ limit: 1 });
   const deals = useDeals({ limit: 1 });
   const accounts = useAccounts({ limit: 1 });
   const activities = useActivities({ status: 'PENDING', limit: 1 });
 
-  const totals: Record<(typeof STAT_CARDS)[number]['key'], number | undefined> = {
-    leads: leads.data?.total,
-    deals: deals.data?.total,
-    accounts: accounts.data?.total,
-    activities: activities.data?.total,
-  };
+  const statCards = [
+    { key: 'leads', label: t('dashboard.openLeads'), icon: <LeadsIcon />, color: '#dc2626', total: leads.data?.total },
+    { key: 'deals', label: t('dashboard.activeDeals'), icon: <DealsIcon />, color: '#2563eb', total: deals.data?.total },
+    { key: 'accounts', label: t('dashboard.accounts'), icon: <AccountsIcon />, color: '#16a34a', total: accounts.data?.total },
+    {
+      key: 'activities',
+      label: t('dashboard.pendingActivities'),
+      icon: <ActivitiesIcon />,
+      color: '#d97706',
+      total: activities.data?.total,
+    },
+  ] as const;
 
   return (
     <Box>
-      <PageHeader title="Dashboard" subtitle="Overview of your CRM activity" />
+      <PageHeader title={t('dashboard.title')} subtitle={t('dashboard.subtitle')} />
 
       <Grid container spacing={2}>
-        {STAT_CARDS.map((card) => (
+        {statCards.map((card) => (
           <Grid key={card.key} size={{ xs: 12, sm: 6, md: 3 }}>
             <Paper
               elevation={0}
@@ -56,7 +57,7 @@ function DashboardPage() {
               </Box>
               <Box>
                 <Typography variant="h5" sx={{ fontWeight: 700 }}>
-                  {totals[card.key] ?? '—'}
+                  {card.total ?? '—'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {card.label}

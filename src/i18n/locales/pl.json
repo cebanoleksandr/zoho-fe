@@ -1,0 +1,289 @@
+{
+  "common": {
+    "cancel": "Anuluj",
+    "create": "Utwórz",
+    "saving": "Zapisywanie…",
+    "creating": "Tworzenie…",
+    "delete": "Usuń",
+    "revoke": "Odwołaj",
+    "close": "Zamknij",
+    "search": "Szukaj",
+    "actions": "Akcje",
+    "loading": "Ładowanie…",
+    "errorLoading": "Nie udało się załadować danych.",
+    "noRecords": "Nie znaleziono rekordów.",
+    "cannotBeUndone": "Tej czynności nie można cofnąć.",
+    "name": "Nazwa",
+    "email": "Email",
+    "phone": "Telefon",
+    "title": "Stanowisko",
+    "description": "Opis",
+    "notFound": "Nie znaleziono: {{entity}}."
+  },
+  "nav": {
+    "dashboard": "Pulpit",
+    "leads": "Leady",
+    "contacts": "Kontakty",
+    "accounts": "Firmy",
+    "deals": "Transakcje",
+    "activities": "Aktywności",
+    "pipelines": "Lejki sprzedaży",
+    "settings": "Ustawienia",
+    "logout": "Wyloguj"
+  },
+  "auth": {
+    "invalidCredentials": "Nieprawidłowy email lub hasło.",
+    "registrationFailed": "Rejestracja nie powiodła się. Spróbuj ponownie.",
+    "email": "Email",
+    "password": "Hasło",
+    "organizationName": "Nazwa organizacji",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "signIn": "Zaloguj się",
+    "signingIn": "Logowanie…",
+    "signUp": "Zarejestruj się",
+    "createAccount": "Utwórz konto",
+    "creatingAccount": "Tworzenie konta…",
+    "noAccount": "Nie masz konta?",
+    "haveAccount": "Masz już konto?",
+    "validation": {
+      "emailInvalid": "Nieprawidłowy email",
+      "emailRequired": "Email jest wymagany",
+      "passwordRequired": "Hasło jest wymagane",
+      "passwordMinLength": "Minimum 8 znaków",
+      "organizationNameRequired": "Nazwa organizacji jest wymagana",
+      "firstNameRequired": "Imię jest wymagane",
+      "lastNameRequired": "Nazwisko jest wymagane"
+    }
+  },
+  "dashboard": {
+    "title": "Pulpit",
+    "subtitle": "Przegląd aktywności w Twoim CRM",
+    "openLeads": "Otwarte leady",
+    "activeDeals": "Aktywne transakcje",
+    "accounts": "Firmy",
+    "pendingActivities": "Oczekujące aktywności"
+  },
+  "leads": {
+    "title": "Leady",
+    "subtitle": "Potencjalni klienci, którzy nie zostali jeszcze przekonwertowani",
+    "new": "Nowy lead",
+    "searchPlaceholder": "Szukaj leadów…",
+    "empty": "Nie znaleziono leadów.",
+    "columns": {
+      "name": "Imię i nazwisko",
+      "company": "Firma",
+      "email": "Email",
+      "phone": "Telefon",
+      "status": "Status"
+    },
+    "form": {
+      "title": "Nowy lead",
+      "company": "Firma",
+      "source": "Źródło",
+      "notes": "Notatki"
+    },
+    "detail": {
+      "convert": "Konwertuj",
+      "source": "Źródło",
+      "notes": "Notatki",
+      "activities": "Aktywności",
+      "noActivities": "Brak zarejestrowanych aktywności.",
+      "status": "Status",
+      "deleteTitle": "Usunąć lead?",
+      "notFound": "Nie znaleziono leada."
+    },
+    "validation": {
+      "firstNameRequired": "Imię jest wymagane",
+      "lastNameRequired": "Nazwisko jest wymagane"
+    }
+  },
+  "contacts": {
+    "title": "Kontakty",
+    "subtitle": "Osoby powiązane z Twoimi firmami",
+    "new": "Nowy kontakt",
+    "searchPlaceholder": "Szukaj kontaktów…",
+    "empty": "Nie znaleziono kontaktów.",
+    "columns": {
+      "name": "Imię i nazwisko",
+      "title": "Stanowisko",
+      "email": "Email",
+      "phone": "Telefon"
+    },
+    "form": {
+      "title": "Nowy kontakt",
+      "notes": "Notatki"
+    },
+    "detail": {
+      "account": "Firma",
+      "notes": "Notatki",
+      "deleteTitle": "Usunąć kontakt?",
+      "notFound": "Nie znaleziono kontaktu."
+    },
+    "validation": {
+      "firstNameRequired": "Imię jest wymagane",
+      "lastNameRequired": "Nazwisko jest wymagane"
+    }
+  },
+  "accounts": {
+    "title": "Firmy",
+    "subtitle": "Firmy, z którymi współpracujesz",
+    "new": "Nowa firma",
+    "searchPlaceholder": "Szukaj firm…",
+    "empty": "Nie znaleziono firm.",
+    "columns": {
+      "name": "Nazwa",
+      "industry": "Branża",
+      "website": "Strona internetowa",
+      "phone": "Telefon"
+    },
+    "form": {
+      "title": "Nowa firma",
+      "industry": "Branża",
+      "website": "Strona internetowa",
+      "billingAddress": "Adres rozliczeniowy"
+    },
+    "detail": {
+      "website": "Strona internetowa",
+      "phone": "Telefon",
+      "billingAddress": "Adres rozliczeniowy",
+      "description": "Opis",
+      "contactsCount": "Kontakty ({{count}})",
+      "dealsCount": "Transakcje ({{count}})",
+      "deleteTitle": "Usunąć firmę?",
+      "notFound": "Nie znaleziono firmy."
+    },
+    "validation": {
+      "nameRequired": "Nazwa jest wymagana"
+    }
+  },
+  "deals": {
+    "title": "Transakcje",
+    "subtitle": "Szanse sprzedaży w Twoim lejku",
+    "new": "Nowa transakcja",
+    "searchPlaceholder": "Szukaj transakcji…",
+    "empty": "Nie znaleziono transakcji.",
+    "columns": {
+      "name": "Nazwa",
+      "amount": "Kwota",
+      "stage": "Etap",
+      "expectedClose": "Planowane zamknięcie"
+    },
+    "form": {
+      "title": "Nowa transakcja",
+      "amount": "Kwota",
+      "currency": "Waluta",
+      "pipeline": "Lejek sprzedaży",
+      "stage": "Etap",
+      "expectedCloseDate": "Planowana data zamknięcia"
+    },
+    "detail": {
+      "expectedCloseDate": "Planowana data zamknięcia",
+      "closedAt": "Zamknięto",
+      "description": "Opis",
+      "stageOf": "Etap ({{pipeline}})",
+      "deleteTitle": "Usunąć transakcję?",
+      "notFound": "Nie znaleziono transakcji."
+    },
+    "validation": {
+      "nameRequired": "Nazwa jest wymagana",
+      "pipelineRequired": "Lejek sprzedaży jest wymagany",
+      "stageRequired": "Etap jest wymagany",
+      "amountNumber": "Musi być liczbą"
+    }
+  },
+  "activities": {
+    "title": "Aktywności",
+    "subtitle": "Rozmowy, spotkania, zadania, e-maile i notatki",
+    "new": "Nowa aktywność",
+    "empty": "Nie znaleziono aktywności.",
+    "tabs": {
+      "all": "Wszystkie",
+      "pending": "Oczekujące",
+      "completed": "Zakończone"
+    },
+    "columns": {
+      "subject": "Temat",
+      "type": "Typ",
+      "relatedTo": "Powiązane z",
+      "due": "Termin",
+      "status": "Status"
+    },
+    "markComplete": "Oznacz jako zakończone",
+    "form": {
+      "title": "Nowa aktywność",
+      "subject": "Temat",
+      "type": "Typ",
+      "relatedTo": "Powiązane z",
+      "recordId": "ID rekordu",
+      "dueDate": "Termin"
+    },
+    "validation": {
+      "entityTypeRequired": "Typ encji jest wymagany",
+      "entityIdRequired": "ID encji jest wymagane",
+      "typeRequired": "Typ jest wymagany",
+      "subjectRequired": "Temat jest wymagany"
+    }
+  },
+  "pipelines": {
+    "title": "Lejki sprzedaży",
+    "subtitle": "Etapy sprzedaży używane do śledzenia postępu transakcji",
+    "errorLoading": "Nie udało się załadować lejków sprzedaży.",
+    "empty": "Nie skonfigurowano żadnych lejków sprzedaży.",
+    "default": "Domyślny"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "subtitle": "Zarządzaj dostępem do API i integracjami",
+    "tabs": {
+      "apiKeys": "Klucze API",
+      "webhooks": "Webhooki"
+    },
+    "apiKeys": {
+      "new": "Nowy klucz API",
+      "newKeyCreated": "Utworzono nowy klucz API — skopiuj go teraz, nie zostanie ponownie wyświetlony:",
+      "empty": "Brak kluczy API.",
+      "columns": {
+        "name": "Nazwa",
+        "prefix": "Prefiks",
+        "scopes": "Uprawnienia",
+        "created": "Utworzono"
+      },
+      "form": {
+        "title": "Nowy klucz API",
+        "scopes": "Uprawnienia (oddzielone przecinkami)"
+      },
+      "revokeTitle": "Odwołać klucz API?",
+      "revokeDescription": "Aplikacje korzystające z tego klucza natychmiast stracą dostęp.",
+      "validation": {
+        "nameRequired": "Nazwa jest wymagana",
+        "scopesRequired": "Wymagane jest co najmniej jedno uprawnienie"
+      }
+    },
+    "webhooks": {
+      "new": "Nowy webhook",
+      "empty": "Nie skonfigurowano żadnych webhooków.",
+      "columns": {
+        "url": "URL",
+        "events": "Zdarzenia",
+        "active": "Aktywny"
+      },
+      "form": {
+        "title": "Nowy webhook",
+        "url": "URL",
+        "events": "Zdarzenia"
+      },
+      "deleteTitle": "Usunąć webhook?",
+      "validation": {
+        "urlInvalid": "Nieprawidłowy adres URL",
+        "urlRequired": "URL jest wymagany",
+        "eventsRequired": "Wybierz co najmniej jedno zdarzenie"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Nie znaleziono strony.",
+    "backToDashboard": "Wróć do pulpitu"
+  }
+}

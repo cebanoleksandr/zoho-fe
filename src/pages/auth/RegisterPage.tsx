@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -11,19 +12,24 @@ import Typography from '@mui/material/Typography';
 import { useRegister } from '../../hooks/queries';
 import type { RegisterPayload } from '../../types';
 
-const schema = yup.object({
-  organizationName: yup.string().required('Organization name is required'),
-  firstName: yup.string().required('First name is required'),
-  lastName: yup.string().required('Last name is required'),
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().min(8, 'At least 8 characters').required('Password is required'),
-});
-
-type RegisterFormValues = yup.InferType<typeof schema>;
-
 function RegisterPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const register_ = useRegister();
+
+  const schema = yup.object({
+    organizationName: yup.string().required(t('auth.validation.organizationNameRequired')),
+    firstName: yup.string().required(t('auth.validation.firstNameRequired')),
+    lastName: yup.string().required(t('auth.validation.lastNameRequired')),
+    email: yup.string().email(t('auth.validation.emailInvalid')).required(t('auth.validation.emailRequired')),
+    password: yup
+      .string()
+      .min(8, t('auth.validation.passwordMinLength'))
+      .required(t('auth.validation.passwordRequired')),
+  });
+
+  type RegisterFormValues = yup.InferType<typeof schema>;
+
   const {
     register,
     handleSubmit,
@@ -39,9 +45,9 @@ function RegisterPage() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Stack spacing={2}>
-        {register_.isError && <Alert severity="error">Registration failed. Please try again.</Alert>}
+        {register_.isError && <Alert severity="error">{t('auth.registrationFailed')}</Alert>}
         <TextField
-          label="Organization name"
+          label={t('auth.organizationName')}
           fullWidth
           {...register('organizationName')}
           error={!!errors.organizationName}
@@ -49,14 +55,14 @@ function RegisterPage() {
         />
         <Stack direction="row" spacing={2}>
           <TextField
-            label="First name"
+            label={t('auth.firstName')}
             fullWidth
             {...register('firstName')}
             error={!!errors.firstName}
             helperText={errors.firstName?.message}
           />
           <TextField
-            label="Last name"
+            label={t('auth.lastName')}
             fullWidth
             {...register('lastName')}
             error={!!errors.lastName}
@@ -64,7 +70,7 @@ function RegisterPage() {
           />
         </Stack>
         <TextField
-          label="Email"
+          label={t('auth.email')}
           type="email"
           fullWidth
           {...register('email')}
@@ -72,7 +78,7 @@ function RegisterPage() {
           helperText={errors.email?.message}
         />
         <TextField
-          label="Password"
+          label={t('auth.password')}
           type="password"
           fullWidth
           {...register('password')}
@@ -80,10 +86,10 @@ function RegisterPage() {
           helperText={errors.password?.message}
         />
         <Button type="submit" variant="contained" size="large" disabled={register_.isPending}>
-          {register_.isPending ? 'Creating account…' : 'Create account'}
+          {register_.isPending ? t('auth.creatingAccount') : t('auth.createAccount')}
         </Button>
         <Typography variant="body2" align="center">
-          Already have an account? <Link component={RouterLink} to="/auth/login">Sign in</Link>
+          {t('auth.haveAccount')} <Link component={RouterLink} to="/auth/login">{t('auth.signIn')}</Link>
         </Typography>
       </Stack>
     </form>

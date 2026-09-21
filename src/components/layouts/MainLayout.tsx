@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Drawer from '@mui/material/Drawer';
@@ -24,24 +25,26 @@ import SettingsIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutIcon from '@mui/icons-material/LogoutOutlined';
 import { useLogout } from '../../hooks/queries';
 import { tokenStorage } from '../../api/client';
+import LanguageSwitcher from '../common/LanguageSwitcher';
 
 const DRAWER_WIDTH = 240;
 
-const NAV_ITEMS = [
-  { to: '/app', label: 'Dashboard', icon: <DashboardIcon />, end: true },
-  { to: '/app/leads', label: 'Leads', icon: <LeadsIcon /> },
-  { to: '/app/contacts', label: 'Contacts', icon: <ContactsIcon /> },
-  { to: '/app/accounts', label: 'Accounts', icon: <AccountsIcon /> },
-  { to: '/app/deals', label: 'Deals', icon: <DealsIcon /> },
-  { to: '/app/activities', label: 'Activities', icon: <ActivitiesIcon /> },
-  { to: '/app/pipelines', label: 'Pipelines', icon: <PipelinesIcon /> },
-  { to: '/app/settings', label: 'Settings', icon: <SettingsIcon /> },
-];
-
 function MainLayout() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const logout = useLogout();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  const navItems = [
+    { to: '/app', label: t('nav.dashboard'), icon: <DashboardIcon />, end: true },
+    { to: '/app/leads', label: t('nav.leads'), icon: <LeadsIcon /> },
+    { to: '/app/contacts', label: t('nav.contacts'), icon: <ContactsIcon /> },
+    { to: '/app/accounts', label: t('nav.accounts'), icon: <AccountsIcon /> },
+    { to: '/app/deals', label: t('nav.deals'), icon: <DealsIcon /> },
+    { to: '/app/activities', label: t('nav.activities'), icon: <ActivitiesIcon /> },
+    { to: '/app/pipelines', label: t('nav.pipelines'), icon: <PipelinesIcon /> },
+    { to: '/app/settings', label: t('nav.settings'), icon: <SettingsIcon /> },
+  ];
 
   const handleLogout = async () => {
     setAnchorEl(null);
@@ -65,6 +68,7 @@ function MainLayout() {
           <Typography variant="h6" noWrap sx={{ flexGrow: 1, fontWeight: 700, color: '#dc2626' }}>
             Zoho CRM
           </Typography>
+          <LanguageSwitcher />
           <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
             <Avatar sx={{ width: 32, height: 32, bgcolor: '#dc2626', fontSize: 14 }}>U</Avatar>
           </IconButton>
@@ -73,7 +77,7 @@ function MainLayout() {
               <ListItemIcon>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>
-              Logout
+              {t('nav.logout')}
             </MenuItem>
           </Menu>
         </Toolbar>
@@ -89,7 +93,7 @@ function MainLayout() {
       >
         <Toolbar />
         <List sx={{ px: 1 }}>
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <ListItemButton
               key={item.to}
               component={NavLink}

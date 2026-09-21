@@ -1,0 +1,289 @@
+{
+  "common": {
+    "cancel": "Скасувати",
+    "create": "Створити",
+    "saving": "Збереження…",
+    "creating": "Створення…",
+    "delete": "Видалити",
+    "revoke": "Відкликати",
+    "close": "Закрити",
+    "search": "Пошук",
+    "actions": "Дії",
+    "loading": "Завантаження…",
+    "errorLoading": "Не вдалося завантажити дані.",
+    "noRecords": "Записів не знайдено.",
+    "cannotBeUndone": "Цю дію неможливо скасувати.",
+    "name": "Назва",
+    "email": "Email",
+    "phone": "Телефон",
+    "title": "Посада",
+    "description": "Опис",
+    "notFound": "{{entity}} не знайдено."
+  },
+  "nav": {
+    "dashboard": "Огляд",
+    "leads": "Ліди",
+    "contacts": "Контакти",
+    "accounts": "Компанії",
+    "deals": "Угоди",
+    "activities": "Активності",
+    "pipelines": "Воронки",
+    "settings": "Налаштування",
+    "logout": "Вийти"
+  },
+  "auth": {
+    "invalidCredentials": "Невірний email або пароль.",
+    "registrationFailed": "Не вдалося зареєструватися. Спробуйте ще раз.",
+    "email": "Email",
+    "password": "Пароль",
+    "organizationName": "Назва організації",
+    "firstName": "Ім'я",
+    "lastName": "Прізвище",
+    "signIn": "Увійти",
+    "signingIn": "Вхід…",
+    "signUp": "Зареєструватися",
+    "createAccount": "Створити акаунт",
+    "creatingAccount": "Створення акаунту…",
+    "noAccount": "Немає акаунту?",
+    "haveAccount": "Вже маєте акаунт?",
+    "validation": {
+      "emailInvalid": "Невірний email",
+      "emailRequired": "Email обов'язковий",
+      "passwordRequired": "Пароль обов'язковий",
+      "passwordMinLength": "Щонайменше 8 символів",
+      "organizationNameRequired": "Назва організації обов'язкова",
+      "firstNameRequired": "Ім'я обов'язкове",
+      "lastNameRequired": "Прізвище обов'язкове"
+    }
+  },
+  "dashboard": {
+    "title": "Огляд",
+    "subtitle": "Огляд активності вашої CRM",
+    "openLeads": "Активні ліди",
+    "activeDeals": "Активні угоди",
+    "accounts": "Компанії",
+    "pendingActivities": "Незавершені активності"
+  },
+  "leads": {
+    "title": "Ліди",
+    "subtitle": "Потенційні клієнти, що ще не конвертовані",
+    "new": "Новий лід",
+    "searchPlaceholder": "Пошук лідів…",
+    "empty": "Лідів не знайдено.",
+    "columns": {
+      "name": "Ім'я",
+      "company": "Компанія",
+      "email": "Email",
+      "phone": "Телефон",
+      "status": "Статус"
+    },
+    "form": {
+      "title": "Новий лід",
+      "company": "Компанія",
+      "source": "Джерело",
+      "notes": "Примітки"
+    },
+    "detail": {
+      "convert": "Конвертувати",
+      "source": "Джерело",
+      "notes": "Примітки",
+      "activities": "Активності",
+      "noActivities": "Активностей ще немає.",
+      "status": "Статус",
+      "deleteTitle": "Видалити лід?",
+      "notFound": "Лід не знайдено."
+    },
+    "validation": {
+      "firstNameRequired": "Ім'я обов'язкове",
+      "lastNameRequired": "Прізвище обов'язкове"
+    }
+  },
+  "contacts": {
+    "title": "Контакти",
+    "subtitle": "Люди, пов'язані з вашими компаніями",
+    "new": "Новий контакт",
+    "searchPlaceholder": "Пошук контактів…",
+    "empty": "Контактів не знайдено.",
+    "columns": {
+      "name": "Ім'я",
+      "title": "Посада",
+      "email": "Email",
+      "phone": "Телефон"
+    },
+    "form": {
+      "title": "Новий контакт",
+      "notes": "Примітки"
+    },
+    "detail": {
+      "account": "Компанія",
+      "notes": "Примітки",
+      "deleteTitle": "Видалити контакт?",
+      "notFound": "Контакт не знайдено."
+    },
+    "validation": {
+      "firstNameRequired": "Ім'я обов'язкове",
+      "lastNameRequired": "Прізвище обов'язкове"
+    }
+  },
+  "accounts": {
+    "title": "Компанії",
+    "subtitle": "Компанії, з якими ви співпрацюєте",
+    "new": "Нова компанія",
+    "searchPlaceholder": "Пошук компаній…",
+    "empty": "Компаній не знайдено.",
+    "columns": {
+      "name": "Назва",
+      "industry": "Галузь",
+      "website": "Вебсайт",
+      "phone": "Телефон"
+    },
+    "form": {
+      "title": "Нова компанія",
+      "industry": "Галузь",
+      "website": "Вебсайт",
+      "billingAddress": "Платіжна адреса"
+    },
+    "detail": {
+      "website": "Вебсайт",
+      "phone": "Телефон",
+      "billingAddress": "Платіжна адреса",
+      "description": "Опис",
+      "contactsCount": "Контакти ({{count}})",
+      "dealsCount": "Угоди ({{count}})",
+      "deleteTitle": "Видалити компанію?",
+      "notFound": "Компанію не знайдено."
+    },
+    "validation": {
+      "nameRequired": "Назва обов'язкова"
+    }
+  },
+  "deals": {
+    "title": "Угоди",
+    "subtitle": "Можливості продажу у вашій воронці",
+    "new": "Нова угода",
+    "searchPlaceholder": "Пошук угод…",
+    "empty": "Угод не знайдено.",
+    "columns": {
+      "name": "Назва",
+      "amount": "Сума",
+      "stage": "Етап",
+      "expectedClose": "Очікуване закриття"
+    },
+    "form": {
+      "title": "Нова угода",
+      "amount": "Сума",
+      "currency": "Валюта",
+      "pipeline": "Воронка",
+      "stage": "Етап",
+      "expectedCloseDate": "Очікувана дата закриття"
+    },
+    "detail": {
+      "expectedCloseDate": "Очікувана дата закриття",
+      "closedAt": "Закрито",
+      "description": "Опис",
+      "stageOf": "Етап ({{pipeline}})",
+      "deleteTitle": "Видалити угоду?",
+      "notFound": "Угоду не знайдено."
+    },
+    "validation": {
+      "nameRequired": "Назва обов'язкова",
+      "pipelineRequired": "Воронка обов'язкова",
+      "stageRequired": "Етап обов'язковий",
+      "amountNumber": "Має бути числом"
+    }
+  },
+  "activities": {
+    "title": "Активності",
+    "subtitle": "Дзвінки, зустрічі, завдання, листи та примітки",
+    "new": "Нова активність",
+    "empty": "Активностей не знайдено.",
+    "tabs": {
+      "all": "Усі",
+      "pending": "Незавершені",
+      "completed": "Завершені"
+    },
+    "columns": {
+      "subject": "Тема",
+      "type": "Тип",
+      "relatedTo": "Пов'язано з",
+      "due": "Термін",
+      "status": "Статус"
+    },
+    "markComplete": "Позначити виконаним",
+    "form": {
+      "title": "Нова активність",
+      "subject": "Тема",
+      "type": "Тип",
+      "relatedTo": "Пов'язано з",
+      "recordId": "ID запису",
+      "dueDate": "Термін виконання"
+    },
+    "validation": {
+      "entityTypeRequired": "Тип сутності обов'язковий",
+      "entityIdRequired": "ID сутності обов'язковий",
+      "typeRequired": "Тип обов'язковий",
+      "subjectRequired": "Тема обов'язкова"
+    }
+  },
+  "pipelines": {
+    "title": "Воронки",
+    "subtitle": "Етапи продажу для відстеження прогресу угод",
+    "errorLoading": "Не вдалося завантажити воронки.",
+    "empty": "Воронки не налаштовано.",
+    "default": "За замовчуванням"
+  },
+  "settings": {
+    "title": "Налаштування",
+    "subtitle": "Керування доступом до API та інтеграціями",
+    "tabs": {
+      "apiKeys": "API-ключі",
+      "webhooks": "Вебхуки"
+    },
+    "apiKeys": {
+      "new": "Новий API-ключ",
+      "newKeyCreated": "Новий API-ключ створено — скопіюйте його зараз, він більше не показуватиметься:",
+      "empty": "API-ключів ще немає.",
+      "columns": {
+        "name": "Назва",
+        "prefix": "Префікс",
+        "scopes": "Права доступу",
+        "created": "Створено"
+      },
+      "form": {
+        "title": "Новий API-ключ",
+        "scopes": "Права доступу (через кому)"
+      },
+      "revokeTitle": "Відкликати API-ключ?",
+      "revokeDescription": "Застосунки, що використовують цей ключ, негайно втратять доступ.",
+      "validation": {
+        "nameRequired": "Назва обов'язкова",
+        "scopesRequired": "Потрібно вказати хоча б одне право доступу"
+      }
+    },
+    "webhooks": {
+      "new": "Новий вебхук",
+      "empty": "Вебхуки не налаштовано.",
+      "columns": {
+        "url": "URL",
+        "events": "Події",
+        "active": "Активний"
+      },
+      "form": {
+        "title": "Новий вебхук",
+        "url": "URL",
+        "events": "Події"
+      },
+      "deleteTitle": "Видалити вебхук?",
+      "validation": {
+        "urlInvalid": "Некоректний URL",
+        "urlRequired": "URL обов'язковий",
+        "eventsRequired": "Оберіть принаймні одну подію"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Сторінку не знайдено.",
+    "backToDashboard": "На головну"
+  }
+}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -11,6 +12,7 @@ import type { Account } from '../../types';
 import AccountFormDialog from './AccountFormDialog';
 
 function AccountsListPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
@@ -20,26 +22,26 @@ function AccountsListPage() {
   const { data, isLoading, isError } = useAccounts({ search: search || undefined, page: page + 1, limit });
 
   const columns: DataTableColumn<Account>[] = [
-    { key: 'name', header: 'Name', render: (r) => r.name },
-    { key: 'industry', header: 'Industry', render: (r) => r.industry ?? '—' },
-    { key: 'website', header: 'Website', render: (r) => r.website ?? '—' },
-    { key: 'phone', header: 'Phone', render: (r) => r.phone ?? '—' },
+    { key: 'name', header: t('accounts.columns.name'), render: (r) => r.name },
+    { key: 'industry', header: t('accounts.columns.industry'), render: (r) => r.industry ?? '—' },
+    { key: 'website', header: t('accounts.columns.website'), render: (r) => r.website ?? '—' },
+    { key: 'phone', header: t('accounts.columns.phone'), render: (r) => r.phone ?? '—' },
   ];
 
   return (
     <Box>
       <PageHeader
-        title="Accounts"
-        subtitle="Companies you do business with"
+        title={t('accounts.title')}
+        subtitle={t('accounts.subtitle')}
         actions={
           <Button variant="contained" startIcon={<AddIcon />} onClick={() => setFormOpen(true)}>
-            New Account
+            {t('accounts.new')}
           </Button>
         }
       />
 
       <TextField
-        placeholder="Search accounts…"
+        placeholder={t('accounts.searchPlaceholder')}
         size="small"
         value={search}
         onChange={(e) => {
@@ -56,7 +58,7 @@ function AccountsListPage() {
         isLoading={isLoading}
         isError={isError}
         onRowClick={(r) => navigate(`/app/accounts/${r.id}`)}
-        emptyMessage="No accounts found."
+        emptyMessage={t('accounts.empty')}
         page={page}
         limit={limit}
         total={data?.total ?? 0}

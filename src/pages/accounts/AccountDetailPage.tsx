@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -24,6 +25,7 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 function AccountDetailPage() {
+  const { t } = useTranslation();
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const { data: account, isLoading, isError } = useAccount(id);
@@ -41,7 +43,7 @@ function AccountDetailPage() {
   }
 
   if (isError || !account) {
-    return <Alert severity="error">Account not found.</Alert>;
+    return <Alert severity="error">{t('accounts.detail.notFound')}</Alert>;
   }
 
   return (
@@ -51,7 +53,7 @@ function AccountDetailPage() {
         subtitle={account.industry ?? undefined}
         actions={
           <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />
@@ -61,16 +63,16 @@ function AccountDetailPage() {
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
               <Grid size={{ xs: 6 }}>
-                <Field label="Website" value={account.website ?? '—'} />
+                <Field label={t('accounts.detail.website')} value={account.website ?? '—'} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label="Phone" value={account.phone ?? '—'} />
+                <Field label={t('accounts.detail.phone')} value={account.phone ?? '—'} />
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <Field label="Billing address" value={account.billingAddress ?? '—'} />
+                <Field label={t('accounts.detail.billingAddress')} value={account.billingAddress ?? '—'} />
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <Field label="Description" value={account.description ?? '—'} />
+                <Field label={t('accounts.detail.description')} value={account.description ?? '—'} />
               </Grid>
             </Grid>
           </Paper>
@@ -79,7 +81,7 @@ function AccountDetailPage() {
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2, mb: 2 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
-              Contacts ({contacts?.total ?? 0})
+              {t('accounts.detail.contactsCount', { count: contacts?.total ?? 0 })}
             </Typography>
             {(contacts?.data ?? []).slice(0, 5).map((c) => (
               <Typography key={c.id} variant="body2">
@@ -89,7 +91,7 @@ function AccountDetailPage() {
           </Paper>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
-              Deals ({deals?.total ?? 0})
+              {t('accounts.detail.dealsCount', { count: deals?.total ?? 0 })}
             </Typography>
             {(deals?.data ?? []).slice(0, 5).map((d) => (
               <Typography key={d.id} variant="body2">
@@ -102,8 +104,8 @@ function AccountDetailPage() {
 
       <ConfirmDialog
         open={confirmOpen}
-        title="Delete account?"
-        description="This action cannot be undone."
+        title={t('accounts.detail.deleteTitle')}
+        description={t('common.cannotBeUndone')}
         loading={deleteAccount.isPending}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() =>

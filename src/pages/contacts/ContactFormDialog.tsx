@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,26 +12,28 @@ import TextField from '@mui/material/TextField';
 import { useCreateContact } from '../../hooks/queries';
 import type { CreateContactPayload } from '../../types';
 
-const schema = yup.object({
-  firstName: yup.string().required('First name is required'),
-  lastName: yup.string().required('Last name is required'),
-  email: yup.string().email('Invalid email').optional(),
-  phone: yup.string().optional(),
-  title: yup.string().optional(),
-  accountId: yup.string().optional(),
-  ownerId: yup.string().optional(),
-  notes: yup.string().optional(),
-});
-
-type ContactFormValues = yup.InferType<typeof schema>;
-
 interface ContactFormDialogProps {
   open: boolean;
   onClose: () => void;
 }
 
 function ContactFormDialog({ open, onClose }: ContactFormDialogProps) {
+  const { t } = useTranslation();
   const createContact = useCreateContact();
+
+  const schema = yup.object({
+    firstName: yup.string().required(t('contacts.validation.firstNameRequired')),
+    lastName: yup.string().required(t('contacts.validation.lastNameRequired')),
+    email: yup.string().email(t('auth.validation.emailInvalid')).optional(),
+    phone: yup.string().optional(),
+    title: yup.string().optional(),
+    accountId: yup.string().optional(),
+    ownerId: yup.string().optional(),
+    notes: yup.string().optional(),
+  });
+
+  type ContactFormValues = yup.InferType<typeof schema>;
+
   const {
     register,
     handleSubmit,
@@ -49,36 +52,42 @@ function ContactFormDialog({ open, onClose }: ContactFormDialogProps) {
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>New Contact</DialogTitle>
+      <DialogTitle>{t('contacts.form.title')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
             <Stack direction="row" spacing={2}>
               <TextField
-                label="First name"
+                label={t('auth.firstName')}
                 fullWidth
                 {...register('firstName')}
                 error={!!errors.firstName}
                 helperText={errors.firstName?.message}
               />
               <TextField
-                label="Last name"
+                label={t('auth.lastName')}
                 fullWidth
                 {...register('lastName')}
                 error={!!errors.lastName}
                 helperText={errors.lastName?.message}
               />
             </Stack>
-            <TextField label="Email" fullWidth {...register('email')} error={!!errors.email} helperText={errors.email?.message} />
-            <TextField label="Phone" fullWidth {...register('phone')} />
-            <TextField label="Title" fullWidth {...register('title')} />
-            <TextField label="Notes" fullWidth multiline minRows={2} {...register('notes')} />
+            <TextField
+              label={t('common.email')}
+              fullWidth
+              {...register('email')}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
+            <TextField label={t('common.phone')} fullWidth {...register('phone')} />
+            <TextField label={t('common.title')} fullWidth {...register('title')} />
+            <TextField label={t('contacts.form.notes')} fullWidth multiline minRows={2} {...register('notes')} />
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>{t('common.cancel')}</Button>
           <Button type="submit" variant="contained" disabled={createContact.isPending}>
-            {createContact.isPending ? 'Saving…' : 'Create'}
+            {createContact.isPending ? t('common.saving') : t('common.create')}
           </Button>
         </DialogActions>
       </form>

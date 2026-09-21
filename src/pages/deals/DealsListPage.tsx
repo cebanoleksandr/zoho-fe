@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -12,6 +13,7 @@ import type { Deal } from '../../types';
 import DealFormDialog from './DealFormDialog';
 
 function DealsListPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
@@ -27,30 +29,30 @@ function DealsListPage() {
   };
 
   const columns: DataTableColumn<Deal>[] = [
-    { key: 'name', header: 'Name', render: (r) => r.name },
+    { key: 'name', header: t('deals.columns.name'), render: (r) => r.name },
     {
       key: 'amount',
-      header: 'Amount',
+      header: t('deals.columns.amount'),
       render: (r) => (r.amount != null ? `${r.amount} ${r.currency ?? ''}`.trim() : '—'),
     },
-    { key: 'stage', header: 'Stage', render: (r) => <Chip size="small" label={stageName(r)} /> },
-    { key: 'closeDate', header: 'Expected Close', render: (r) => r.expectedCloseDate ?? '—' },
+    { key: 'stage', header: t('deals.columns.stage'), render: (r) => <Chip size="small" label={stageName(r)} /> },
+    { key: 'closeDate', header: t('deals.columns.expectedClose'), render: (r) => r.expectedCloseDate ?? '—' },
   ];
 
   return (
     <Box>
       <PageHeader
-        title="Deals"
-        subtitle="Sales opportunities moving through your pipeline"
+        title={t('deals.title')}
+        subtitle={t('deals.subtitle')}
         actions={
           <Button variant="contained" startIcon={<AddIcon />} onClick={() => setFormOpen(true)}>
-            New Deal
+            {t('deals.new')}
           </Button>
         }
       />
 
       <TextField
-        placeholder="Search deals…"
+        placeholder={t('deals.searchPlaceholder')}
         size="small"
         value={search}
         onChange={(e) => {
@@ -67,7 +69,7 @@ function DealsListPage() {
         isLoading={isLoading}
         isError={isError}
         onRowClick={(r) => navigate(`/app/deals/${r.id}`)}
-        emptyMessage="No deals found."
+        emptyMessage={t('deals.empty')}
         page={page}
         limit={limit}
         total={data?.total ?? 0}

@@ -1,0 +1,289 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "create": "Create",
+    "saving": "Saving…",
+    "creating": "Creating…",
+    "delete": "Delete",
+    "revoke": "Revoke",
+    "close": "Close",
+    "search": "Search",
+    "actions": "Actions",
+    "loading": "Loading…",
+    "errorLoading": "Failed to load data.",
+    "noRecords": "No records found.",
+    "cannotBeUndone": "This action cannot be undone.",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "title": "Title",
+    "description": "Description",
+    "notFound": "{{entity}} not found."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "leads": "Leads",
+    "contacts": "Contacts",
+    "accounts": "Accounts",
+    "deals": "Deals",
+    "activities": "Activities",
+    "pipelines": "Pipelines",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "auth": {
+    "invalidCredentials": "Invalid email or password.",
+    "registrationFailed": "Registration failed. Please try again.",
+    "email": "Email",
+    "password": "Password",
+    "organizationName": "Organization name",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "signUp": "Sign up",
+    "createAccount": "Create account",
+    "creatingAccount": "Creating account…",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "validation": {
+      "emailInvalid": "Invalid email",
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "At least 8 characters",
+      "organizationNameRequired": "Organization name is required",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of your CRM activity",
+    "openLeads": "Open Leads",
+    "activeDeals": "Active Deals",
+    "accounts": "Accounts",
+    "pendingActivities": "Pending Activities"
+  },
+  "leads": {
+    "title": "Leads",
+    "subtitle": "Prospective customers not yet converted",
+    "new": "New Lead",
+    "searchPlaceholder": "Search leads…",
+    "empty": "No leads found.",
+    "columns": {
+      "name": "Name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "status": "Status"
+    },
+    "form": {
+      "title": "New Lead",
+      "company": "Company",
+      "source": "Source",
+      "notes": "Notes"
+    },
+    "detail": {
+      "convert": "Convert",
+      "source": "Source",
+      "notes": "Notes",
+      "activities": "Activities",
+      "noActivities": "No activities logged yet.",
+      "status": "Status",
+      "deleteTitle": "Delete lead?",
+      "notFound": "Lead not found."
+    },
+    "validation": {
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required"
+    }
+  },
+  "contacts": {
+    "title": "Contacts",
+    "subtitle": "People associated with your accounts",
+    "new": "New Contact",
+    "searchPlaceholder": "Search contacts…",
+    "empty": "No contacts found.",
+    "columns": {
+      "name": "Name",
+      "title": "Title",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "form": {
+      "title": "New Contact",
+      "notes": "Notes"
+    },
+    "detail": {
+      "account": "Account",
+      "notes": "Notes",
+      "deleteTitle": "Delete contact?",
+      "notFound": "Contact not found."
+    },
+    "validation": {
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required"
+    }
+  },
+  "accounts": {
+    "title": "Accounts",
+    "subtitle": "Companies you do business with",
+    "new": "New Account",
+    "searchPlaceholder": "Search accounts…",
+    "empty": "No accounts found.",
+    "columns": {
+      "name": "Name",
+      "industry": "Industry",
+      "website": "Website",
+      "phone": "Phone"
+    },
+    "form": {
+      "title": "New Account",
+      "industry": "Industry",
+      "website": "Website",
+      "billingAddress": "Billing address"
+    },
+    "detail": {
+      "website": "Website",
+      "phone": "Phone",
+      "billingAddress": "Billing address",
+      "description": "Description",
+      "contactsCount": "Contacts ({{count}})",
+      "dealsCount": "Deals ({{count}})",
+      "deleteTitle": "Delete account?",
+      "notFound": "Account not found."
+    },
+    "validation": {
+      "nameRequired": "Name is required"
+    }
+  },
+  "deals": {
+    "title": "Deals",
+    "subtitle": "Sales opportunities moving through your pipeline",
+    "new": "New Deal",
+    "searchPlaceholder": "Search deals…",
+    "empty": "No deals found.",
+    "columns": {
+      "name": "Name",
+      "amount": "Amount",
+      "stage": "Stage",
+      "expectedClose": "Expected Close"
+    },
+    "form": {
+      "title": "New Deal",
+      "amount": "Amount",
+      "currency": "Currency",
+      "pipeline": "Pipeline",
+      "stage": "Stage",
+      "expectedCloseDate": "Expected close date"
+    },
+    "detail": {
+      "expectedCloseDate": "Expected close date",
+      "closedAt": "Closed at",
+      "description": "Description",
+      "stageOf": "Stage ({{pipeline}})",
+      "deleteTitle": "Delete deal?",
+      "notFound": "Deal not found."
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "pipelineRequired": "Pipeline is required",
+      "stageRequired": "Stage is required",
+      "amountNumber": "Must be a number"
+    }
+  },
+  "activities": {
+    "title": "Activities",
+    "subtitle": "Calls, meetings, tasks, emails and notes",
+    "new": "New Activity",
+    "empty": "No activities found.",
+    "tabs": {
+      "all": "All",
+      "pending": "Pending",
+      "completed": "Completed"
+    },
+    "columns": {
+      "subject": "Subject",
+      "type": "Type",
+      "relatedTo": "Related To",
+      "due": "Due",
+      "status": "Status"
+    },
+    "markComplete": "Mark complete",
+    "form": {
+      "title": "New Activity",
+      "subject": "Subject",
+      "type": "Type",
+      "relatedTo": "Related to",
+      "recordId": "Record ID",
+      "dueDate": "Due date"
+    },
+    "validation": {
+      "entityTypeRequired": "Entity type is required",
+      "entityIdRequired": "Entity id is required",
+      "typeRequired": "Type is required",
+      "subjectRequired": "Subject is required"
+    }
+  },
+  "pipelines": {
+    "title": "Pipelines",
+    "subtitle": "Sales stages used to track deal progress",
+    "errorLoading": "Failed to load pipelines.",
+    "empty": "No pipelines configured.",
+    "default": "Default"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage API access and integrations",
+    "tabs": {
+      "apiKeys": "API Keys",
+      "webhooks": "Webhooks"
+    },
+    "apiKeys": {
+      "new": "New API Key",
+      "newKeyCreated": "New API key created — copy it now, it won't be shown again:",
+      "empty": "No API keys yet.",
+      "columns": {
+        "name": "Name",
+        "prefix": "Prefix",
+        "scopes": "Scopes",
+        "created": "Created"
+      },
+      "form": {
+        "title": "New API Key",
+        "scopes": "Scopes (comma separated)"
+      },
+      "revokeTitle": "Revoke API key?",
+      "revokeDescription": "Applications using this key will lose access immediately.",
+      "validation": {
+        "nameRequired": "Name is required",
+        "scopesRequired": "At least one scope is required"
+      }
+    },
+    "webhooks": {
+      "new": "New Webhook",
+      "empty": "No webhooks configured.",
+      "columns": {
+        "url": "URL",
+        "events": "Events",
+        "active": "Active"
+      },
+      "form": {
+        "title": "New Webhook",
+        "url": "URL",
+        "events": "Events"
+      },
+      "deleteTitle": "Delete webhook?",
+      "validation": {
+        "urlInvalid": "Must be a valid URL",
+        "urlRequired": "URL is required",
+        "eventsRequired": "Select at least one event"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Page not found.",
+    "backToDashboard": "Back to Dashboard"
+  }
+}

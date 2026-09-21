@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -24,6 +25,7 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 function ContactDetailPage() {
+  const { t } = useTranslation();
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const { data: contact, isLoading, isError } = useContact(id);
@@ -39,7 +41,7 @@ function ContactDetailPage() {
   }
 
   if (isError || !contact) {
-    return <Alert severity="error">Contact not found.</Alert>;
+    return <Alert severity="error">{t('contacts.detail.notFound')}</Alert>;
   }
 
   return (
@@ -49,7 +51,7 @@ function ContactDetailPage() {
         subtitle={contact.title ?? undefined}
         actions={
           <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />
@@ -57,24 +59,24 @@ function ContactDetailPage() {
       <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 6 }}>
-            <Field label="Email" value={contact.email ?? '—'} />
+            <Field label={t('common.email')} value={contact.email ?? '—'} />
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <Field label="Phone" value={contact.phone ?? '—'} />
+            <Field label={t('common.phone')} value={contact.phone ?? '—'} />
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <Field label="Account" value={contact.accountId ?? '—'} />
+            <Field label={t('contacts.detail.account')} value={contact.accountId ?? '—'} />
           </Grid>
           <Grid size={{ xs: 12 }}>
-            <Field label="Notes" value={contact.notes ?? '—'} />
+            <Field label={t('contacts.detail.notes')} value={contact.notes ?? '—'} />
           </Grid>
         </Grid>
       </Paper>
 
       <ConfirmDialog
         open={confirmOpen}
-        title="Delete contact?"
-        description="This action cannot be undone."
+        title={t('contacts.detail.deleteTitle')}
+        description={t('common.cannotBeUndone')}
         loading={deleteContact.isPending}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() =>

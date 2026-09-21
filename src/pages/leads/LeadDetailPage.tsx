@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -36,6 +37,7 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 function LeadDetailPage() {
+  const { t } = useTranslation();
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const { data: lead, isLoading, isError } = useLead(id);
@@ -54,7 +56,7 @@ function LeadDetailPage() {
   }
 
   if (isError || !lead) {
-    return <Alert severity="error">Lead not found.</Alert>;
+    return <Alert severity="error">{t('leads.detail.notFound')}</Alert>;
   }
 
   return (
@@ -71,7 +73,7 @@ function LeadDetailPage() {
                 disabled={convertLead.isPending}
                 onClick={() => convertLead.mutate({ id, payload: {} })}
               >
-                Convert
+                {t('leads.detail.convert')}
               </Button>
             )}
             <Button
@@ -80,7 +82,7 @@ function LeadDetailPage() {
               startIcon={<DeleteOutlineIcon />}
               onClick={() => setConfirmOpen(true)}
             >
-              Delete
+              {t('common.delete')}
             </Button>
           </>
         }
@@ -91,31 +93,31 @@ function LeadDetailPage() {
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
               <Grid size={{ xs: 6 }}>
-                <Field label="Email" value={lead.email ?? '—'} />
+                <Field label={t('common.email')} value={lead.email ?? '—'} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label="Phone" value={lead.phone ?? '—'} />
+                <Field label={t('common.phone')} value={lead.phone ?? '—'} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label="Title" value={lead.title ?? '—'} />
+                <Field label={t('common.title')} value={lead.title ?? '—'} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label="Source" value={lead.source ?? '—'} />
+                <Field label={t('leads.detail.source')} value={lead.source ?? '—'} />
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <Field label="Notes" value={lead.notes ?? '—'} />
+                <Field label={t('leads.detail.notes')} value={lead.notes ?? '—'} />
               </Grid>
             </Grid>
           </Paper>
 
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2, mt: 2 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Activities
+              {t('leads.detail.activities')}
             </Typography>
             <Stack spacing={1}>
               {(activities?.data ?? []).length === 0 && (
                 <Typography variant="body2" color="text.secondary">
-                  No activities logged yet.
+                  {t('leads.detail.noActivities')}
                 </Typography>
               )}
               {activities?.data.map((a) => (
@@ -133,7 +135,7 @@ function LeadDetailPage() {
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Typography variant="caption" color="text.secondary">
-              Status
+              {t('leads.detail.status')}
             </Typography>
             <Select
               fullWidth
@@ -155,8 +157,8 @@ function LeadDetailPage() {
 
       <ConfirmDialog
         open={confirmOpen}
-        title="Delete lead?"
-        description="This action cannot be undone."
+        title={t('leads.detail.deleteTitle')}
+        description={t('common.cannotBeUndone')}
         loading={deleteLead.isPending}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() =>

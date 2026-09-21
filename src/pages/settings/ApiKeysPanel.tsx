@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -20,20 +21,21 @@ import ConfirmDialog from '../../components/common/ConfirmDialog';
 import { useApiKeys, useCreateApiKey, useRevokeApiKey } from '../../hooks/queries';
 import type { ApiKey } from '../../types';
 
-const schema = yup.object({
-  name: yup.string().required('Name is required'),
-  scopes: yup.array().of(yup.string().required()).min(1, 'At least one scope is required').required(),
-});
-
-type ApiKeyFormValues = yup.InferType<typeof schema>;
-
 function ApiKeysPanel() {
+  const { t } = useTranslation();
   const { data: apiKeys, isLoading, isError } = useApiKeys();
   const createApiKey = useCreateApiKey();
   const revokeApiKey = useRevokeApiKey();
   const [formOpen, setFormOpen] = useState(false);
   const [revokeId, setRevokeId] = useState<string | null>(null);
   const [newKey, setNewKey] = useState<string | null>(null);
+
+  const schema = yup.object({
+    name: yup.string().required(t('settings.apiKeys.validation.nameRequired')),
+    scopes: yup.array().of(yup.string().required()).min(1, t('settings.apiKeys.validation.scopesRequired')).required(),
+  });
+
+  type ApiKeyFormValues = yup.InferType<typeof schema>;
 
   const {
     register,
@@ -60,16 +62,20 @@ function ApiKeysPanel() {
   });
 
   const columns: DataTableColumn<ApiKey>[] = [
-    { key: 'name', header: 'Name', render: (r) => r.name },
-    { key: 'prefix', header: 'Prefix', render: (r) => r.prefix },
-    { key: 'scopes', header: 'Scopes', render: (r) => r.scopes.join(', ') },
-    { key: 'createdAt', header: 'Created', render: (r) => new Date(r.createdAt).toLocaleDateString() },
+    { key: 'name', header: t('settings.apiKeys.columns.name'), render: (r) => r.name },
+    { key: 'prefix', header: t('settings.apiKeys.columns.prefix'), render: (r) => r.prefix },
+    { key: 'scopes', header: t('settings.apiKeys.columns.scopes'), render: (r) => r.scopes.join(', ') },
+    {
+      key: 'createdAt',
+      header: t('settings.apiKeys.columns.created'),
+      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+    },
     {
       key: 'actions',
       header: '',
       width: 60,
       render: (r) => (
-        <Tooltip title="Revoke">
+        <Tooltip title={t('common.revoke')}>
           <IconButton size="small" onClick={() => setRevokeId(r.id)}>
             <DeleteOutlineIcon fontSize="small" />
           </IconButton>
@@ -82,13 +88,13 @@ function ApiKeysPanel() {
     <Box>
       {newKey && (
         <Alert severity="success" onClose={() => setNewKey(null)} sx={{ mb: 2 }}>
-          New API key created — copy it now, it won&apos;t be shown again: <code>{newKey}</code>
+          {t('settings.apiKeys.newKeyCreated')} <code>{newKey}</code>
         </Alert>
       )}
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={() => setFormOpen(true)}>
-          New API Key
+          {t('settings.apiKeys.new')}
         </Button>
       </Box>
 
@@ -98,23 +104,23 @@ function ApiKeysPanel() {
         getRowId={(r) => r.id}
         isLoading={isLoading}
         isError={isError}
-        emptyMessage="No API keys yet."
+        emptyMessage={t('settings.apiKeys.empty')}
       />
 
       <Dialog open={formOpen} onClose={() => setFormOpen(false)} maxWidth="xs" fullWidth>
-        <DialogTitle>New API Key</DialogTitle>
+        <DialogTitle>{t('settings.apiKeys.form.title')}</DialogTitle>
         <form onSubmit={onSubmit} noValidate>
           <DialogContent>
             <Stack spacing={2} sx={{ mt: 0.5 }}>
               <TextField
-                label="Name"
+                label={t('common.name')}
                 fullWidth
                 {...register('name')}
                 error={!!errors.name}
                 helperText={errors.name?.message}
               />
               <TextField
-                label="Scopes (comma separated)"
+                label={t('settings.apiKeys.form.scopes')}
                 fullWidth
                 placeholder="leads:read, deals:write"
                 {...register('scopes')}
@@ -124,9 +130,9 @@ function ApiKeysPanel() {
             </Stack>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setFormOpen(false)}>Cancel</Button>
+            <Button onClick={() => setFormOpen(false)}>{t('common.cancel')}</Button>
             <Button type="submit" variant="contained" disabled={createApiKey.isPending}>
-              {createApiKey.isPending ? 'Creating…' : 'Create'}
+              {createApiKey.isPending ? t('common.creating') : t('common.create')}
             </Button>
           </DialogActions>
         </form>
@@ -134,9 +140,9 @@ function ApiKeysPanel() {
 
       <ConfirmDialog
         open={!!revokeId}
-        title="Revoke API key?"
-        description="Applications using this key will lose access immediately."
-        confirmLabel="Revoke"
+        title={t('settings.apiKeys.revokeTitle')}
+        description={t('settings.apiKeys.revokeDescription')}
+        confirmLabel={t('common.revoke')}
         loading={revokeApiKey.isPending}
         onClose={() => setRevokeId(null)}
         onConfirm={() => {

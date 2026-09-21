@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -13,30 +14,31 @@ import MenuItem from '@mui/material/MenuItem';
 import { useCreateDeal, usePipelines } from '../../hooks/queries';
 import type { CreateDealPayload } from '../../types';
 
-const schema = yup.object({
-  name: yup.string().required('Name is required'),
-  amount: yup.number().typeError('Must be a number').optional(),
-  currency: yup.string().optional(),
-  accountId: yup.string().optional(),
-  contactId: yup.string().optional(),
-  pipelineId: yup.string().required('Pipeline is required'),
-  stageId: yup.string().required('Stage is required'),
-  ownerId: yup.string().optional(),
-  expectedCloseDate: yup.string().optional(),
-  description: yup.string().optional(),
-});
-
-type DealFormValues = yup.InferType<typeof schema>;
-
 interface DealFormDialogProps {
   open: boolean;
   onClose: () => void;
 }
 
 function DealFormDialog({ open, onClose }: DealFormDialogProps) {
+  const { t } = useTranslation();
   const createDeal = useCreateDeal();
   const { data: pipelines } = usePipelines();
   const [selectedPipelineId, setSelectedPipelineId] = useState('');
+
+  const schema = yup.object({
+    name: yup.string().required(t('deals.validation.nameRequired')),
+    amount: yup.number().typeError(t('deals.validation.amountNumber')).optional(),
+    currency: yup.string().optional(),
+    accountId: yup.string().optional(),
+    contactId: yup.string().optional(),
+    pipelineId: yup.string().required(t('deals.validation.pipelineRequired')),
+    stageId: yup.string().required(t('deals.validation.stageRequired')),
+    ownerId: yup.string().optional(),
+    expectedCloseDate: yup.string().optional(),
+    description: yup.string().optional(),
+  });
+
+  type DealFormValues = yup.InferType<typeof schema>;
 
   const {
     register,
@@ -63,20 +65,20 @@ function DealFormDialog({ open, onClose }: DealFormDialogProps) {
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>New Deal</DialogTitle>
+      <DialogTitle>{t('deals.form.title')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
             <TextField
-              label="Name"
+              label={t('common.name')}
               fullWidth
               {...register('name')}
               error={!!errors.name}
               helperText={errors.name?.message}
             />
             <Stack direction="row" spacing={2}>
-              <TextField label="Amount" type="number" fullWidth {...register('amount')} />
-              <TextField label="Currency" fullWidth {...register('currency')} placeholder="USD" />
+              <TextField label={t('deals.form.amount')} type="number" fullWidth {...register('amount')} />
+              <TextField label={t('deals.form.currency')} fullWidth {...register('currency')} placeholder="USD" />
             </Stack>
             <Controller
               name="pipelineId"
@@ -85,7 +87,7 @@ function DealFormDialog({ open, onClose }: DealFormDialogProps) {
               render={({ field }) => (
                 <TextField
                   select
-                  label="Pipeline"
+                  label={t('deals.form.pipeline')}
                   fullWidth
                   {...field}
                   error={!!errors.pipelineId}
@@ -110,7 +112,7 @@ function DealFormDialog({ open, onClose }: DealFormDialogProps) {
               render={({ field }) => (
                 <TextField
                   select
-                  label="Stage"
+                  label={t('deals.form.stage')}
                   fullWidth
                   disabled={!selectedPipelineId}
                   {...field}
@@ -126,19 +128,19 @@ function DealFormDialog({ open, onClose }: DealFormDialogProps) {
               )}
             />
             <TextField
-              label="Expected close date"
+              label={t('deals.form.expectedCloseDate')}
               type="date"
               fullWidth
               slotProps={{ inputLabel: { shrink: true } }}
               {...register('expectedCloseDate')}
             />
-            <TextField label="Description" fullWidth multiline minRows={2} {...register('description')} />
+            <TextField label={t('common.description')} fullWidth multiline minRows={2} {...register('description')} />
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>{t('common.cancel')}</Button>
           <Button type="submit" variant="contained" disabled={createDeal.isPending}>
-            {createDeal.isPending ? 'Saving…' : 'Create'}
+            {createDeal.isPending ? t('common.saving') : t('common.create')}
           </Button>
         </DialogActions>
       </form>

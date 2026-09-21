@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -21,22 +22,27 @@ import ConfirmDialog from '../../components/common/ConfirmDialog';
 import { useWebhooks, useCreateWebhook, useDeleteWebhook, useUpdateWebhook } from '../../hooks/queries';
 import { WebhookEvent, type CreateWebhookPayload, type Webhook } from '../../types';
 
-const schema = yup.object({
-  url: yup.string().url('Must be a valid URL').required('URL is required'),
-  events: yup.array().of(yup.mixed<WebhookEvent>().oneOf(Object.values(WebhookEvent)).required()).min(1, 'Select at least one event').required(),
-  isActive: yup.boolean().optional(),
-  description: yup.string().optional(),
-});
-
-type WebhookFormValues = yup.InferType<typeof schema>;
-
 function WebhooksPanel() {
+  const { t } = useTranslation();
   const { data: webhooks, isLoading, isError } = useWebhooks();
   const createWebhook = useCreateWebhook();
   const updateWebhook = useUpdateWebhook();
   const deleteWebhook = useDeleteWebhook();
   const [formOpen, setFormOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const schema = yup.object({
+    url: yup.string().url(t('settings.webhooks.validation.urlInvalid')).required(t('settings.webhooks.validation.urlRequired')),
+    events: yup
+      .array()
+      .of(yup.mixed<WebhookEvent>().oneOf(Object.values(WebhookEvent)).required())
+      .min(1, t('settings.webhooks.validation.eventsRequired'))
+      .required(),
+    isActive: yup.boolean().optional(),
+    description: yup.string().optional(),
+  });
+
+  type WebhookFormValues = yup.InferType<typeof schema>;
 
   const {
     register,
@@ -56,11 +62,11 @@ function WebhooksPanel() {
   });
 
   const columns: DataTableColumn<Webhook>[] = [
-    { key: 'url', header: 'URL', render: (r) => r.url },
-    { key: 'events', header: 'Events', render: (r) => r.events.join(', ') },
+    { key: 'url', header: t('settings.webhooks.columns.url'), render: (r) => r.url },
+    { key: 'events', header: t('settings.webhooks.columns.events'), render: (r) => r.events.join(', ') },
     {
       key: 'active',
-      header: 'Active',
+      header: t('settings.webhooks.columns.active'),
       width: 90,
       render: (r) => (
         <Switch
@@ -75,7 +81,7 @@ function WebhooksPanel() {
       header: '',
       width: 60,
       render: (r) => (
-        <Tooltip title="Delete">
+        <Tooltip title={t('common.delete')}>
           <IconButton size="small" onClick={() => setDeleteId(r.id)}>
             <DeleteOutlineIcon fontSize="small" />
           </IconButton>
@@ -88,7 +94,7 @@ function WebhooksPanel() {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={() => setFormOpen(true)}>
-          New Webhook
+          {t('settings.webhooks.new')}
         </Button>
       </Box>
 
@@ -98,16 +104,16 @@ function WebhooksPanel() {
         getRowId={(r) => r.id}
         isLoading={isLoading}
         isError={isError}
-        emptyMessage="No webhooks configured."
+        emptyMessage={t('settings.webhooks.empty')}
       />
 
       <Dialog open={formOpen} onClose={() => setFormOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>New Webhook</DialogTitle>
+        <DialogTitle>{t('settings.webhooks.form.title')}</DialogTitle>
         <form onSubmit={onSubmit} noValidate>
           <DialogContent>
             <Stack spacing={2} sx={{ mt: 0.5 }}>
               <TextField
-                label="URL"
+                label={t('settings.webhooks.form.url')}
                 fullWidth
                 placeholder="https://example.com/webhook"
                 {...register('url')}
@@ -120,7 +126,7 @@ function WebhooksPanel() {
                 render={({ field }) => (
                   <TextField
                     select
-                    label="Events"
+                    label={t('settings.webhooks.form.events')}
                     fullWidth
                     slotProps={{ select: { multiple: true } }}
                     value={field.value ?? []}
@@ -136,13 +142,13 @@ function WebhooksPanel() {
                   </TextField>
                 )}
               />
-              <TextField label="Description" fullWidth multiline minRows={2} {...register('description')} />
+              <TextField label={t('common.description')} fullWidth multiline minRows={2} {...register('description')} />
             </Stack>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setFormOpen(false)}>Cancel</Button>
+            <Button onClick={() => setFormOpen(false)}>{t('common.cancel')}</Button>
             <Button type="submit" variant="contained" disabled={createWebhook.isPending}>
-              {createWebhook.isPending ? 'Creating…' : 'Create'}
+              {createWebhook.isPending ? t('common.creating') : t('common.create')}
             </Button>
           </DialogActions>
         </form>
@@ -150,8 +156,8 @@ function WebhooksPanel() {
 
       <ConfirmDialog
         open={!!deleteId}
-        title="Delete webhook?"
-        description="This action cannot be undone."
+        title={t('settings.webhooks.deleteTitle')}
+        description={t('common.cannotBeUndone')}
         loading={deleteWebhook.isPending}
         onClose={() => setDeleteId(null)}
         onConfirm={() => {

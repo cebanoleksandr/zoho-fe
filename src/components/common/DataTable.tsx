@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -41,16 +42,19 @@ function DataTable<T>({
   getRowId,
   isLoading,
   isError,
-  errorMessage = 'Failed to load data.',
+  errorMessage,
   onRowClick,
-  emptyMessage = 'No records found.',
+  emptyMessage,
   page,
   limit,
   total,
   onPageChange,
   onLimitChange,
 }: DataTableProps<T>) {
+  const { t } = useTranslation();
   const paginated = page !== undefined && limit !== undefined && total !== undefined;
+  const resolvedErrorMessage = errorMessage ?? t('common.errorLoading');
+  const resolvedEmptyMessage = emptyMessage ?? t('common.noRecords');
 
   return (
     <Paper elevation={0} sx={{ border: '1px solid #e5e7eb', borderRadius: 2, overflow: 'hidden' }}>
@@ -80,7 +84,7 @@ function DataTable<T>({
               <TableRow>
                 <TableCell colSpan={columns.length}>
                   <Alert severity="error" sx={{ m: 1 }}>
-                    {errorMessage}
+                    {resolvedErrorMessage}
                   </Alert>
                 </TableCell>
               </TableRow>
@@ -90,7 +94,7 @@ function DataTable<T>({
               <TableRow>
                 <TableCell colSpan={columns.length}>
                   <Typography align="center" color="text.secondary" sx={{ py: 4 }}>
-                    {emptyMessage}
+                    {resolvedEmptyMessage}
                   </Typography>
                 </TableCell>
               </TableRow>

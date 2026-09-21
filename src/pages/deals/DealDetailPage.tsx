@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -26,6 +27,7 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 function DealDetailPage() {
+  const { t } = useTranslation();
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const { data: deal, isLoading, isError } = useDeal(id);
@@ -45,7 +47,7 @@ function DealDetailPage() {
   }
 
   if (isError || !deal) {
-    return <Alert severity="error">Deal not found.</Alert>;
+    return <Alert severity="error">{t('deals.detail.notFound')}</Alert>;
   }
 
   return (
@@ -55,7 +57,7 @@ function DealDetailPage() {
         subtitle={deal.amount != null ? `${deal.amount} ${deal.currency ?? ''}`.trim() : undefined}
         actions={
           <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />
@@ -65,13 +67,13 @@ function DealDetailPage() {
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
               <Grid size={{ xs: 6 }}>
-                <Field label="Expected close date" value={deal.expectedCloseDate ?? '—'} />
+                <Field label={t('deals.detail.expectedCloseDate')} value={deal.expectedCloseDate ?? '—'} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label="Closed at" value={deal.closedAt ?? '—'} />
+                <Field label={t('deals.detail.closedAt')} value={deal.closedAt ?? '—'} />
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <Field label="Description" value={deal.description ?? '—'} />
+                <Field label={t('deals.detail.description')} value={deal.description ?? '—'} />
               </Grid>
             </Grid>
           </Paper>
@@ -80,7 +82,7 @@ function DealDetailPage() {
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Typography variant="caption" color="text.secondary">
-              Stage ({pipeline?.name ?? '—'})
+              {t('deals.detail.stageOf', { pipeline: pipeline?.name ?? '—' })}
             </Typography>
             <Select
               fullWidth
@@ -102,8 +104,8 @@ function DealDetailPage() {
 
       <ConfirmDialog
         open={confirmOpen}
-        title="Delete deal?"
-        description="This action cannot be undone."
+        title={t('deals.detail.deleteTitle')}
+        description={t('common.cannotBeUndone')}
         loading={deleteDeal.isPending}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() =>

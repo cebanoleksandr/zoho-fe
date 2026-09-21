@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -16,6 +17,7 @@ import type { Activity, ActivityStatus } from '../../types';
 import ActivityFormDialog from './ActivityFormDialog';
 
 function ActivitiesListPage() {
+  const { t } = useTranslation();
   const [status, setStatus] = useState<ActivityStatus | 'ALL'>('ALL');
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(25);
@@ -30,11 +32,15 @@ function ActivitiesListPage() {
   const deleteActivity = useDeleteActivity();
 
   const columns: DataTableColumn<Activity>[] = [
-    { key: 'subject', header: 'Subject', render: (r) => r.subject },
-    { key: 'type', header: 'Type', render: (r) => r.type },
-    { key: 'related', header: 'Related To', render: (r) => `${r.entityType} · ${r.entityId.slice(0, 8)}` },
-    { key: 'dueDate', header: 'Due', render: (r) => r.dueDate ?? '—' },
-    { key: 'status', header: 'Status', render: (r) => <StatusChip status={r.status} /> },
+    { key: 'subject', header: t('activities.columns.subject'), render: (r) => r.subject },
+    { key: 'type', header: t('activities.columns.type'), render: (r) => r.type },
+    {
+      key: 'related',
+      header: t('activities.columns.relatedTo'),
+      render: (r) => `${r.entityType} · ${r.entityId.slice(0, 8)}`,
+    },
+    { key: 'dueDate', header: t('activities.columns.due'), render: (r) => r.dueDate ?? '—' },
+    { key: 'status', header: t('activities.columns.status'), render: (r) => <StatusChip status={r.status} /> },
     {
       key: 'actions',
       header: '',
@@ -42,13 +48,13 @@ function ActivitiesListPage() {
       render: (r) => (
         <Box sx={{ display: 'flex', gap: 0.5 }}>
           {r.status !== 'COMPLETED' && (
-            <Tooltip title="Mark complete">
+            <Tooltip title={t('activities.markComplete')}>
               <IconButton size="small" onClick={(e) => { e.stopPropagation(); completeActivity.mutate(r.id); }}>
                 <CheckCircleOutlineIcon fontSize="small" />
               </IconButton>
             </Tooltip>
           )}
-          <Tooltip title="Delete">
+          <Tooltip title={t('common.delete')}>
             <IconButton size="small" onClick={(e) => { e.stopPropagation(); deleteActivity.mutate(r.id); }}>
               <DeleteOutlineIcon fontSize="small" />
             </IconButton>
@@ -61,11 +67,11 @@ function ActivitiesListPage() {
   return (
     <Box>
       <PageHeader
-        title="Activities"
-        subtitle="Calls, meetings, tasks, emails and notes"
+        title={t('activities.title')}
+        subtitle={t('activities.subtitle')}
         actions={
           <Button variant="contained" startIcon={<AddIcon />} onClick={() => setFormOpen(true)}>
-            New Activity
+            {t('activities.new')}
           </Button>
         }
       />
@@ -78,9 +84,9 @@ function ActivitiesListPage() {
         }}
         sx={{ mb: 2 }}
       >
-        <Tab label="All" value="ALL" />
-        <Tab label="Pending" value="PENDING" />
-        <Tab label="Completed" value="COMPLETED" />
+        <Tab label={t('activities.tabs.all')} value="ALL" />
+        <Tab label={t('activities.tabs.pending')} value="PENDING" />
+        <Tab label={t('activities.tabs.completed')} value="COMPLETED" />
       </Tabs>
 
       <DataTable
@@ -89,7 +95,7 @@ function ActivitiesListPage() {
         getRowId={(r) => r.id}
         isLoading={isLoading}
         isError={isError}
-        emptyMessage="No activities found."
+        emptyMessage={t('activities.empty')}
         page={page}
         limit={limit}
         total={data?.total ?? 0}
