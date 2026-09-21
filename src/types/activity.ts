@@ -1,25 +1,26 @@
 import type { BaseEntity, PaginationQuery } from './common';
 
 export const CrmEntityType = {
-  ACCOUNT: 'ACCOUNT',
-  CONTACT: 'CONTACT',
-  DEAL: 'DEAL',
-  LEAD: 'LEAD',
+  ACCOUNT: 'account',
+  CONTACT: 'contact',
+  DEAL: 'deal',
+  LEAD: 'lead',
 } as const;
 export type CrmEntityType = (typeof CrmEntityType)[keyof typeof CrmEntityType];
 
 export const ActivityType = {
-  CALL: 'CALL',
-  MEETING: 'MEETING',
-  TASK: 'TASK',
-  EMAIL: 'EMAIL',
-  NOTE: 'NOTE',
+  CALL: 'call',
+  MEETING: 'meeting',
+  TASK: 'task',
+  EMAIL: 'email',
+  NOTE: 'note',
 } as const;
 export type ActivityType = (typeof ActivityType)[keyof typeof ActivityType];
 
 export const ActivityStatus = {
-  PENDING: 'PENDING',
-  COMPLETED: 'COMPLETED',
+  PENDING: 'pending',
+  COMPLETED: 'completed',
+  CANCELLED: 'cancelled',
 } as const;
 export type ActivityStatus = (typeof ActivityStatus)[keyof typeof ActivityStatus];
 

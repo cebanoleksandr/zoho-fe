@@ -30,7 +30,6 @@ export interface CreateDealPayload {
 export type UpdateDealPayload = Partial<CreateDealPayload>;
 
 export interface QueryDealsParams extends PaginationQuery {
-  search?: string;
   accountId?: string;
   pipelineId?: string;
   stageId?: string;

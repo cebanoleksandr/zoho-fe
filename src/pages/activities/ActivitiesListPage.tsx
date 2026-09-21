@@ -13,7 +13,7 @@ import PageHeader from '../../components/common/PageHeader';
 import DataTable, { type DataTableColumn } from '../../components/common/DataTable';
 import StatusChip from '../../components/common/StatusChip';
 import { useActivities, useCompleteActivity, useDeleteActivity } from '../../hooks/queries';
-import type { Activity, ActivityStatus } from '../../types';
+import { ActivityStatus, type Activity } from '../../types';
 import ActivityFormDialog from './ActivityFormDialog';
 
 function ActivitiesListPage() {
@@ -47,7 +47,7 @@ function ActivitiesListPage() {
       width: 100,
       render: (r) => (
         <Box sx={{ display: 'flex', gap: 0.5 }}>
-          {r.status !== 'COMPLETED' && (
+          {r.status === ActivityStatus.PENDING && (
             <Tooltip title={t('activities.markComplete')}>
               <IconButton size="small" onClick={(e) => { e.stopPropagation(); completeActivity.mutate(r.id); }}>
                 <CheckCircleOutlineIcon fontSize="small" />
@@ -85,8 +85,9 @@ function ActivitiesListPage() {
         sx={{ mb: 2 }}
       >
         <Tab label={t('activities.tabs.all')} value="ALL" />
-        <Tab label={t('activities.tabs.pending')} value="PENDING" />
-        <Tab label={t('activities.tabs.completed')} value="COMPLETED" />
+        <Tab label={t('activities.tabs.pending')} value={ActivityStatus.PENDING} />
+        <Tab label={t('activities.tabs.completed')} value={ActivityStatus.COMPLETED} />
+        <Tab label={t('activities.tabs.cancelled')} value={ActivityStatus.CANCELLED} />
       </Tabs>
 
       <DataTable

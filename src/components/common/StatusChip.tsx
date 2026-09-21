@@ -2,13 +2,14 @@ import Chip from '@mui/material/Chip';
 import type { ChipProps } from '@mui/material/Chip';
 
 const COLOR_MAP: Record<string, ChipProps['color']> = {
-  NEW: 'info',
-  CONTACTED: 'primary',
-  QUALIFIED: 'secondary',
-  UNQUALIFIED: 'default',
-  CONVERTED: 'success',
-  PENDING: 'warning',
-  COMPLETED: 'success',
+  new: 'info',
+  contacted: 'primary',
+  qualified: 'secondary',
+  disqualified: 'default',
+  converted: 'success',
+  pending: 'warning',
+  completed: 'success',
+  cancelled: 'default',
 };
 
 interface StatusChipProps {

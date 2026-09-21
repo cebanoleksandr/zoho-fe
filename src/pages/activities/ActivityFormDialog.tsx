@@ -1,4 +1,4 @@
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, useWatch, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import RecordAutocomplete from '../../components/common/RecordAutocomplete';
 import { useCreateActivity } from '../../hooks/queries';
 import { ActivityType, CrmEntityType, type CreateActivityPayload } from '../../types';
 
@@ -39,8 +40,11 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ActivityFormValues>({ resolver: yupResolver(schema) });
+
+  const entityType = useWatch({ control, name: 'entityType' });
 
   const handleClose = () => {
     reset();
@@ -100,6 +104,10 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
                     value={field.value ?? ''}
                     error={!!errors.entityType}
                     helperText={errors.entityType?.message}
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      setValue('entityId', '');
+                    }}
                   >
                     {Object.values(CrmEntityType).map((ty) => (
                       <MenuItem key={ty} value={ty}>
@@ -109,12 +117,20 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
                   </TextField>
                 )}
               />
-              <TextField
-                label={t('activities.form.recordId')}
-                fullWidth
-                {...register('entityId')}
-                error={!!errors.entityId}
-                helperText={errors.entityId?.message}
+              <Controller
+                name="entityId"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <RecordAutocomplete
+                    entityType={entityType}
+                    value={field.value || null}
+                    onChange={(id) => field.onChange(id ?? '')}
+                    label={t('activities.form.recordId')}
+                    error={!!errors.entityId}
+                    helperText={errors.entityId?.message}
+                  />
+                )}
               />
             </Stack>
             <TextField

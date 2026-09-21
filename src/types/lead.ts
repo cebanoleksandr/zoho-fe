@@ -1,20 +1,21 @@
 import type { BaseEntity, PaginationQuery } from './common';
 
 export const LeadSource = {
-  WEB: 'WEB',
-  REFERRAL: 'REFERRAL',
-  EVENT: 'EVENT',
-  COLD_CALL: 'COLD_CALL',
-  OTHER: 'OTHER',
+  WEB: 'website',
+  REFERRAL: 'referral',
+  EVENT: 'event',
+  COLD_CALL: 'cold_call',
+  ADVERTISEMENT: 'advertisement',
+  OTHER: 'other',
 } as const;
 export type LeadSource = (typeof LeadSource)[keyof typeof LeadSource];
 
 export const LeadStatus = {
-  NEW: 'NEW',
-  CONTACTED: 'CONTACTED',
-  QUALIFIED: 'QUALIFIED',
-  UNQUALIFIED: 'UNQUALIFIED',
-  CONVERTED: 'CONVERTED',
+  NEW: 'new',
+  CONTACTED: 'contacted',
+  QUALIFIED: 'qualified',
+  UNQUALIFIED: 'disqualified',
+  CONVERTED: 'converted',
 } as const;
 export type LeadStatus = (typeof LeadStatus)[keyof typeof LeadStatus];
 
@@ -51,7 +52,6 @@ export interface CreateLeadPayload {
 export type UpdateLeadPayload = Partial<CreateLeadPayload>;
 
 export interface QueryLeadsParams extends PaginationQuery {
-  search?: string;
   status?: LeadStatus;
   ownerId?: string;
 }

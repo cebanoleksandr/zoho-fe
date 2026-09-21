@@ -3,11 +3,12 @@ import { contactsService } from '../../api/services';
 import { queryKeys } from '../../api/queryKeys';
 import type { CreateContactPayload, QueryContactsParams, UpdateContactPayload } from '../../types';
 
-export function useContacts(params?: QueryContactsParams) {
+export function useContacts(params?: QueryContactsParams, enabled = true) {
   return useQuery({
     queryKey: queryKeys.contacts.list(params),
     queryFn: () => contactsService.list(params),
     placeholderData: keepPreviousData,
+    enabled,
   });
 }
 

@@ -9,11 +9,12 @@ import type {
   UpdateLeadStatusPayload,
 } from '../../types';
 
-export function useLeads(params?: QueryLeadsParams) {
+export function useLeads(params?: QueryLeadsParams, enabled = true) {
   return useQuery({
     queryKey: queryKeys.leads.list(params),
     queryFn: () => leadsService.list(params),
     placeholderData: keepPreviousData,
+    enabled,
   });
 }
 

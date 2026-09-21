@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
@@ -12,6 +12,11 @@ import { useDeals, usePipelines } from '../../hooks/queries';
 import type { Deal } from '../../types';
 import DealFormDialog from './DealFormDialog';
 
+// The backend doesn't support a `search` query param for /deals, so when the
+// user types something we fetch a larger batch and filter it client-side
+// instead of paginating server-side.
+const SEARCH_BATCH_SIZE = 100;
+
 function DealsListPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -20,8 +25,19 @@ function DealsListPage() {
   const [limit, setLimit] = useState(25);
   const [formOpen, setFormOpen] = useState(false);
 
-  const { data, isLoading, isError } = useDeals({ search: search || undefined, page: page + 1, limit });
+  const isSearching = search.trim().length > 0;
+
+  const { data, isLoading, isError } = useDeals(
+    isSearching ? { limit: SEARCH_BATCH_SIZE } : { page: page + 1, limit },
+  );
   const { data: pipelines } = usePipelines();
+
+  const rows = useMemo(() => {
+    const all = data?.data ?? [];
+    if (!isSearching) return all;
+    const query = search.trim().toLowerCase();
+    return all.filter((r) => r.name.toLowerCase().includes(query));
+  }, [data, isSearching, search]);
 
   const stageName = (row: Deal) => {
     const pipeline = pipelines?.find((p) => p.id === row.pipelineId);
@@ -64,20 +80,24 @@ function DealsListPage() {
 
       <DataTable
         columns={columns}
-        rows={data?.data ?? []}
+        rows={rows}
         getRowId={(r) => r.id}
         isLoading={isLoading}
         isError={isError}
         onRowClick={(r) => navigate(`/app/deals/${r.id}`)}
         emptyMessage={t('deals.empty')}
-        page={page}
-        limit={limit}
-        total={data?.total ?? 0}
-        onPageChange={setPage}
-        onLimitChange={(l) => {
-          setLimit(l);
-          setPage(0);
-        }}
+        {...(isSearching
+          ? {}
+          : {
+              page,
+              limit,
+              total: data?.total ?? 0,
+              onPageChange: setPage,
+              onLimitChange: (l: number) => {
+                setLimit(l);
+                setPage(0);
+              },
+            })}
       />
 
       <DealFormDialog open={formOpen} onClose={() => setFormOpen(false)} />

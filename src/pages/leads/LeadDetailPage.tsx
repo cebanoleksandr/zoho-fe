@@ -23,7 +23,7 @@ import {
   useDeleteLead,
   useActivities,
 } from '../../hooks/queries';
-import { LeadStatus } from '../../types';
+import { CrmEntityType, LeadStatus } from '../../types';
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
@@ -44,7 +44,7 @@ function LeadDetailPage() {
   const updateStatus = useUpdateLeadStatus();
   const convertLead = useConvertLead();
   const deleteLead = useDeleteLead();
-  const { data: activities } = useActivities({ entityType: 'LEAD', entityId: id });
+  const { data: activities } = useActivities({ entityType: CrmEntityType.LEAD, entityId: id });
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   if (isLoading) {
@@ -66,7 +66,7 @@ function LeadDetailPage() {
         subtitle={lead.company ?? undefined}
         actions={
           <>
-            {lead.status !== 'CONVERTED' && (
+            {lead.status !== LeadStatus.CONVERTED && (
               <Button
                 variant="outlined"
                 startIcon={<SwapHorizIcon />}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
@@ -12,6 +12,11 @@ import { useLeads } from '../../hooks/queries';
 import type { Lead } from '../../types';
 import LeadFormDialog from './LeadFormDialog';
 
+// The backend doesn't support a `search` query param for /leads, so when the
+// user types something we fetch a larger batch and filter it client-side
+// instead of paginating server-side.
+const SEARCH_BATCH_SIZE = 100;
+
 function LeadsListPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -20,7 +25,22 @@ function LeadsListPage() {
   const [limit, setLimit] = useState(25);
   const [formOpen, setFormOpen] = useState(false);
 
-  const { data, isLoading, isError } = useLeads({ search: search || undefined, page: page + 1, limit });
+  const isSearching = search.trim().length > 0;
+
+  const { data, isLoading, isError } = useLeads(
+    isSearching ? { limit: SEARCH_BATCH_SIZE } : { page: page + 1, limit },
+  );
+
+  const rows = useMemo(() => {
+    const all = data?.data ?? [];
+    if (!isSearching) return all;
+    const query = search.trim().toLowerCase();
+    return all.filter((r) =>
+      [r.firstName, r.lastName, r.company, r.email]
+        .filter(Boolean)
+        .some((field) => field!.toLowerCase().includes(query)),
+    );
+  }, [data, isSearching, search]);
 
   const columns: DataTableColumn<Lead>[] = [
     { key: 'name', header: t('leads.columns.name'), render: (r) => `${r.firstName} ${r.lastName}` },
@@ -55,20 +75,24 @@ function LeadsListPage() {
 
       <DataTable
         columns={columns}
-        rows={data?.data ?? []}
+        rows={rows}
         getRowId={(r) => r.id}
         isLoading={isLoading}
         isError={isError}
         onRowClick={(r) => navigate(`/app/leads/${r.id}`)}
         emptyMessage={t('leads.empty')}
-        page={page}
-        limit={limit}
-        total={data?.total ?? 0}
-        onPageChange={setPage}
-        onLimitChange={(l) => {
-          setLimit(l);
-          setPage(0);
-        }}
+        {...(isSearching
+          ? {}
+          : {
+              page,
+              limit,
+              total: data?.total ?? 0,
+              onPageChange: setPage,
+              onLimitChange: (l: number) => {
+                setLimit(l);
+                setPage(0);
+              },
+            })}
       />
 
       <LeadFormDialog open={formOpen} onClose={() => setFormOpen(false)} />

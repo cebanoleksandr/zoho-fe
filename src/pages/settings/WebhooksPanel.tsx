@@ -11,6 +11,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
+import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
@@ -128,7 +131,18 @@ function WebhooksPanel() {
                     select
                     label={t('settings.webhooks.form.events')}
                     fullWidth
-                    slotProps={{ select: { multiple: true } }}
+                    slotProps={{
+                      select: {
+                        multiple: true,
+                        renderValue: (selected) => (
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {(selected as WebhookEvent[]).map((value) => (
+                              <Chip key={value} label={value} size="small" />
+                            ))}
+                          </Box>
+                        ),
+                      },
+                    }}
                     value={field.value ?? []}
                     onChange={field.onChange}
                     error={!!errors.events}
@@ -136,7 +150,8 @@ function WebhooksPanel() {
                   >
                     {Object.values(WebhookEvent).map((ev) => (
                       <MenuItem key={ev} value={ev}>
-                        {ev}
+                        <Checkbox size="small" checked={(field.value ?? []).includes(ev)} />
+                        <ListItemText primary={ev} />
                       </MenuItem>
                     ))}
                   </TextField>

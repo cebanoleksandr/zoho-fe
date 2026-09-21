@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -28,6 +28,7 @@ interface DataTableProps<T> {
   isError?: boolean;
   errorMessage?: string;
   onRowClick?: (row: T) => void;
+  getRowSx?: (row: T) => CSSProperties;
   emptyMessage?: string;
   page?: number;
   limit?: number;
@@ -44,6 +45,7 @@ function DataTable<T>({
   isError,
   errorMessage,
   onRowClick,
+  getRowSx,
   emptyMessage,
   page,
   limit,
@@ -107,7 +109,7 @@ function DataTable<T>({
                   key={getRowId(row)}
                   hover
                   onClick={() => onRowClick?.(row)}
-                  sx={{ cursor: onRowClick ? 'pointer' : 'default' }}
+                  sx={{ cursor: onRowClick ? 'pointer' : 'default', ...getRowSx?.(row) }}
                 >
                   {columns.map((col) => (
                     <TableCell key={col.key}>{col.render(row)}</TableCell>

@@ -7,6 +7,8 @@
     "delete": "Delete",
     "revoke": "Revoke",
     "close": "Close",
+    "copy": "Copy",
+    "copied": "Copied!",
     "search": "Search",
     "actions": "Actions",
     "loading": "Loading…",
@@ -200,7 +202,8 @@
     "tabs": {
       "all": "All",
       "pending": "Pending",
-      "completed": "Completed"
+      "completed": "Completed",
+      "cancelled": "Cancelled"
     },
     "columns": {
       "subject": "Subject",
@@ -241,13 +244,19 @@
     },
     "apiKeys": {
       "new": "New API Key",
-      "newKeyCreated": "New API key created — copy it now, it won't be shown again:",
+      "newKeyTitle": "API key created",
+      "newKeyCreated": "Copy it now — it won't be shown again.",
       "empty": "No API keys yet.",
       "columns": {
         "name": "Name",
         "prefix": "Prefix",
         "scopes": "Scopes",
+        "status": "Status",
         "created": "Created"
+      },
+      "status": {
+        "active": "Active",
+        "revoked": "Revoked"
       },
       "form": {
         "title": "New API Key",

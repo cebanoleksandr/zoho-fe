@@ -3,11 +3,12 @@ import { accountsService } from '../../api/services';
 import { queryKeys } from '../../api/queryKeys';
 import type { CreateAccountPayload, QueryAccountsParams, UpdateAccountPayload } from '../../types';
 
-export function useAccounts(params?: QueryAccountsParams) {
+export function useAccounts(params?: QueryAccountsParams, enabled = true) {
   return useQuery({
     queryKey: queryKeys.accounts.list(params),
     queryFn: () => accountsService.list(params),
     placeholderData: keepPreviousData,
+    enabled,
   });
 }
 

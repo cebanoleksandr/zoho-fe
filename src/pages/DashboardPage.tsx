@@ -9,13 +9,14 @@ import AccountsIcon from '@mui/icons-material/ApartmentOutlined';
 import ActivitiesIcon from '@mui/icons-material/EventNoteOutlined';
 import PageHeader from '../components/common/PageHeader';
 import { useLeads, useDeals, useAccounts, useActivities } from '../hooks/queries';
+import { ActivityStatus } from '../types';
 
 function DashboardPage() {
   const { t } = useTranslation();
   const leads = useLeads({ limit: 1 });
   const deals = useDeals({ limit: 1 });
   const accounts = useAccounts({ limit: 1 });
-  const activities = useActivities({ status: 'PENDING', limit: 1 });
+  const activities = useActivities({ status: ActivityStatus.PENDING, limit: 1 });
 
   const statCards = [
     { key: 'leads', label: t('dashboard.openLeads'), icon: <LeadsIcon />, color: '#dc2626', total: leads.data?.total },

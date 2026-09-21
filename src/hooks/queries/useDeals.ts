@@ -8,11 +8,12 @@ import type {
   UpdateDealStagePayload,
 } from '../../types';
 
-export function useDeals(params?: QueryDealsParams) {
+export function useDeals(params?: QueryDealsParams, enabled = true) {
   return useQuery({
     queryKey: queryKeys.deals.list(params),
     queryFn: () => dealsService.list(params),
     placeholderData: keepPreviousData,
+    enabled,
   });
 }
 

@@ -1,12 +1,12 @@
 import type { BaseEntity } from './common';
 
 export const WebhookEvent = {
-  ACCOUNT_CREATED: 'ACCOUNT_CREATED',
-  CONTACT_CREATED: 'CONTACT_CREATED',
-  DEAL_CREATED: 'DEAL_CREATED',
-  DEAL_STAGE_CHANGED: 'DEAL_STAGE_CHANGED',
-  LEAD_CREATED: 'LEAD_CREATED',
-  LEAD_CONVERTED: 'LEAD_CONVERTED',
+  ACCOUNT_CREATED: 'account.created',
+  CONTACT_CREATED: 'contact.created',
+  DEAL_CREATED: 'deal.created',
+  DEAL_STAGE_CHANGED: 'deal.stage_changed',
+  LEAD_CREATED: 'lead.created',
+  LEAD_CONVERTED: 'lead.converted',
 } as const;
 export type WebhookEvent = (typeof WebhookEvent)[keyof typeof WebhookEvent];
 

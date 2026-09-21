@@ -7,6 +7,8 @@
     "delete": "Usuń",
     "revoke": "Odwołaj",
     "close": "Zamknij",
+    "copy": "Kopiuj",
+    "copied": "Skopiowano!",
     "search": "Szukaj",
     "actions": "Akcje",
     "loading": "Ładowanie…",
@@ -200,7 +202,8 @@
     "tabs": {
       "all": "Wszystkie",
       "pending": "Oczekujące",
-      "completed": "Zakończone"
+      "completed": "Zakończone",
+      "cancelled": "Anulowane"
     },
     "columns": {
       "subject": "Temat",
@@ -241,13 +244,19 @@
     },
     "apiKeys": {
       "new": "Nowy klucz API",
-      "newKeyCreated": "Utworzono nowy klucz API — skopiuj go teraz, nie zostanie ponownie wyświetlony:",
+      "newKeyTitle": "Utworzono klucz API",
+      "newKeyCreated": "Skopiuj go teraz — nie zostanie ponownie wyświetlony.",
       "empty": "Brak kluczy API.",
       "columns": {
         "name": "Nazwa",
         "prefix": "Prefiks",
         "scopes": "Uprawnienia",
+        "status": "Status",
         "created": "Utworzono"
+      },
+      "status": {
+        "active": "Aktywny",
+        "revoked": "Odwołany"
       },
       "form": {
         "title": "Nowy klucz API",

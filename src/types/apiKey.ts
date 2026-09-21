@@ -4,12 +4,14 @@ export interface ApiKey {
   name: string;
   scopes: string[];
   prefix: string;
+  isActive: boolean;
+  lastUsedAt: string | null;
   createdAt: string;
 }
 
 export interface CreateApiKeyPayload {
   name: string;
-  scopes: string[];
+  scopes?: string[];
 }
 
 export interface CreateApiKeyResponse extends ApiKey {
