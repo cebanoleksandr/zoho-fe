@@ -2,6 +2,8 @@
   "common": {
     "cancel": "Cancel",
     "create": "Create",
+    "save": "Save",
+    "edit": "Edit",
     "saving": "Saving…",
     "creating": "Creating…",
     "delete": "Delete",
@@ -81,6 +83,7 @@
     },
     "form": {
       "title": "New Lead",
+      "editTitle": "Edit Lead",
       "company": "Company",
       "source": "Source",
       "notes": "Notes"
@@ -114,6 +117,7 @@
     },
     "form": {
       "title": "New Contact",
+      "editTitle": "Edit Contact",
       "notes": "Notes"
     },
     "detail": {
@@ -141,6 +145,7 @@
     },
     "form": {
       "title": "New Account",
+      "editTitle": "Edit Account",
       "industry": "Industry",
       "website": "Website",
       "billingAddress": "Billing address"
@@ -173,6 +178,7 @@
     },
     "form": {
       "title": "New Deal",
+      "editTitle": "Edit Deal",
       "amount": "Amount",
       "currency": "Currency",
       "pipeline": "Pipeline",
@@ -233,7 +239,31 @@
     "subtitle": "Sales stages used to track deal progress",
     "errorLoading": "Failed to load pipelines.",
     "empty": "No pipelines configured.",
-    "default": "Default"
+    "default": "Default",
+    "new": "New Pipeline",
+    "setDefault": "Set as default",
+    "addStage": "Add stage",
+    "deleteTitle": "Delete pipeline?",
+    "deleteStageTitle": "Delete stage?",
+    "cannotDeleteLast": "The last pipeline in the organization can't be deleted",
+    "form": {
+      "createTitle": "New Pipeline",
+      "editTitle": "Rename Pipeline",
+      "createHint": "A new pipeline starts with a default set of stages (Qualification → Closed Won/Lost) that you can customize afterwards."
+    },
+    "stageForm": {
+      "createTitle": "New Stage",
+      "editTitle": "Edit Stage",
+      "probability": "Win probability (%)",
+      "isWon": "Won",
+      "isLost": "Lost"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "stageNameRequired": "Stage name is required",
+      "probabilityNumber": "Must be a number",
+      "probabilityRange": "Must be between 0 and 100"
+    }
   },
   "settings": {
     "title": "Settings",

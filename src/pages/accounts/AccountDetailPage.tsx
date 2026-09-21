@@ -9,9 +9,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import { useAccount, useDeleteAccount, useContacts, useDeals } from '../../hooks/queries';
+import AccountFormDialog from './AccountFormDialog';
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
@@ -33,6 +35,7 @@ function AccountDetailPage() {
   const { data: deals } = useDeals({ accountId: id });
   const deleteAccount = useDeleteAccount();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -52,9 +55,14 @@ function AccountDetailPage() {
         title={account.name}
         subtitle={account.industry ?? undefined}
         actions={
-          <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
-            {t('common.delete')}
-          </Button>
+          <>
+            <Button variant="outlined" startIcon={<EditOutlinedIcon />} onClick={() => setEditOpen(true)}>
+              {t('common.edit')}
+            </Button>
+            <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
+              {t('common.delete')}
+            </Button>
+          </>
         }
       />
 
@@ -101,6 +109,8 @@ function AccountDetailPage() {
           </Paper>
         </Grid>
       </Grid>
+
+      <AccountFormDialog open={editOpen} account={account} onClose={() => setEditOpen(false)} />
 
       <ConfirmDialog
         open={confirmOpen}

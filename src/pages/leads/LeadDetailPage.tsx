@@ -12,6 +12,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
@@ -24,6 +25,7 @@ import {
   useActivities,
 } from '../../hooks/queries';
 import { CrmEntityType, LeadStatus } from '../../types';
+import LeadFormDialog from './LeadFormDialog';
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
@@ -46,6 +48,7 @@ function LeadDetailPage() {
   const deleteLead = useDeleteLead();
   const { data: activities } = useActivities({ entityType: CrmEntityType.LEAD, entityId: id });
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -76,6 +79,9 @@ function LeadDetailPage() {
                 {t('leads.detail.convert')}
               </Button>
             )}
+            <Button variant="outlined" startIcon={<EditOutlinedIcon />} onClick={() => setEditOpen(true)}>
+              {t('common.edit')}
+            </Button>
             <Button
               variant="outlined"
               color="error"
@@ -154,6 +160,8 @@ function LeadDetailPage() {
           </Paper>
         </Grid>
       </Grid>
+
+      <LeadFormDialog open={editOpen} lead={lead} onClose={() => setEditOpen(false)} />
 
       <ConfirmDialog
         open={confirmOpen}

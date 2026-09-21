@@ -2,6 +2,8 @@
   "common": {
     "cancel": "Cancelar",
     "create": "Crear",
+    "save": "Guardar",
+    "edit": "Editar",
     "saving": "Guardando…",
     "creating": "Creando…",
     "delete": "Eliminar",
@@ -81,6 +83,7 @@
     },
     "form": {
       "title": "Nuevo prospecto",
+      "editTitle": "Editar prospecto",
       "company": "Empresa",
       "source": "Origen",
       "notes": "Notas"
@@ -114,6 +117,7 @@
     },
     "form": {
       "title": "Nuevo contacto",
+      "editTitle": "Editar contacto",
       "notes": "Notas"
     },
     "detail": {
@@ -141,6 +145,7 @@
     },
     "form": {
       "title": "Nueva empresa",
+      "editTitle": "Editar empresa",
       "industry": "Sector",
       "website": "Sitio web",
       "billingAddress": "Dirección de facturación"
@@ -173,6 +178,7 @@
     },
     "form": {
       "title": "Nuevo negocio",
+      "editTitle": "Editar negocio",
       "amount": "Importe",
       "currency": "Moneda",
       "pipeline": "Embudo",
@@ -233,7 +239,31 @@
     "subtitle": "Etapas de venta usadas para seguir el progreso de los negocios",
     "errorLoading": "No se pudieron cargar los embudos.",
     "empty": "No hay embudos configurados.",
-    "default": "Predeterminado"
+    "default": "Predeterminado",
+    "new": "Nuevo embudo",
+    "setDefault": "Marcar como predeterminado",
+    "addStage": "Añadir etapa",
+    "deleteTitle": "¿Eliminar embudo?",
+    "deleteStageTitle": "¿Eliminar etapa?",
+    "cannotDeleteLast": "No se puede eliminar el último embudo de la organización",
+    "form": {
+      "createTitle": "Nuevo embudo",
+      "editTitle": "Renombrar embudo",
+      "createHint": "Un embudo nuevo comienza con un conjunto de etapas predeterminado (Calificación → Cerrado ganado/perdido) que puedes personalizar después."
+    },
+    "stageForm": {
+      "createTitle": "Nueva etapa",
+      "editTitle": "Editar etapa",
+      "probability": "Probabilidad de ganar (%)",
+      "isWon": "Ganada",
+      "isLost": "Perdida"
+    },
+    "validation": {
+      "nameRequired": "El nombre es obligatorio",
+      "stageNameRequired": "El nombre de la etapa es obligatorio",
+      "probabilityNumber": "Debe ser un número",
+      "probabilityRange": "Debe estar entre 0 y 100"
+    }
   },
   "settings": {
     "title": "Configuración",

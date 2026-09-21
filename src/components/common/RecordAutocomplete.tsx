@@ -27,63 +27,66 @@ const CLIENT_FILTER_BATCH_SIZE = 100;
 
 function RecordAutocomplete({ entityType, value, onChange, label, error, helperText }: RecordAutocompleteProps) {
   const { t } = useTranslation();
-  const [inputValue, setInputValue] = useState('');
+  // This only drives the search query — it's intentionally NOT passed back
+  // into Autocomplete's `inputValue` prop. Controlling that prop as well
+  // creates a feedback loop: MUI resets the displayed text via
+  // onInputChange whenever it thinks `value` changed, which updates this
+  // state, which re-renders the component, which (depending on how options
+  // are derived) can make MUI think `value` changed again — infinite loop.
+  // Leaving `inputValue` uncontrolled lets MUI own the displayed text and
+  // sync it internally when `value` changes.
+  const [search, setSearch] = useState('');
 
   const leads = useLeads({ limit: CLIENT_FILTER_BATCH_SIZE }, entityType === CrmEntityType.LEAD);
-  const contacts = useContacts(
-    { search: inputValue || undefined, limit: 20 },
-    entityType === CrmEntityType.CONTACT,
-  );
-  const accounts = useAccounts(
-    { search: inputValue || undefined, limit: 20 },
-    entityType === CrmEntityType.ACCOUNT,
-  );
+  const contacts = useContacts({ search: search || undefined, limit: 20 }, entityType === CrmEntityType.CONTACT);
+  const accounts = useAccounts({ search: search || undefined, limit: 20 }, entityType === CrmEntityType.ACCOUNT);
   const deals = useDeals({ limit: CLIENT_FILTER_BATCH_SIZE }, entityType === CrmEntityType.DEAL);
 
-  const { options, isLoading } = useMemo<{ options: RecordOption[]; isLoading: boolean }>(() => {
-    const query = inputValue.trim().toLowerCase();
+  const { allOptions, isLoading } = useMemo<{ allOptions: RecordOption[]; isLoading: boolean }>(() => {
     switch (entityType) {
       case CrmEntityType.LEAD:
         return {
-          options: (leads.data?.data ?? [])
-            .map((r) => ({
-              id: r.id,
-              label: r.company ? `${r.firstName} ${r.lastName} — ${r.company}` : `${r.firstName} ${r.lastName}`,
-            }))
-            .filter((o) => o.label.toLowerCase().includes(query)),
+          allOptions: (leads.data?.data ?? []).map((r) => ({
+            id: r.id,
+            label: r.company ? `${r.firstName} ${r.lastName} — ${r.company}` : `${r.firstName} ${r.lastName}`,
+          })),
           isLoading: leads.isFetching,
         };
       case CrmEntityType.CONTACT:
         return {
-          options: (contacts.data?.data ?? []).map((r) => ({ id: r.id, label: `${r.firstName} ${r.lastName}` })),
+          allOptions: (contacts.data?.data ?? []).map((r) => ({ id: r.id, label: `${r.firstName} ${r.lastName}` })),
           isLoading: contacts.isFetching,
         };
       case CrmEntityType.ACCOUNT:
         return {
-          options: (accounts.data?.data ?? []).map((r) => ({ id: r.id, label: r.name })),
+          allOptions: (accounts.data?.data ?? []).map((r) => ({ id: r.id, label: r.name })),
           isLoading: accounts.isFetching,
         };
       case CrmEntityType.DEAL:
         return {
-          options: (deals.data?.data ?? [])
-            .map((r) => ({ id: r.id, label: r.name }))
-            .filter((o) => o.label.toLowerCase().includes(query)),
+          allOptions: (deals.data?.data ?? []).map((r) => ({ id: r.id, label: r.name })),
           isLoading: deals.isFetching,
         };
       default:
-        return { options: [], isLoading: false };
+        return { allOptions: [], isLoading: false };
     }
-  }, [entityType, inputValue, leads.data, leads.isFetching, contacts.data, contacts.isFetching, accounts.data, accounts.isFetching, deals.data, deals.isFetching]);
+  }, [entityType, leads.data, leads.isFetching, contacts.data, contacts.isFetching, accounts.data, accounts.isFetching, deals.data, deals.isFetching]);
 
-  const selectedOption = options.find((o) => o.id === value) ?? null;
+  const needsClientFilter = entityType === CrmEntityType.LEAD || entityType === CrmEntityType.DEAL;
+  const options = needsClientFilter
+    ? allOptions.filter((o) => o.label.toLowerCase().includes(search.trim().toLowerCase()))
+    : allOptions;
+
+  const selectedOption = allOptions.find((o) => o.id === value) ?? null;
 
   return (
     <Autocomplete
       fullWidth
       options={options}
       value={selectedOption}
-      inputValue={inputValue}
-      onInputChange={(_e, newInputValue) => setInputValue(newInputValue)}
+      onInputChange={(_e, newValue, reason) => {
+        if (reason === 'input') setSearch(newValue);
+      }}
       onChange={(_e, option) => onChange(option?.id ?? null)}
       getOptionLabel={(option) => option.label}
       isOptionEqualToValue={(option, val) => option.id === val.id}

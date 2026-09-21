@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -9,17 +10,20 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useCreateAccount } from '../../hooks/queries';
-import type { CreateAccountPayload } from '../../types';
+import { useCreateAccount, useUpdateAccount } from '../../hooks/queries';
+import type { Account, CreateAccountPayload } from '../../types';
 
 interface AccountFormDialogProps {
   open: boolean;
+  account?: Account | null;
   onClose: () => void;
 }
 
-function AccountFormDialog({ open, onClose }: AccountFormDialogProps) {
+function AccountFormDialog({ open, account, onClose }: AccountFormDialogProps) {
   const { t } = useTranslation();
   const createAccount = useCreateAccount();
+  const updateAccount = useUpdateAccount();
+  const isEditing = !!account;
 
   const schema = yup.object({
     name: yup.string().required(t('accounts.validation.nameRequired')),
@@ -40,18 +44,37 @@ function AccountFormDialog({ open, onClose }: AccountFormDialogProps) {
     formState: { errors },
   } = useForm<AccountFormValues>({ resolver: yupResolver(schema) });
 
+  useEffect(() => {
+    if (open) {
+      reset({
+        name: account?.name ?? '',
+        industry: account?.industry ?? '',
+        website: account?.website ?? '',
+        phone: account?.phone ?? '',
+        billingAddress: account?.billingAddress ?? '',
+        description: account?.description ?? '',
+      });
+    }
+  }, [open, account, reset]);
+
   const handleClose = () => {
     reset();
     onClose();
   };
 
   const onSubmit = (payload: AccountFormValues) => {
-    createAccount.mutate(payload as CreateAccountPayload, { onSuccess: handleClose });
+    if (isEditing && account) {
+      updateAccount.mutate({ id: account.id, payload }, { onSuccess: handleClose });
+    } else {
+      createAccount.mutate(payload as CreateAccountPayload, { onSuccess: handleClose });
+    }
   };
+
+  const isPending = createAccount.isPending || updateAccount.isPending;
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{t('accounts.form.title')}</DialogTitle>
+      <DialogTitle>{isEditing ? t('accounts.form.editTitle') : t('accounts.form.title')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
@@ -73,8 +96,8 @@ function AccountFormDialog({ open, onClose }: AccountFormDialogProps) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t('common.cancel')}</Button>
-          <Button type="submit" variant="contained" disabled={createAccount.isPending}>
-            {createAccount.isPending ? t('common.saving') : t('common.create')}
+          <Button type="submit" variant="contained" disabled={isPending}>
+            {isPending ? t('common.saving') : isEditing ? t('common.save') : t('common.create')}
           </Button>
         </DialogActions>
       </form>

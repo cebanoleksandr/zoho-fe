@@ -2,6 +2,8 @@
   "common": {
     "cancel": "Anuluj",
     "create": "Utwórz",
+    "save": "Zapisz",
+    "edit": "Edytuj",
     "saving": "Zapisywanie…",
     "creating": "Tworzenie…",
     "delete": "Usuń",
@@ -81,6 +83,7 @@
     },
     "form": {
       "title": "Nowy lead",
+      "editTitle": "Edytuj lead",
       "company": "Firma",
       "source": "Źródło",
       "notes": "Notatki"
@@ -114,6 +117,7 @@
     },
     "form": {
       "title": "Nowy kontakt",
+      "editTitle": "Edytuj kontakt",
       "notes": "Notatki"
     },
     "detail": {
@@ -141,6 +145,7 @@
     },
     "form": {
       "title": "Nowa firma",
+      "editTitle": "Edytuj firmę",
       "industry": "Branża",
       "website": "Strona internetowa",
       "billingAddress": "Adres rozliczeniowy"
@@ -173,6 +178,7 @@
     },
     "form": {
       "title": "Nowa transakcja",
+      "editTitle": "Edytuj transakcję",
       "amount": "Kwota",
       "currency": "Waluta",
       "pipeline": "Lejek sprzedaży",
@@ -233,7 +239,31 @@
     "subtitle": "Etapy sprzedaży używane do śledzenia postępu transakcji",
     "errorLoading": "Nie udało się załadować lejków sprzedaży.",
     "empty": "Nie skonfigurowano żadnych lejków sprzedaży.",
-    "default": "Domyślny"
+    "default": "Domyślny",
+    "new": "Nowy lejek",
+    "setDefault": "Ustaw jako domyślny",
+    "addStage": "Dodaj etap",
+    "deleteTitle": "Usunąć lejek?",
+    "deleteStageTitle": "Usunąć etap?",
+    "cannotDeleteLast": "Nie można usunąć ostatniego lejka w organizacji",
+    "form": {
+      "createTitle": "Nowy lejek",
+      "editTitle": "Zmień nazwę lejka",
+      "createHint": "Nowy lejek zaczyna się od domyślnego zestawu etapów (Kwalifikacja → Zamknięte wygrane/przegrane), które można później dostosować."
+    },
+    "stageForm": {
+      "createTitle": "Nowy etap",
+      "editTitle": "Edytuj etap",
+      "probability": "Prawdopodobieństwo wygranej (%)",
+      "isWon": "Wygrany",
+      "isLost": "Przegrany"
+    },
+    "validation": {
+      "nameRequired": "Nazwa jest wymagana",
+      "stageNameRequired": "Nazwa etapu jest wymagana",
+      "probabilityNumber": "Musi być liczbą",
+      "probabilityRange": "Musi być od 0 do 100"
+    }
   },
   "settings": {
     "title": "Ustawienia",

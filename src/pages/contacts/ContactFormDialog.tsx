@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -9,17 +10,20 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
-import { useCreateContact } from '../../hooks/queries';
-import type { CreateContactPayload } from '../../types';
+import { useCreateContact, useUpdateContact } from '../../hooks/queries';
+import type { Contact, CreateContactPayload } from '../../types';
 
 interface ContactFormDialogProps {
   open: boolean;
+  contact?: Contact | null;
   onClose: () => void;
 }
 
-function ContactFormDialog({ open, onClose }: ContactFormDialogProps) {
+function ContactFormDialog({ open, contact, onClose }: ContactFormDialogProps) {
   const { t } = useTranslation();
   const createContact = useCreateContact();
+  const updateContact = useUpdateContact();
+  const isEditing = !!contact;
 
   const schema = yup.object({
     firstName: yup.string().required(t('contacts.validation.firstNameRequired')),
@@ -41,18 +45,37 @@ function ContactFormDialog({ open, onClose }: ContactFormDialogProps) {
     formState: { errors },
   } = useForm<ContactFormValues>({ resolver: yupResolver(schema) });
 
+  useEffect(() => {
+    if (open) {
+      reset({
+        firstName: contact?.firstName ?? '',
+        lastName: contact?.lastName ?? '',
+        email: contact?.email ?? '',
+        phone: contact?.phone ?? '',
+        title: contact?.title ?? '',
+        notes: contact?.notes ?? '',
+      });
+    }
+  }, [open, contact, reset]);
+
   const handleClose = () => {
     reset();
     onClose();
   };
 
   const onSubmit = (payload: ContactFormValues) => {
-    createContact.mutate(payload as CreateContactPayload, { onSuccess: handleClose });
+    if (isEditing && contact) {
+      updateContact.mutate({ id: contact.id, payload }, { onSuccess: handleClose });
+    } else {
+      createContact.mutate(payload as CreateContactPayload, { onSuccess: handleClose });
+    }
   };
+
+  const isPending = createContact.isPending || updateContact.isPending;
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{t('contacts.form.title')}</DialogTitle>
+      <DialogTitle>{isEditing ? t('contacts.form.editTitle') : t('contacts.form.title')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
@@ -86,8 +109,8 @@ function ContactFormDialog({ open, onClose }: ContactFormDialogProps) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t('common.cancel')}</Button>
-          <Button type="submit" variant="contained" disabled={createContact.isPending}>
-            {createContact.isPending ? t('common.saving') : t('common.create')}
+          <Button type="submit" variant="contained" disabled={isPending}>
+            {isPending ? t('common.saving') : isEditing ? t('common.save') : t('common.create')}
           </Button>
         </DialogActions>
       </form>

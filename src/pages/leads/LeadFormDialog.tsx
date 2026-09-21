@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -10,17 +11,20 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { useCreateLead } from '../../hooks/queries';
-import { LeadSource, LeadStatus, type CreateLeadPayload } from '../../types';
+import { useCreateLead, useUpdateLead } from '../../hooks/queries';
+import { LeadSource, LeadStatus, type CreateLeadPayload, type Lead } from '../../types';
 
 interface LeadFormDialogProps {
   open: boolean;
+  lead?: Lead | null;
   onClose: () => void;
 }
 
-function LeadFormDialog({ open, onClose }: LeadFormDialogProps) {
+function LeadFormDialog({ open, lead, onClose }: LeadFormDialogProps) {
   const { t } = useTranslation();
   const createLead = useCreateLead();
+  const updateLead = useUpdateLead();
+  const isEditing = !!lead;
 
   const schema = yup.object({
     firstName: yup.string().required(t('leads.validation.firstNameRequired')),
@@ -45,18 +49,39 @@ function LeadFormDialog({ open, onClose }: LeadFormDialogProps) {
     formState: { errors },
   } = useForm<LeadFormValues>({ resolver: yupResolver(schema) });
 
+  useEffect(() => {
+    if (open) {
+      reset({
+        firstName: lead?.firstName ?? '',
+        lastName: lead?.lastName ?? '',
+        email: lead?.email ?? '',
+        phone: lead?.phone ?? '',
+        company: lead?.company ?? '',
+        title: lead?.title ?? '',
+        source: lead?.source ?? undefined,
+        notes: lead?.notes ?? '',
+      });
+    }
+  }, [open, lead, reset]);
+
   const handleClose = () => {
     reset();
     onClose();
   };
 
   const onSubmit = (payload: LeadFormValues) => {
-    createLead.mutate(payload as CreateLeadPayload, { onSuccess: handleClose });
+    if (isEditing && lead) {
+      updateLead.mutate({ id: lead.id, payload }, { onSuccess: handleClose });
+    } else {
+      createLead.mutate(payload as CreateLeadPayload, { onSuccess: handleClose });
+    }
   };
+
+  const isPending = createLead.isPending || updateLead.isPending;
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{t('leads.form.title')}</DialogTitle>
+      <DialogTitle>{isEditing ? t('leads.form.editTitle') : t('leads.form.title')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
@@ -108,8 +133,8 @@ function LeadFormDialog({ open, onClose }: LeadFormDialogProps) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t('common.cancel')}</Button>
-          <Button type="submit" variant="contained" disabled={createLead.isPending}>
-            {createLead.isPending ? t('common.saving') : t('common.create')}
+          <Button type="submit" variant="contained" disabled={isPending}>
+            {isPending ? t('common.saving') : isEditing ? t('common.save') : t('common.create')}
           </Button>
         </DialogActions>
       </form>

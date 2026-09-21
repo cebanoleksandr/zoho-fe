@@ -9,9 +9,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import { useContact, useDeleteContact } from '../../hooks/queries';
+import ContactFormDialog from './ContactFormDialog';
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
@@ -31,6 +33,7 @@ function ContactDetailPage() {
   const { data: contact, isLoading, isError } = useContact(id);
   const deleteContact = useDeleteContact();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -50,9 +53,14 @@ function ContactDetailPage() {
         title={`${contact.firstName} ${contact.lastName}`}
         subtitle={contact.title ?? undefined}
         actions={
-          <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
-            {t('common.delete')}
-          </Button>
+          <>
+            <Button variant="outlined" startIcon={<EditOutlinedIcon />} onClick={() => setEditOpen(true)}>
+              {t('common.edit')}
+            </Button>
+            <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
+              {t('common.delete')}
+            </Button>
+          </>
         }
       />
 
@@ -72,6 +80,8 @@ function ContactDetailPage() {
           </Grid>
         </Grid>
       </Paper>
+
+      <ContactFormDialog open={editOpen} contact={contact} onClose={() => setEditOpen(false)} />
 
       <ConfirmDialog
         open={confirmOpen}

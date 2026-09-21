@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useEffect, useMemo } from 'react';
+import { useForm, useWatch, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -11,19 +11,21 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { useCreateDeal, usePipelines } from '../../hooks/queries';
-import type { CreateDealPayload } from '../../types';
+import { useCreateDeal, useUpdateDeal, usePipelines } from '../../hooks/queries';
+import type { CreateDealPayload, Deal } from '../../types';
 
 interface DealFormDialogProps {
   open: boolean;
+  deal?: Deal | null;
   onClose: () => void;
 }
 
-function DealFormDialog({ open, onClose }: DealFormDialogProps) {
+function DealFormDialog({ open, deal, onClose }: DealFormDialogProps) {
   const { t } = useTranslation();
   const createDeal = useCreateDeal();
+  const updateDeal = useUpdateDeal();
   const { data: pipelines } = usePipelines();
-  const [selectedPipelineId, setSelectedPipelineId] = useState('');
+  const isEditing = !!deal;
 
   const schema = yup.object({
     name: yup.string().required(t('deals.validation.nameRequired')),
@@ -48,24 +50,45 @@ function DealFormDialog({ open, onClose }: DealFormDialogProps) {
     formState: { errors },
   } = useForm<DealFormValues>({ resolver: yupResolver(schema) });
 
+  const selectedPipelineId = useWatch({ control, name: 'pipelineId' });
+
   const stages = useMemo(
     () => pipelines?.find((p) => p.id === selectedPipelineId)?.stages ?? [],
     [pipelines, selectedPipelineId],
   );
 
+  useEffect(() => {
+    if (open) {
+      reset({
+        name: deal?.name ?? '',
+        amount: deal?.amount ?? undefined,
+        currency: deal?.currency ?? '',
+        pipelineId: deal?.pipelineId ?? '',
+        stageId: deal?.stageId ?? '',
+        expectedCloseDate: deal?.expectedCloseDate ?? '',
+        description: deal?.description ?? '',
+      });
+    }
+  }, [open, deal, reset]);
+
   const handleClose = () => {
     reset();
-    setSelectedPipelineId('');
     onClose();
   };
 
   const onSubmit = (payload: DealFormValues) => {
-    createDeal.mutate(payload as CreateDealPayload, { onSuccess: handleClose });
+    if (isEditing && deal) {
+      updateDeal.mutate({ id: deal.id, payload }, { onSuccess: handleClose });
+    } else {
+      createDeal.mutate(payload as CreateDealPayload, { onSuccess: handleClose });
+    }
   };
+
+  const isPending = createDeal.isPending || updateDeal.isPending;
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{t('deals.form.title')}</DialogTitle>
+      <DialogTitle>{isEditing ? t('deals.form.editTitle') : t('deals.form.title')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
@@ -92,10 +115,6 @@ function DealFormDialog({ open, onClose }: DealFormDialogProps) {
                   {...field}
                   error={!!errors.pipelineId}
                   helperText={errors.pipelineId?.message}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    setSelectedPipelineId(e.target.value);
-                  }}
                 >
                   {(pipelines ?? []).map((p) => (
                     <MenuItem key={p.id} value={p.id}>
@@ -139,8 +158,8 @@ function DealFormDialog({ open, onClose }: DealFormDialogProps) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t('common.cancel')}</Button>
-          <Button type="submit" variant="contained" disabled={createDeal.isPending}>
-            {createDeal.isPending ? t('common.saving') : t('common.create')}
+          <Button type="submit" variant="contained" disabled={isPending}>
+            {isPending ? t('common.saving') : isEditing ? t('common.save') : t('common.create')}
           </Button>
         </DialogActions>
       </form>
