@@ -324,5 +324,23 @@
     "title": "404",
     "subtitle": "Page not found.",
     "backToDashboard": "Back to Dashboard"
+  },
+  "alerts": {
+    "createSuccess": "{{entity}} created successfully",
+    "updateSuccess": "{{entity}} updated successfully",
+    "deleteSuccess": "{{entity}} deleted successfully",
+    "actionError": "{{message}}"
+  },
+  "entities": {
+    "lead": "Lead",
+    "contact": "Contact",
+    "account": "Account",
+    "deal": "Deal",
+    "activity": "Activity",
+    "pipeline": "Pipeline",
+    "stage": "Stage",
+    "customField": "Custom field",
+    "apiKey": "API key",
+    "webhook": "Webhook"
   }
 }

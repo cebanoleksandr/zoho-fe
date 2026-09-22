@@ -324,5 +324,23 @@
     "title": "404",
     "subtitle": "Nie znaleziono strony.",
     "backToDashboard": "Wróć do pulpitu"
+  },
+  "alerts": {
+    "createSuccess": "{{entity}} zostało utworzone",
+    "updateSuccess": "{{entity}} zostało zaktualizowane",
+    "deleteSuccess": "{{entity}} zostało usunięte",
+    "actionError": "{{message}}"
+  },
+  "entities": {
+    "lead": "Lead",
+    "contact": "Kontakt",
+    "account": "Konto",
+    "deal": "Transakcję",
+    "activity": "Aktywność",
+    "pipeline": "Pipeline",
+    "stage": "Etap",
+    "customField": "Pole niestandardowe",
+    "apiKey": "Klucz API",
+    "webhook": "Webhook"
   }
 }

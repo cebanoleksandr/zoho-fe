@@ -14,7 +14,9 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
+import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import { useDeal, useDeleteDeal, useUpdateDealStage, usePipelines } from '../../hooks/queries';
+import { CrmEntityType } from '../../types';
 import DealFormDialog from './DealFormDialog';
 
 function Field({ label, value }: { label: string; value: string }) {
@@ -85,6 +87,8 @@ function DealDetailPage() {
               </Grid>
             </Grid>
           </Paper>
+
+          <ActivitiesPanel entityType={CrmEntityType.DEAL} entityId={id} />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>

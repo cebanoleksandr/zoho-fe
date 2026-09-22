@@ -24,6 +24,7 @@ export function useCreateAccount() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateAccountPayload) => accountsService.create(payload),
+    meta: { alert: { entity: 'account', action: 'create' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.accounts.lists() });
     },
@@ -35,6 +36,7 @@ export function useUpdateAccount() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateAccountPayload }) =>
       accountsService.update(id, payload),
+    meta: { alert: { entity: 'account', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.accounts.detail(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.accounts.lists() });
@@ -46,6 +48,7 @@ export function useDeleteAccount() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => accountsService.remove(id),
+    meta: { alert: { entity: 'account', action: 'delete' } },
     onSuccess: (_data, id) => {
       queryClient.removeQueries({ queryKey: queryKeys.accounts.detail(id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.accounts.lists() });

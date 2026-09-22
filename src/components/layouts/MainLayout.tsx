@@ -26,6 +26,7 @@ import LogoutIcon from '@mui/icons-material/LogoutOutlined';
 import { useLogout } from '../../hooks/queries';
 import { tokenStorage } from '../../api/client';
 import LanguageSwitcher from '../common/LanguageSwitcher';
+import CustomAlert from '../common/CustomAlert';
 
 const DRAWER_WIDTH = 240;
 
@@ -119,6 +120,8 @@ function MainLayout() {
           <Outlet />
         </Box>
       </Box>
+
+      <CustomAlert />
     </Box>
   );
 }

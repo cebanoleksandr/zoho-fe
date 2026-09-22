@@ -324,5 +324,23 @@
     "title": "404",
     "subtitle": "Сторінку не знайдено.",
     "backToDashboard": "На головну"
+  },
+  "alerts": {
+    "createSuccess": "{{entity}} успішно створено",
+    "updateSuccess": "{{entity}} успішно оновлено",
+    "deleteSuccess": "{{entity}} успішно видалено",
+    "actionError": "{{message}}"
+  },
+  "entities": {
+    "lead": "Лід",
+    "contact": "Контакт",
+    "account": "Компанію",
+    "deal": "Угоду",
+    "activity": "Активність",
+    "pipeline": "Воронку",
+    "stage": "Етап",
+    "customField": "Кастомне поле",
+    "apiKey": "API-ключ",
+    "webhook": "Вебхук"
   }
 }

@@ -12,7 +12,9 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
+import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import { useContact, useDeleteContact } from '../../hooks/queries';
+import { CrmEntityType } from '../../types';
 import ContactFormDialog from './ContactFormDialog';
 
 function Field({ label, value }: { label: string; value: string }) {
@@ -80,6 +82,8 @@ function ContactDetailPage() {
           </Grid>
         </Grid>
       </Paper>
+
+      <ActivitiesPanel entityType={CrmEntityType.CONTACT} entityId={id} />
 
       <ContactFormDialog open={editOpen} contact={contact} onClose={() => setEditOpen(false)} />
 

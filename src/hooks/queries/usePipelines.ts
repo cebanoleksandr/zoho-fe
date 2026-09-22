@@ -28,6 +28,7 @@ export function useCreatePipeline() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreatePipelinePayload) => pipelinesService.create(payload),
+    meta: { alert: { entity: 'pipeline', action: 'create' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.lists() });
     },
@@ -39,6 +40,7 @@ export function useUpdatePipeline() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdatePipelinePayload }) =>
       pipelinesService.update(id, payload),
+    meta: { alert: { entity: 'pipeline', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.pipelines.detail(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.lists() });
@@ -50,6 +52,7 @@ export function useDeletePipeline() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => pipelinesService.remove(id),
+    meta: { alert: { entity: 'pipeline', action: 'delete' } },
     onSuccess: (_data, id) => {
       queryClient.removeQueries({ queryKey: queryKeys.pipelines.detail(id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.lists() });
@@ -62,6 +65,7 @@ export function useAddStage() {
   return useMutation({
     mutationFn: ({ pipelineId, payload }: { pipelineId: string; payload: CreateStagePayload }) =>
       pipelinesService.addStage(pipelineId, payload),
+    meta: { alert: { entity: 'stage', action: 'create' } },
     onSuccess: (_data, { pipelineId }) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.detail(pipelineId) });
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.lists() });
@@ -81,6 +85,7 @@ export function useUpdateStage() {
       stageId: string;
       payload: UpdateStagePayload;
     }) => pipelinesService.updateStage(pipelineId, stageId, payload),
+    meta: { alert: { entity: 'stage', action: 'update' } },
     onSuccess: (_data, { pipelineId }) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.detail(pipelineId) });
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.lists() });
@@ -93,6 +98,7 @@ export function useRemoveStage() {
   return useMutation({
     mutationFn: ({ pipelineId, stageId }: { pipelineId: string; stageId: string }) =>
       pipelinesService.removeStage(pipelineId, stageId),
+    meta: { alert: { entity: 'stage', action: 'delete' } },
     onSuccess: (_data, { pipelineId }) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.detail(pipelineId) });
       queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.lists() });

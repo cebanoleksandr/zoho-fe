@@ -36,6 +36,7 @@ export function useCreateCustomFieldDefinition() {
   return useMutation({
     mutationFn: (payload: CreateCustomFieldDefinitionPayload) =>
       customFieldsService.createDefinition(payload),
+    meta: { alert: { entity: 'customField', action: 'create' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.customFields.all });
     },
@@ -47,6 +48,7 @@ export function useUpdateCustomFieldDefinition() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateCustomFieldDefinitionPayload }) =>
       customFieldsService.updateDefinition(id, payload),
+    meta: { alert: { entity: 'customField', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.customFields.definition(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.customFields.all });
@@ -58,6 +60,7 @@ export function useDeleteCustomFieldDefinition() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => customFieldsService.removeDefinition(id),
+    meta: { alert: { entity: 'customField', action: 'delete' } },
     onSuccess: (_data, id) => {
       queryClient.removeQueries({ queryKey: queryKeys.customFields.definition(id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.customFields.all });

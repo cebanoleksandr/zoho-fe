@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,13 +15,12 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
-import StatusChip from '../../components/common/StatusChip';
+import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import {
   useLead,
   useUpdateLeadStatus,
   useConvertLead,
   useDeleteLead,
-  useActivities,
 } from '../../hooks/queries';
 import { CrmEntityType, LeadStatus } from '../../types';
 import LeadFormDialog from './LeadFormDialog';
@@ -46,7 +44,6 @@ function LeadDetailPage() {
   const updateStatus = useUpdateLeadStatus();
   const convertLead = useConvertLead();
   const deleteLead = useDeleteLead();
-  const { data: activities } = useActivities({ entityType: CrmEntityType.LEAD, entityId: id });
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
@@ -116,26 +113,7 @@ function LeadDetailPage() {
             </Grid>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2, mt: 2 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-              {t('leads.detail.activities')}
-            </Typography>
-            <Stack spacing={1}>
-              {(activities?.data ?? []).length === 0 && (
-                <Typography variant="body2" color="text.secondary">
-                  {t('leads.detail.noActivities')}
-                </Typography>
-              )}
-              {activities?.data.map((a) => (
-                <Box key={a.id} sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                  <Typography variant="body2">
-                    {a.type} — {a.subject}
-                  </Typography>
-                  <StatusChip status={a.status} />
-                </Box>
-              ))}
-            </Stack>
-          </Paper>
+          <ActivitiesPanel entityType={CrmEntityType.LEAD} entityId={id} />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>

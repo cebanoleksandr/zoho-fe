@@ -23,6 +23,7 @@ export function useCreateActivity() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateActivityPayload) => activitiesService.create(payload),
+    meta: { alert: { entity: 'activity', action: 'create' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.activities.lists() });
     },
@@ -34,6 +35,7 @@ export function useUpdateActivity() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateActivityPayload }) =>
       activitiesService.update(id, payload),
+    meta: { alert: { entity: 'activity', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.activities.detail(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.activities.lists() });
@@ -56,6 +58,7 @@ export function useDeleteActivity() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => activitiesService.remove(id),
+    meta: { alert: { entity: 'activity', action: 'delete' } },
     onSuccess: (_data, id) => {
       queryClient.removeQueries({ queryKey: queryKeys.activities.detail(id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.activities.lists() });

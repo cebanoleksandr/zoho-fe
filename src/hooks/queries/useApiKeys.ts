@@ -14,6 +14,7 @@ export function useCreateApiKey() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateApiKeyPayload) => apiKeysService.create(payload),
+    meta: { alert: { entity: 'apiKey', action: 'create' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.lists() });
     },
@@ -24,6 +25,7 @@ export function useRevokeApiKey() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => apiKeysService.revoke(id),
+    meta: { alert: { entity: 'apiKey', action: 'delete' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.apiKeys.lists() });
     },

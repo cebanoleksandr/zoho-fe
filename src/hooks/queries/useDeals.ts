@@ -29,6 +29,7 @@ export function useCreateDeal() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateDealPayload) => dealsService.create(payload),
+    meta: { alert: { entity: 'deal', action: 'create' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.deals.lists() });
     },
@@ -40,6 +41,7 @@ export function useUpdateDeal() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateDealPayload }) =>
       dealsService.update(id, payload),
+    meta: { alert: { entity: 'deal', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.deals.detail(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.deals.lists() });
@@ -52,6 +54,7 @@ export function useUpdateDealStage() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateDealStagePayload }) =>
       dealsService.updateStage(id, payload),
+    meta: { alert: { entity: 'deal', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.deals.detail(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.deals.lists() });
@@ -63,6 +66,7 @@ export function useDeleteDeal() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => dealsService.remove(id),
+    meta: { alert: { entity: 'deal', action: 'delete' } },
     onSuccess: (_data, id) => {
       queryClient.removeQueries({ queryKey: queryKeys.deals.detail(id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.deals.lists() });

@@ -324,5 +324,23 @@
     "title": "404",
     "subtitle": "Página no encontrada.",
     "backToDashboard": "Volver al panel"
+  },
+  "alerts": {
+    "createSuccess": "{{entity}} creado correctamente",
+    "updateSuccess": "{{entity}} actualizado correctamente",
+    "deleteSuccess": "{{entity}} eliminado correctamente",
+    "actionError": "{{message}}"
+  },
+  "entities": {
+    "lead": "Lead",
+    "contact": "Contacto",
+    "account": "Cuenta",
+    "deal": "Negocio",
+    "activity": "Actividad",
+    "pipeline": "Pipeline",
+    "stage": "Etapa",
+    "customField": "Campo personalizado",
+    "apiKey": "Clave API",
+    "webhook": "Webhook"
   }
 }

@@ -17,11 +17,14 @@ import { ActivityType, CrmEntityType, type CreateActivityPayload } from '../../t
 interface ActivityFormDialogProps {
   open: boolean;
   onClose: () => void;
+  defaultEntityType?: CrmEntityType;
+  defaultEntityId?: string;
 }
 
-function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
+function ActivityFormDialog({ open, onClose, defaultEntityType, defaultEntityId }: ActivityFormDialogProps) {
   const { t } = useTranslation();
   const createActivity = useCreateActivity();
+  const lockedToEntity = !!defaultEntityType && !!defaultEntityId;
 
   const schema = yup.object({
     entityType: yup.mixed<CrmEntityType>().oneOf(Object.values(CrmEntityType)).required(t('activities.validation.entityTypeRequired')),
@@ -42,7 +45,10 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
     reset,
     setValue,
     formState: { errors },
-  } = useForm<ActivityFormValues>({ resolver: yupResolver(schema) });
+  } = useForm<ActivityFormValues>({
+    resolver: yupResolver(schema),
+    values: lockedToEntity ? { entityType: defaultEntityType, entityId: defaultEntityId } as ActivityFormValues : undefined,
+  });
 
   const entityType = useWatch({ control, name: 'entityType' });
 
@@ -90,49 +96,51 @@ function ActivityFormDialog({ open, onClose }: ActivityFormDialogProps) {
                 </TextField>
               )}
             />
-            <Stack direction="row" spacing={2}>
-              <Controller
-                name="entityType"
-                control={control}
-                defaultValue={undefined}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    label={t('activities.form.relatedTo')}
-                    fullWidth
-                    {...field}
-                    value={field.value ?? ''}
-                    error={!!errors.entityType}
-                    helperText={errors.entityType?.message}
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                      setValue('entityId', '');
-                    }}
-                  >
-                    {Object.values(CrmEntityType).map((ty) => (
-                      <MenuItem key={ty} value={ty}>
-                        {ty}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-              <Controller
-                name="entityId"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <RecordAutocomplete
-                    entityType={entityType}
-                    value={field.value || null}
-                    onChange={(id) => field.onChange(id ?? '')}
-                    label={t('activities.form.recordId')}
-                    error={!!errors.entityId}
-                    helperText={errors.entityId?.message}
-                  />
-                )}
-              />
-            </Stack>
+            {!lockedToEntity && (
+              <Stack direction="row" spacing={2}>
+                <Controller
+                  name="entityType"
+                  control={control}
+                  defaultValue={undefined}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      label={t('activities.form.relatedTo')}
+                      fullWidth
+                      {...field}
+                      value={field.value ?? ''}
+                      error={!!errors.entityType}
+                      helperText={errors.entityType?.message}
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                        setValue('entityId', '');
+                      }}
+                    >
+                      {Object.values(CrmEntityType).map((ty) => (
+                        <MenuItem key={ty} value={ty}>
+                          {ty}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+                <Controller
+                  name="entityId"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <RecordAutocomplete
+                      entityType={entityType}
+                      value={field.value || null}
+                      onChange={(id) => field.onChange(id ?? '')}
+                      label={t('activities.form.recordId')}
+                      error={!!errors.entityId}
+                      helperText={errors.entityId?.message}
+                    />
+                  )}
+                />
+              </Stack>
+            )}
             <TextField
               label={t('activities.form.dueDate')}
               type="date"

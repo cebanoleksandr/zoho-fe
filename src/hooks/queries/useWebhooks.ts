@@ -30,6 +30,7 @@ export function useCreateWebhook() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateWebhookPayload) => webhooksService.create(payload),
+    meta: { alert: { entity: 'webhook', action: 'create' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.webhooks.lists() });
     },
@@ -41,6 +42,7 @@ export function useUpdateWebhook() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateWebhookPayload }) =>
       webhooksService.update(id, payload),
+    meta: { alert: { entity: 'webhook', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.webhooks.detail(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.webhooks.lists() });
@@ -52,6 +54,7 @@ export function useDeleteWebhook() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => webhooksService.remove(id),
+    meta: { alert: { entity: 'webhook', action: 'delete' } },
     onSuccess: (_data, id) => {
       queryClient.removeQueries({ queryKey: queryKeys.webhooks.detail(id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.webhooks.lists() });

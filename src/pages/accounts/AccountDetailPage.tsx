@@ -12,7 +12,9 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
+import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import { useAccount, useDeleteAccount, useContacts, useDeals } from '../../hooks/queries';
+import { CrmEntityType } from '../../types';
 import AccountFormDialog from './AccountFormDialog';
 
 function Field({ label, value }: { label: string; value: string }) {
@@ -84,6 +86,8 @@ function AccountDetailPage() {
               </Grid>
             </Grid>
           </Paper>
+
+          <ActivitiesPanel entityType={CrmEntityType.ACCOUNT} entityId={id} />
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>

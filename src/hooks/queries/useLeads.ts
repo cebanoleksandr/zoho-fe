@@ -30,6 +30,7 @@ export function useCreateLead() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateLeadPayload) => leadsService.create(payload),
+    meta: { alert: { entity: 'lead', action: 'create' } },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.leads.lists() });
     },
@@ -41,6 +42,7 @@ export function useUpdateLead() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateLeadPayload }) =>
       leadsService.update(id, payload),
+    meta: { alert: { entity: 'lead', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.leads.detail(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.leads.lists() });
@@ -53,6 +55,7 @@ export function useUpdateLeadStatus() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateLeadStatusPayload }) =>
       leadsService.updateStatus(id, payload),
+    meta: { alert: { entity: 'lead', action: 'update' } },
     onSuccess: (data, { id }) => {
       queryClient.setQueryData(queryKeys.leads.detail(id), data);
       queryClient.invalidateQueries({ queryKey: queryKeys.leads.lists() });
@@ -79,6 +82,7 @@ export function useDeleteLead() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => leadsService.remove(id),
+    meta: { alert: { entity: 'lead', action: 'delete' } },
     onSuccess: (_data, id) => {
       queryClient.removeQueries({ queryKey: queryKeys.leads.detail(id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.leads.lists() });
