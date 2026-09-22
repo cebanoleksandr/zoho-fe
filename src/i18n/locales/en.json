@@ -17,6 +17,9 @@
     "errorLoading": "Failed to load data.",
     "noRecords": "No records found.",
     "cannotBeUndone": "This action cannot be undone.",
+    "all": "All",
+    "yes": "Yes",
+    "no": "No",
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
@@ -274,7 +277,8 @@
     "subtitle": "Manage API access and integrations",
     "tabs": {
       "apiKeys": "API Keys",
-      "webhooks": "Webhooks"
+      "webhooks": "Webhooks",
+      "customFields": "Custom Fields"
     },
     "apiKeys": {
       "new": "New API Key",
@@ -322,7 +326,42 @@
         "urlRequired": "URL is required",
         "eventsRequired": "Select at least one event"
       }
+    },
+    "customFields": {
+      "new": "New Field",
+      "empty": "No custom fields defined yet.",
+      "filterEntity": "Entity",
+      "deleteTitle": "Delete custom field?",
+      "columns": {
+        "label": "Label",
+        "fieldKey": "Field key",
+        "entityType": "Entity",
+        "fieldType": "Type",
+        "required": "Required"
+      },
+      "form": {
+        "title": "New Custom Field",
+        "editTitle": "Edit Custom Field",
+        "entityType": "Entity",
+        "fieldKey": "Field key",
+        "label": "Label",
+        "fieldType": "Field type",
+        "options": "Options",
+        "optionsHelper": "Comma-separated list of options",
+        "required": "Required field",
+        "lockedNotice": "Entity & key locked"
+      },
+      "validation": {
+        "entityTypeRequired": "Entity is required",
+        "fieldKeyRequired": "Field key is required",
+        "fieldKeyFormat": "Lowercase letters, numbers and underscores only, starting with a letter",
+        "labelRequired": "Label is required",
+        "fieldTypeRequired": "Field type is required"
+      }
     }
+  },
+  "customFields": {
+    "title": "Custom Fields"
   },
   "notFound": {
     "title": "404",

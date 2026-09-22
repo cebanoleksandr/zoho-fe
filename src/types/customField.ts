@@ -1,11 +1,11 @@
 import { CrmEntityType } from './activity';
 
 export const CustomFieldType = {
-  TEXT: 'TEXT',
-  NUMBER: 'NUMBER',
-  DATE: 'DATE',
-  BOOLEAN: 'BOOLEAN',
-  SELECT: 'SELECT',
+  TEXT: 'text',
+  NUMBER: 'number',
+  DATE: 'date',
+  BOOLEAN: 'boolean',
+  SELECT: 'select',
 } as const;
 export type CustomFieldType = (typeof CustomFieldType)[keyof typeof CustomFieldType];
 
@@ -33,15 +33,14 @@ export interface CreateCustomFieldDefinitionPayload {
 
 export type UpdateCustomFieldDefinitionPayload = Partial<CreateCustomFieldDefinitionPayload>;
 
-export interface CustomFieldValue {
-  fieldKey: string;
-  value: unknown;
-}
+export type CustomFieldValueType = string | number | boolean | null;
+
+export type CustomFieldValueMap = Record<string, CustomFieldValueType>;
 
 export interface SetCustomFieldValuesPayload {
   entityType: CrmEntityType;
   entityId: string;
-  values: CustomFieldValue[];
+  values: CustomFieldValueMap;
 }
 
 export { CrmEntityType };

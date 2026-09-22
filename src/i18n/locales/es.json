@@ -17,6 +17,9 @@
     "errorLoading": "No se pudieron cargar los datos.",
     "noRecords": "No se encontraron registros.",
     "cannotBeUndone": "Esta acción no se puede deshacer.",
+    "all": "Todos",
+    "yes": "Sí",
+    "no": "No",
     "name": "Nombre",
     "email": "Correo electrónico",
     "phone": "Teléfono",
@@ -274,7 +277,8 @@
     "subtitle": "Gestiona el acceso a la API y las integraciones",
     "tabs": {
       "apiKeys": "Claves API",
-      "webhooks": "Webhooks"
+      "webhooks": "Webhooks",
+      "customFields": "Campos personalizados"
     },
     "apiKeys": {
       "new": "Nueva clave API",
@@ -322,7 +326,42 @@
         "urlRequired": "La URL es obligatoria",
         "eventsRequired": "Selecciona al menos un evento"
       }
+    },
+    "customFields": {
+      "new": "Nuevo campo",
+      "empty": "Aún no hay campos personalizados definidos.",
+      "filterEntity": "Entidad",
+      "deleteTitle": "¿Eliminar campo personalizado?",
+      "columns": {
+        "label": "Etiqueta",
+        "fieldKey": "Clave del campo",
+        "entityType": "Entidad",
+        "fieldType": "Tipo",
+        "required": "Obligatorio"
+      },
+      "form": {
+        "title": "Nuevo campo personalizado",
+        "editTitle": "Editar campo personalizado",
+        "entityType": "Entidad",
+        "fieldKey": "Clave del campo",
+        "label": "Etiqueta",
+        "fieldType": "Tipo de campo",
+        "options": "Opciones",
+        "optionsHelper": "Lista de opciones separadas por comas",
+        "required": "Campo obligatorio",
+        "lockedNotice": "Entidad y clave bloqueadas"
+      },
+      "validation": {
+        "entityTypeRequired": "La entidad es obligatoria",
+        "fieldKeyRequired": "La clave del campo es obligatoria",
+        "fieldKeyFormat": "Solo minúsculas, números y guiones bajos, comenzando con una letra",
+        "labelRequired": "La etiqueta es obligatoria",
+        "fieldTypeRequired": "El tipo de campo es obligatorio"
+      }
     }
+  },
+  "customFields": {
+    "title": "Campos personalizados"
   },
   "notFound": {
     "title": "404",

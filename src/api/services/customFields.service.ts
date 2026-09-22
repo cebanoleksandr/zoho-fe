@@ -3,7 +3,7 @@ import type {
   CreateCustomFieldDefinitionPayload,
   CrmEntityType,
   CustomFieldDefinition,
-  CustomFieldValue,
+  CustomFieldValueMap,
   SetCustomFieldValuesPayload,
   UpdateCustomFieldDefinitionPayload,
 } from '../../types';
@@ -46,15 +46,15 @@ export const customFieldsService = {
     await apiClient.delete(`/custom-fields/definitions/${id}`);
   },
 
-  async getValues(entityType: CrmEntityType, entityId: string): Promise<CustomFieldValue[]> {
-    const { data } = await apiClient.get<CustomFieldValue[]>('/custom-fields/values', {
+  async getValues(entityType: CrmEntityType, entityId: string): Promise<CustomFieldValueMap> {
+    const { data } = await apiClient.get<CustomFieldValueMap>('/custom-fields/values', {
       params: { entityType, entityId },
     });
     return data;
   },
 
-  async setValues(payload: SetCustomFieldValuesPayload): Promise<CustomFieldValue[]> {
-    const { data } = await apiClient.put<CustomFieldValue[]>('/custom-fields/values', payload);
+  async setValues(payload: SetCustomFieldValuesPayload): Promise<CustomFieldValueMap> {
+    const { data } = await apiClient.put<CustomFieldValueMap>('/custom-fields/values', payload);
     return data;
   },
 };

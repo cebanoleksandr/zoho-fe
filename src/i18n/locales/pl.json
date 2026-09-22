@@ -17,6 +17,9 @@
     "errorLoading": "Nie udało się załadować danych.",
     "noRecords": "Nie znaleziono rekordów.",
     "cannotBeUndone": "Tej czynności nie można cofnąć.",
+    "all": "Wszystkie",
+    "yes": "Tak",
+    "no": "Nie",
     "name": "Nazwa",
     "email": "Email",
     "phone": "Telefon",
@@ -274,7 +277,8 @@
     "subtitle": "Zarządzaj dostępem do API i integracjami",
     "tabs": {
       "apiKeys": "Klucze API",
-      "webhooks": "Webhooki"
+      "webhooks": "Webhooki",
+      "customFields": "Pola niestandardowe"
     },
     "apiKeys": {
       "new": "Nowy klucz API",
@@ -322,7 +326,42 @@
         "urlRequired": "URL jest wymagany",
         "eventsRequired": "Wybierz co najmniej jedno zdarzenie"
       }
+    },
+    "customFields": {
+      "new": "Nowe pole",
+      "empty": "Nie zdefiniowano jeszcze żadnych pól niestandardowych.",
+      "filterEntity": "Encja",
+      "deleteTitle": "Usunąć pole niestandardowe?",
+      "columns": {
+        "label": "Etykieta",
+        "fieldKey": "Klucz pola",
+        "entityType": "Encja",
+        "fieldType": "Typ",
+        "required": "Wymagane"
+      },
+      "form": {
+        "title": "Nowe pole niestandardowe",
+        "editTitle": "Edytuj pole niestandardowe",
+        "entityType": "Encja",
+        "fieldKey": "Klucz pola",
+        "label": "Etykieta",
+        "fieldType": "Typ pola",
+        "options": "Opcje",
+        "optionsHelper": "Lista opcji oddzielona przecinkami",
+        "required": "Pole wymagane",
+        "lockedNotice": "Encja i klucz zablokowane"
+      },
+      "validation": {
+        "entityTypeRequired": "Encja jest wymagana",
+        "fieldKeyRequired": "Klucz pola jest wymagany",
+        "fieldKeyFormat": "Tylko małe litery, cyfry i podkreślenia, zaczynając od litery",
+        "labelRequired": "Etykieta jest wymagana",
+        "fieldTypeRequired": "Typ pola jest wymagany"
+      }
     }
+  },
+  "customFields": {
+    "title": "Pola niestandardowe"
   },
   "notFound": {
     "title": "404",

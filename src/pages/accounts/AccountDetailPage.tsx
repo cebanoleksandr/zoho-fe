@@ -13,6 +13,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import ActivitiesPanel from '../../components/common/ActivitiesPanel';
+import CustomFieldsSection from '../../components/common/CustomFieldsSection';
 import { useAccount, useDeleteAccount, useContacts, useDeals } from '../../hooks/queries';
 import { CrmEntityType } from '../../types';
 import AccountFormDialog from './AccountFormDialog';
@@ -86,6 +87,8 @@ function AccountDetailPage() {
               </Grid>
             </Grid>
           </Paper>
+
+          <CustomFieldsSection entityType={CrmEntityType.ACCOUNT} entityId={id} />
 
           <ActivitiesPanel entityType={CrmEntityType.ACCOUNT} entityId={id} />
         </Grid>

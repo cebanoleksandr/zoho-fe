@@ -16,6 +16,7 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import ActivitiesPanel from '../../components/common/ActivitiesPanel';
+import CustomFieldsSection from '../../components/common/CustomFieldsSection';
 import {
   useLead,
   useUpdateLeadStatus,
@@ -113,6 +114,8 @@ function LeadDetailPage() {
               </Grid>
             </Grid>
           </Paper>
+
+          <CustomFieldsSection entityType={CrmEntityType.LEAD} entityId={id} />
 
           <ActivitiesPanel entityType={CrmEntityType.LEAD} entityId={id} />
         </Grid>

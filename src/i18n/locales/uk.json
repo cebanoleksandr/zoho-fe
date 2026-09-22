@@ -17,6 +17,9 @@
     "errorLoading": "Не вдалося завантажити дані.",
     "noRecords": "Записів не знайдено.",
     "cannotBeUndone": "Цю дію неможливо скасувати.",
+    "all": "Усі",
+    "yes": "Так",
+    "no": "Ні",
     "name": "Назва",
     "email": "Email",
     "phone": "Телефон",
@@ -274,7 +277,8 @@
     "subtitle": "Керування доступом до API та інтеграціями",
     "tabs": {
       "apiKeys": "API-ключі",
-      "webhooks": "Вебхуки"
+      "webhooks": "Вебхуки",
+      "customFields": "Користувацькі поля"
     },
     "apiKeys": {
       "new": "Новий API-ключ",
@@ -322,7 +326,42 @@
         "urlRequired": "URL обов'язковий",
         "eventsRequired": "Оберіть принаймні одну подію"
       }
+    },
+    "customFields": {
+      "new": "Нове поле",
+      "empty": "Користувацькі поля ще не створені.",
+      "filterEntity": "Сутність",
+      "deleteTitle": "Видалити користувацьке поле?",
+      "columns": {
+        "label": "Назва",
+        "fieldKey": "Ключ поля",
+        "entityType": "Сутність",
+        "fieldType": "Тип",
+        "required": "Обов'язкове"
+      },
+      "form": {
+        "title": "Нове користувацьке поле",
+        "editTitle": "Редагувати користувацьке поле",
+        "entityType": "Сутність",
+        "fieldKey": "Ключ поля",
+        "label": "Назва",
+        "fieldType": "Тип поля",
+        "options": "Варіанти",
+        "optionsHelper": "Перелік варіантів через кому",
+        "required": "Обов'язкове поле",
+        "lockedNotice": "Сутність і ключ заблоковано"
+      },
+      "validation": {
+        "entityTypeRequired": "Сутність обов'язкова",
+        "fieldKeyRequired": "Ключ поля обов'язковий",
+        "fieldKeyFormat": "Лише малі латинські літери, цифри та підкреслення, починаючи з літери",
+        "labelRequired": "Назва обов'язкова",
+        "fieldTypeRequired": "Тип поля обов'язковий"
+      }
     }
+  },
+  "customFields": {
+    "title": "Користувацькі поля"
   },
   "notFound": {
     "title": "404",
