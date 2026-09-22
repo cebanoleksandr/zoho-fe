@@ -12,6 +12,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import DataTable, { type DataTableColumn } from '../../components/common/DataTable';
 import StatusChip from '../../components/common/StatusChip';
+import ConfirmDialog from '../../components/common/ConfirmDialog';
 import { useActivities, useCompleteActivity, useDeleteActivity } from '../../hooks/queries';
 import { ActivityStatus, type Activity } from '../../types';
 import ActivityFormDialog from './ActivityFormDialog';
@@ -22,6 +23,7 @@ function ActivitiesListPage() {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(25);
   const [formOpen, setFormOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { data, isLoading, isError } = useActivities({
     status: status === 'ALL' ? undefined : status,
@@ -55,7 +57,7 @@ function ActivitiesListPage() {
             </Tooltip>
           )}
           <Tooltip title={t('common.delete')}>
-            <IconButton size="small" onClick={(e) => { e.stopPropagation(); deleteActivity.mutate(r.id); }}>
+            <IconButton size="small" onClick={(e) => { e.stopPropagation(); setDeleteId(r.id); }}>
               <DeleteOutlineIcon fontSize="small" />
             </IconButton>
           </Tooltip>
@@ -108,6 +110,17 @@ function ActivitiesListPage() {
       />
 
       <ActivityFormDialog open={formOpen} onClose={() => setFormOpen(false)} />
+
+      <ConfirmDialog
+        open={!!deleteId}
+        title={t('activities.deleteTitle')}
+        description={t('common.cannotBeUndone')}
+        loading={deleteActivity.isPending}
+        onClose={() => setDeleteId(null)}
+        onConfirm={() => {
+          if (deleteId) deleteActivity.mutate(deleteId, { onSuccess: () => setDeleteId(null) });
+        }}
+      />
     </Box>
   );
 }

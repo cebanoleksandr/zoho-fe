@@ -96,7 +96,9 @@
       "noActivities": "Активностей ще немає.",
       "status": "Статус",
       "deleteTitle": "Видалити лід?",
-      "notFound": "Лід не знайдено."
+      "notFound": "Лід не знайдено.",
+      "convertTitle": "Конвертувати лід?",
+      "convertDescription": "Це створить компанію, контакт та угоду на основі цього ліда."
     },
     "validation": {
       "firstNameRequired": "Ім'я обов'язкове",
@@ -232,7 +234,8 @@
       "entityIdRequired": "ID сутності обов'язковий",
       "typeRequired": "Тип обов'язковий",
       "subjectRequired": "Тема обов'язкова"
-    }
+    },
+    "deleteTitle": "Видалити активність?"
   },
   "pipelines": {
     "title": "Воронки",

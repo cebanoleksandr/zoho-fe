@@ -11,6 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import StatusChip from './StatusChip';
+import ConfirmDialog from './ConfirmDialog';
 import { useActivities, useCompleteActivity, useDeleteActivity } from '../../hooks/queries';
 import { ActivityStatus, type CrmEntityType } from '../../types';
 import ActivityFormDialog from '../../pages/activities/ActivityFormDialog';
@@ -23,6 +24,7 @@ interface ActivitiesPanelProps {
 function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
   const { t } = useTranslation();
   const [formOpen, setFormOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const { data: activities, isLoading } = useActivities({ entityType, entityId });
   const completeActivity = useCompleteActivity();
   const deleteActivity = useDeleteActivity();
@@ -69,7 +71,7 @@ function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
                 </Tooltip>
               )}
               <Tooltip title={t('common.delete')}>
-                <IconButton size="small" onClick={() => deleteActivity.mutate(a.id)}>
+                <IconButton size="small" onClick={() => setDeleteId(a.id)}>
                   <DeleteOutlineIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
@@ -83,6 +85,17 @@ function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
         onClose={() => setFormOpen(false)}
         defaultEntityType={entityType}
         defaultEntityId={entityId}
+      />
+
+      <ConfirmDialog
+        open={!!deleteId}
+        title={t('activities.deleteTitle')}
+        description={t('common.cannotBeUndone')}
+        loading={deleteActivity.isPending}
+        onClose={() => setDeleteId(null)}
+        onConfirm={() => {
+          if (deleteId) deleteActivity.mutate(deleteId, { onSuccess: () => setDeleteId(null) });
+        }}
       />
     </Paper>
   );

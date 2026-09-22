@@ -96,7 +96,9 @@
       "noActivities": "Brak zarejestrowanych aktywności.",
       "status": "Status",
       "deleteTitle": "Usunąć lead?",
-      "notFound": "Nie znaleziono leada."
+      "notFound": "Nie znaleziono leada.",
+      "convertTitle": "Skonwertować lead?",
+      "convertDescription": "To utworzy konto, kontakt i transakcję na podstawie tego leada."
     },
     "validation": {
       "firstNameRequired": "Imię jest wymagane",
@@ -232,7 +234,8 @@
       "entityIdRequired": "ID encji jest wymagane",
       "typeRequired": "Typ jest wymagany",
       "subjectRequired": "Temat jest wymagany"
-    }
+    },
+    "deleteTitle": "Usunąć aktywność?"
   },
   "pipelines": {
     "title": "Lejki sprzedaży",

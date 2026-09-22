@@ -96,7 +96,9 @@
       "noActivities": "Aún no hay actividades registradas.",
       "status": "Estado",
       "deleteTitle": "¿Eliminar prospecto?",
-      "notFound": "Prospecto no encontrado."
+      "notFound": "Prospecto no encontrado.",
+      "convertTitle": "¿Convertir lead?",
+      "convertDescription": "Esto creará una cuenta, un contacto y un negocio a partir de este lead."
     },
     "validation": {
       "firstNameRequired": "El nombre es obligatorio",
@@ -232,7 +234,8 @@
       "entityIdRequired": "El ID de la entidad es obligatorio",
       "typeRequired": "El tipo es obligatorio",
       "subjectRequired": "El asunto es obligatorio"
-    }
+    },
+    "deleteTitle": "¿Eliminar actividad?"
   },
   "pipelines": {
     "title": "Embudos",

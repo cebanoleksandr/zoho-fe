@@ -45,6 +45,7 @@ function LeadDetailPage() {
   const convertLead = useConvertLead();
   const deleteLead = useDeleteLead();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [convertConfirmOpen, setConvertConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
   if (isLoading) {
@@ -71,7 +72,7 @@ function LeadDetailPage() {
                 variant="outlined"
                 startIcon={<SwapHorizIcon />}
                 disabled={convertLead.isPending}
-                onClick={() => convertLead.mutate({ id, payload: {} })}
+                onClick={() => setConvertConfirmOpen(true)}
               >
                 {t('leads.detail.convert')}
               </Button>
@@ -151,6 +152,21 @@ function LeadDetailPage() {
           deleteLead.mutate(id, {
             onSuccess: () => navigate('/app/leads'),
           })
+        }
+      />
+
+      <ConfirmDialog
+        open={convertConfirmOpen}
+        title={t('leads.detail.convertTitle')}
+        description={t('leads.detail.convertDescription')}
+        confirmLabel={t('leads.detail.convert')}
+        loading={convertLead.isPending}
+        onClose={() => setConvertConfirmOpen(false)}
+        onConfirm={() =>
+          convertLead.mutate(
+            { id, payload: {} },
+            { onSuccess: () => setConvertConfirmOpen(false) },
+          )
         }
       />
     </Box>

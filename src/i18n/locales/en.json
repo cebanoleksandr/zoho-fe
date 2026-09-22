@@ -96,7 +96,9 @@
       "noActivities": "No activities logged yet.",
       "status": "Status",
       "deleteTitle": "Delete lead?",
-      "notFound": "Lead not found."
+      "notFound": "Lead not found.",
+      "convertTitle": "Convert lead?",
+      "convertDescription": "This will create an account, contact, and deal from this lead."
     },
     "validation": {
       "firstNameRequired": "First name is required",
@@ -232,7 +234,8 @@
       "entityIdRequired": "Entity id is required",
       "typeRequired": "Type is required",
       "subjectRequired": "Subject is required"
-    }
+    },
+    "deleteTitle": "Delete activity?"
   },
   "pipelines": {
     "title": "Pipelines",
