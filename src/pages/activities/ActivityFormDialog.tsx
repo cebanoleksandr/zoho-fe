@@ -11,20 +11,23 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import RecordAutocomplete from '../../components/common/RecordAutocomplete';
-import { useCreateActivity } from '../../hooks/queries';
-import { ActivityType, CrmEntityType, type CreateActivityPayload } from '../../types';
+import { useCreateActivity, useUpdateActivity } from '../../hooks/queries';
+import { ActivityType, CrmEntityType, type Activity, type CreateActivityPayload } from '../../types';
 
 interface ActivityFormDialogProps {
   open: boolean;
   onClose: () => void;
+  activity?: Activity;
   defaultEntityType?: CrmEntityType;
   defaultEntityId?: string;
 }
 
-function ActivityFormDialog({ open, onClose, defaultEntityType, defaultEntityId }: ActivityFormDialogProps) {
+function ActivityFormDialog({ open, onClose, activity, defaultEntityType, defaultEntityId }: ActivityFormDialogProps) {
   const { t } = useTranslation();
   const createActivity = useCreateActivity();
-  const lockedToEntity = !!defaultEntityType && !!defaultEntityId;
+  const updateActivity = useUpdateActivity();
+  const isEdit = !!activity;
+  const lockedToEntity = isEdit || (!!defaultEntityType && !!defaultEntityId);
 
   const schema = yup.object({
     entityType: yup.mixed<CrmEntityType>().oneOf(Object.values(CrmEntityType)).required(t('activities.validation.entityTypeRequired')),
@@ -47,10 +50,24 @@ function ActivityFormDialog({ open, onClose, defaultEntityType, defaultEntityId 
     formState: { errors },
   } = useForm<ActivityFormValues>({
     resolver: yupResolver(schema),
-    values: lockedToEntity ? { entityType: defaultEntityType, entityId: defaultEntityId } as ActivityFormValues : undefined,
+    values: activity
+      ? {
+          entityType: activity.entityType,
+          entityId: activity.entityId,
+          type: activity.type,
+          subject: activity.subject,
+          description: activity.description ?? '',
+          dueDate: activity.dueDate ? activity.dueDate.slice(0, 10) : '',
+          ownerId: activity.ownerId ?? '',
+        }
+      : defaultEntityType && defaultEntityId
+        ? ({ entityType: defaultEntityType, entityId: defaultEntityId } as ActivityFormValues)
+        : undefined,
   });
 
   const entityType = useWatch({ control, name: 'entityType' });
+
+  const isPending = createActivity.isPending || updateActivity.isPending;
 
   const handleClose = () => {
     reset();
@@ -58,12 +75,36 @@ function ActivityFormDialog({ open, onClose, defaultEntityType, defaultEntityId 
   };
 
   const onSubmit = (payload: ActivityFormValues) => {
-    createActivity.mutate(payload as CreateActivityPayload, { onSuccess: handleClose });
+    if (activity) {
+      updateActivity.mutate(
+        {
+          id: activity.id,
+          payload: {
+            type: payload.type,
+            subject: payload.subject,
+            description: payload.description || undefined,
+            dueDate: payload.dueDate || undefined,
+            ownerId: payload.ownerId || undefined,
+          },
+        },
+        { onSuccess: handleClose },
+      );
+    } else {
+      createActivity.mutate(
+        {
+          ...(payload as CreateActivityPayload),
+          description: payload.description || undefined,
+          dueDate: payload.dueDate || undefined,
+          ownerId: payload.ownerId || undefined,
+        },
+        { onSuccess: handleClose },
+      );
+    }
   };
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{t('activities.form.title')}</DialogTitle>
+      <DialogTitle>{isEdit ? t('activities.form.editTitle') : t('activities.form.title')}</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
@@ -153,8 +194,8 @@ function ActivityFormDialog({ open, onClose, defaultEntityType, defaultEntityId 
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>{t('common.cancel')}</Button>
-          <Button type="submit" variant="contained" disabled={createActivity.isPending}>
-            {createActivity.isPending ? t('common.saving') : t('common.create')}
+          <Button type="submit" variant="contained" disabled={isPending}>
+            {isPending ? t('common.saving') : isEdit ? t('common.save') : t('common.create')}
           </Button>
         </DialogActions>
       </form>

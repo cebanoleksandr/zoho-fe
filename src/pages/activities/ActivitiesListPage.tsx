@@ -9,6 +9,7 @@ import Tab from '@mui/material/Tab';
 import AddIcon from '@mui/icons-material/Add';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import DataTable, { type DataTableColumn } from '../../components/common/DataTable';
 import StatusChip from '../../components/common/StatusChip';
@@ -23,6 +24,7 @@ function ActivitiesListPage() {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(25);
   const [formOpen, setFormOpen] = useState(false);
+  const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { data, isLoading, isError } = useActivities({
@@ -41,7 +43,11 @@ function ActivitiesListPage() {
       header: t('activities.columns.relatedTo'),
       render: (r) => `${r.entityType} · ${r.entityId.slice(0, 8)}`,
     },
-    { key: 'dueDate', header: t('activities.columns.due'), render: (r) => r.dueDate ?? '—' },
+    {
+      key: 'dueDate',
+      header: t('activities.columns.due'),
+      render: (r) => (r.dueDate ? new Date(r.dueDate).toLocaleDateString() : '—'),
+    },
     { key: 'status', header: t('activities.columns.status'), render: (r) => <StatusChip status={r.status} /> },
     {
       key: 'actions',
@@ -56,6 +62,11 @@ function ActivitiesListPage() {
               </IconButton>
             </Tooltip>
           )}
+          <Tooltip title={t('common.edit')}>
+            <IconButton size="small" onClick={(e) => { e.stopPropagation(); setEditingActivity(r); }}>
+              <EditOutlinedIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
           <Tooltip title={t('common.delete')}>
             <IconButton size="small" onClick={(e) => { e.stopPropagation(); setDeleteId(r.id); }}>
               <DeleteOutlineIcon fontSize="small" />
@@ -110,6 +121,12 @@ function ActivitiesListPage() {
       />
 
       <ActivityFormDialog open={formOpen} onClose={() => setFormOpen(false)} />
+
+      <ActivityFormDialog
+        open={!!editingActivity}
+        activity={editingActivity ?? undefined}
+        onClose={() => setEditingActivity(null)}
+      />
 
       <ConfirmDialog
         open={!!deleteId}

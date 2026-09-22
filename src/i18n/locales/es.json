@@ -227,7 +227,8 @@
       "type": "Tipo",
       "relatedTo": "Relacionado con",
       "recordId": "ID del registro",
-      "dueDate": "Fecha de vencimiento"
+      "dueDate": "Fecha de vencimiento",
+      "editTitle": "Editar actividad"
     },
     "validation": {
       "entityTypeRequired": "El tipo de entidad es obligatorio",

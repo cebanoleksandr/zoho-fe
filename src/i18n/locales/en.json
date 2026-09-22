@@ -227,7 +227,8 @@
       "type": "Type",
       "relatedTo": "Related to",
       "recordId": "Record ID",
-      "dueDate": "Due date"
+      "dueDate": "Due date",
+      "editTitle": "Edit Activity"
     },
     "validation": {
       "entityTypeRequired": "Entity type is required",

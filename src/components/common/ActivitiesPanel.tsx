@@ -10,10 +10,11 @@ import Tooltip from '@mui/material/Tooltip';
 import AddIcon from '@mui/icons-material/Add';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import StatusChip from './StatusChip';
 import ConfirmDialog from './ConfirmDialog';
 import { useActivities, useCompleteActivity, useDeleteActivity } from '../../hooks/queries';
-import { ActivityStatus, type CrmEntityType } from '../../types';
+import { ActivityStatus, type Activity, type CrmEntityType } from '../../types';
 import ActivityFormDialog from '../../pages/activities/ActivityFormDialog';
 
 interface ActivitiesPanelProps {
@@ -24,6 +25,7 @@ interface ActivitiesPanelProps {
 function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
   const { t } = useTranslation();
   const [formOpen, setFormOpen] = useState(false);
+  const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { data: activities, isLoading } = useActivities({ entityType, entityId });
   const completeActivity = useCompleteActivity();
@@ -57,7 +59,7 @@ function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
               </Typography>
               {a.dueDate && (
                 <Typography variant="caption" color="text.secondary">
-                  {a.dueDate}
+                  {new Date(a.dueDate).toLocaleDateString()}
                 </Typography>
               )}
             </Box>
@@ -70,6 +72,11 @@ function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
                   </IconButton>
                 </Tooltip>
               )}
+              <Tooltip title={t('common.edit')}>
+                <IconButton size="small" onClick={() => setEditingActivity(a)}>
+                  <EditOutlinedIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
               <Tooltip title={t('common.delete')}>
                 <IconButton size="small" onClick={() => setDeleteId(a.id)}>
                   <DeleteOutlineIcon fontSize="small" />
@@ -85,6 +92,12 @@ function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
         onClose={() => setFormOpen(false)}
         defaultEntityType={entityType}
         defaultEntityId={entityId}
+      />
+
+      <ActivityFormDialog
+        open={!!editingActivity}
+        activity={editingActivity ?? undefined}
+        onClose={() => setEditingActivity(null)}
       />
 
       <ConfirmDialog

@@ -227,7 +227,8 @@
       "type": "Typ",
       "relatedTo": "Powiązane z",
       "recordId": "ID rekordu",
-      "dueDate": "Termin"
+      "dueDate": "Termin",
+      "editTitle": "Edytuj aktywność"
     },
     "validation": {
       "entityTypeRequired": "Typ encji jest wymagany",

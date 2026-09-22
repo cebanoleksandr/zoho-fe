@@ -227,7 +227,8 @@
       "type": "Тип",
       "relatedTo": "Пов'язано з",
       "recordId": "ID запису",
-      "dueDate": "Термін виконання"
+      "dueDate": "Термін виконання",
+      "editTitle": "Редагувати активність"
     },
     "validation": {
       "entityTypeRequired": "Тип сутності обов'язковий",
