@@ -11,28 +11,25 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import CustomFieldsSection from '../../components/common/CustomFieldsSection';
-import { useDeal, useDeleteDeal, useUpdateDealStage, usePipeline, useContact, useUser } from '../../hooks/queries';
-import { CrmEntityType } from '../../types';
-import DealFormDialog from './DealFormDialog';
+import InlineEditField from '../../components/common/InlineEditField';
+import {
+  useDeal,
+  useUpdateDeal,
+  useDeleteDeal,
+  useUpdateDealStage,
+  usePipeline,
+  useContact,
+  useContacts,
+  useUser,
+} from '../../hooks/queries';
+import { CrmEntityType, type UpdateDealPayload } from '../../types';
 
 function formatDate(value: string | null) {
   return value ? new Date(value).toLocaleDateString() : '—';
-}
-
-function Field({ label, value }: { label: string; value: string }) {
-  return (
-    <Box>
-      <Typography variant="caption" color="text.secondary">
-        {label}
-      </Typography>
-      <Typography variant="body2">{value}</Typography>
-    </Box>
-  );
 }
 
 function DealDetailPage() {
@@ -42,11 +39,17 @@ function DealDetailPage() {
   const { data: deal, isLoading, isError } = useDeal(id);
   const { data: pipeline } = usePipeline(deal?.pipelineId ?? '', !!deal?.pipelineId);
   const { data: contact } = useContact(deal?.contactId ?? '', !!deal?.contactId);
+  const { data: contacts } = useContacts();
   const { data: owner } = useUser(deal?.ownerId ?? '', !!deal?.ownerId);
+  const updateDeal = useUpdateDeal();
   const updateStage = useUpdateDealStage();
   const deleteDeal = useDeleteDeal();
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
+
+  const saveField = (field: keyof UpdateDealPayload) => (value: string) => {
+    const payload = field === 'amount' ? { [field]: value === '' ? undefined : Number(value) } : { [field]: value };
+    updateDeal.mutate({ id, payload: payload as UpdateDealPayload });
+  };
 
   if (isLoading) {
     return (
@@ -66,14 +69,9 @@ function DealDetailPage() {
         title={deal.name}
         subtitle={deal.amount != null ? `${deal.amount} ${deal.currency ?? ''}`.trim() : undefined}
         actions={
-          <>
-            <Button variant="outlined" startIcon={<EditOutlinedIcon />} onClick={() => setEditOpen(true)}>
-              {t('common.edit')}
-            </Button>
-            <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
-              {t('common.delete')}
-            </Button>
-          </>
+          <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
+            {t('common.delete')}
+          </Button>
         }
       />
 
@@ -81,23 +79,64 @@ function DealDetailPage() {
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
-              <Grid size={{ xs: 6 }}>
-                <Field label={t('deals.detail.expectedCloseDate')} value={formatDate(deal.expectedCloseDate)} />
+              <Grid size={{ xs: 12 }}>
+                <InlineEditField label={t('common.name')} value={deal.name} onSave={saveField('name')} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('deals.detail.closedAt')} value={formatDate(deal.closedAt)} />
-              </Grid>
-              <Grid size={{ xs: 6 }}>
-                <Field
-                  label={t('deals.detail.dealWith')}
-                  value={contact ? `${contact.firstName} ${contact.lastName}`.trim() : '—'}
+                <InlineEditField
+                  label={t('deals.form.amount')}
+                  type="number"
+                  value={deal.amount != null ? String(deal.amount) : ''}
+                  onSave={saveField('amount')}
                 />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('common.owner')} value={owner ? `${owner.firstName} ${owner.lastName}` : '—'} />
+                <InlineEditField label={t('deals.form.currency')} value={deal.currency ?? ''} onSave={saveField('currency')} />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <InlineEditField
+                  label={t('deals.form.expectedCloseDate')}
+                  type="date"
+                  value={deal.expectedCloseDate ?? ''}
+                  onSave={saveField('expectedCloseDate')}
+                />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <Box>
+                  <Typography variant="caption" color="text.secondary" display="block">
+                    {t('deals.detail.closedAt')}
+                  </Typography>
+                  <Typography variant="body2">{formatDate(deal.closedAt)}</Typography>
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <InlineEditField
+                  label={t('deals.detail.dealWith')}
+                  value={deal.contactId ?? ''}
+                  onSave={saveField('contactId')}
+                  options={[
+                    ...(contact && !(contacts?.data ?? []).some((c) => c.id === contact.id)
+                      ? [{ value: contact.id, label: `${contact.firstName} ${contact.lastName}` }]
+                      : []),
+                    ...(contacts?.data ?? []).map((c) => ({ value: c.id, label: `${c.firstName} ${c.lastName}` })),
+                  ]}
+                />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <Box>
+                  <Typography variant="caption" color="text.secondary" display="block">
+                    {t('common.owner')}
+                  </Typography>
+                  <Typography variant="body2">{owner ? `${owner.firstName} ${owner.lastName}` : '—'}</Typography>
+                </Box>
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <Field label={t('deals.detail.description')} value={deal.description ?? '—'} />
+                <InlineEditField
+                  label={t('common.description')}
+                  value={deal.description ?? ''}
+                  onSave={saveField('description')}
+                  multiline
+                />
               </Grid>
             </Grid>
           </Paper>
@@ -129,8 +168,6 @@ function DealDetailPage() {
           </Paper>
         </Grid>
       </Grid>
-
-      <DealFormDialog open={editOpen} deal={deal} onClose={() => setEditOpen(false)} />
 
       <ConfirmDialog
         open={confirmOpen}

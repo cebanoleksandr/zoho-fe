@@ -49,10 +49,14 @@ function ActivityDetailDialog({ activityId, onClose }: ActivityDetailDialogProps
               <Field label={t('activities.columns.type')} value={activity.type} />
             </Grid>
             <Grid size={{ xs: 6 }}>
-              <Typography variant="caption" color="text.secondary" display="block">
-                {t('activities.columns.status')}
-              </Typography>
-              <StatusChip status={activity.status} />
+              <Box>
+                <Typography variant="caption" color="text.secondary" component="div">
+                  {t('activities.columns.status')}
+                </Typography>
+                <Box sx={{ mt: 0.5 }}>
+                  <StatusChip status={activity.status} />
+                </Box>
+              </Box>
             </Grid>
             <Grid size={{ xs: 6 }}>
               <Field

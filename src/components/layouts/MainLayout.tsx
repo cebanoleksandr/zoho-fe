@@ -66,12 +66,12 @@ function MainLayout() {
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, borderBottom: '1px solid #e5e7eb' }}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1, fontWeight: 700, color: '#dc2626' }}>
-            Zoho CRM
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1, fontWeight: 700, color: '#4f46e5' }}>
+            Orbit CRM
           </Typography>
           <LanguageSwitcher />
           <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-            <Avatar sx={{ width: 32, height: 32, bgcolor: '#dc2626', fontSize: 14 }}>U</Avatar>
+            <Avatar sx={{ width: 32, height: 32, bgcolor: '#4f46e5', fontSize: 14 }}>U</Avatar>
           </IconButton>
           <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={() => setAnchorEl(null)}>
             <MenuItem onClick={handleLogout}>
@@ -103,8 +103,8 @@ function MainLayout() {
               sx={{
                 borderRadius: 1,
                 mb: 0.5,
-                '&.active': { bgcolor: 'rgba(220,38,38,0.08)', color: '#dc2626' },
-                '&.active .MuiListItemIcon-root': { color: '#dc2626' },
+                '&.active': { bgcolor: 'rgba(79,70,229,0.08)', color: '#4f46e5' },
+                '&.active .MuiListItemIcon-root': { color: '#4f46e5' },
               }}
             >
               <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>

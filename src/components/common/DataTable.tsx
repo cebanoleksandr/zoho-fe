@@ -18,6 +18,7 @@ export interface DataTableColumn<T> {
   header: string;
   render: (row: T) => ReactNode;
   width?: string | number;
+  align?: 'left' | 'center' | 'right';
 }
 
 interface DataTableProps<T> {
@@ -65,7 +66,7 @@ function DataTable<T>({
           <TableHead>
             <TableRow sx={{ bgcolor: '#f9fafb' }}>
               {columns.map((col) => (
-                <TableCell key={col.key} sx={{ fontWeight: 600, width: col.width }}>
+                <TableCell key={col.key} align={col.align} sx={{ fontWeight: 600, width: col.width }}>
                   {col.header}
                 </TableCell>
               ))}
@@ -112,7 +113,9 @@ function DataTable<T>({
                   sx={{ cursor: onRowClick ? 'pointer' : 'default', ...getRowSx?.(row) }}
                 >
                   {columns.map((col) => (
-                    <TableCell key={col.key}>{col.render(row)}</TableCell>
+                    <TableCell key={col.key} align={col.align}>
+                      {col.render(row)}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))}

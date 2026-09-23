@@ -9,25 +9,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import CustomFieldsSection from '../../components/common/CustomFieldsSection';
-import { useAccount, useDeleteAccount, useContacts, useDeals, useUser } from '../../hooks/queries';
-import { CrmEntityType } from '../../types';
-import AccountFormDialog from './AccountFormDialog';
-
-function Field({ label, value }: { label: string; value: string }) {
-  return (
-    <Box>
-      <Typography variant="caption" color="text.secondary">
-        {label}
-      </Typography>
-      <Typography variant="body2">{value}</Typography>
-    </Box>
-  );
-}
+import InlineEditField from '../../components/common/InlineEditField';
+import { useAccount, useUpdateAccount, useDeleteAccount, useContacts, useDeals, useUser } from '../../hooks/queries';
+import { CrmEntityType, type UpdateAccountPayload } from '../../types';
 
 function AccountDetailPage() {
   const { t } = useTranslation();
@@ -37,9 +25,13 @@ function AccountDetailPage() {
   const { data: owner } = useUser(account?.ownerId ?? '', !!account?.ownerId);
   const { data: contacts } = useContacts({ accountId: id });
   const { data: deals } = useDeals({ accountId: id });
+  const updateAccount = useUpdateAccount();
   const deleteAccount = useDeleteAccount();
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
+
+  const saveField = (field: keyof UpdateAccountPayload) => (value: string) => {
+    updateAccount.mutate({ id, payload: { [field]: value } as UpdateAccountPayload });
+  };
 
   if (isLoading) {
     return (
@@ -59,14 +51,9 @@ function AccountDetailPage() {
         title={account.name}
         subtitle={account.industry ?? undefined}
         actions={
-          <>
-            <Button variant="outlined" startIcon={<EditOutlinedIcon />} onClick={() => setEditOpen(true)}>
-              {t('common.edit')}
-            </Button>
-            <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
-              {t('common.delete')}
-            </Button>
-          </>
+          <Button variant="outlined" color="error" startIcon={<DeleteOutlineIcon />} onClick={() => setConfirmOpen(true)}>
+            {t('common.delete')}
+          </Button>
         }
       />
 
@@ -74,20 +61,44 @@ function AccountDetailPage() {
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
-              <Grid size={{ xs: 6 }}>
-                <Field label={t('accounts.detail.website')} value={account.website ?? '—'} />
+              <Grid size={{ xs: 12 }}>
+                <InlineEditField label={t('common.name')} value={account.name} onSave={saveField('name')} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('accounts.detail.phone')} value={account.phone ?? '—'} />
+                <InlineEditField label={t('accounts.detail.website')} value={account.website ?? ''} onSave={saveField('website')} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('common.owner')} value={owner ? `${owner.firstName} ${owner.lastName}` : '—'} />
+                <InlineEditField label={t('accounts.detail.phone')} value={account.phone ?? ''} onSave={saveField('phone')} />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <InlineEditField
+                  label={t('accounts.form.industry')}
+                  value={account.industry ?? ''}
+                  onSave={saveField('industry')}
+                />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <Box>
+                  <Typography variant="caption" color="text.secondary" display="block">
+                    {t('common.owner')}
+                  </Typography>
+                  <Typography variant="body2">{owner ? `${owner.firstName} ${owner.lastName}` : '—'}</Typography>
+                </Box>
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <Field label={t('accounts.detail.billingAddress')} value={account.billingAddress ?? '—'} />
+                <InlineEditField
+                  label={t('accounts.detail.billingAddress')}
+                  value={account.billingAddress ?? ''}
+                  onSave={saveField('billingAddress')}
+                />
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <Field label={t('accounts.detail.description')} value={account.description ?? '—'} />
+                <InlineEditField
+                  label={t('accounts.detail.description')}
+                  value={account.description ?? ''}
+                  onSave={saveField('description')}
+                  multiline
+                />
               </Grid>
             </Grid>
           </Paper>
@@ -120,8 +131,6 @@ function AccountDetailPage() {
           </Paper>
         </Grid>
       </Grid>
-
-      <AccountFormDialog open={editOpen} account={account} onClose={() => setEditOpen(false)} />
 
       <ConfirmDialog
         open={confirmOpen}

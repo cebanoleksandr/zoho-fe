@@ -21,8 +21,8 @@ function AuthLayout() {
         <LanguageSwitcher />
       </Box>
       <Paper elevation={0} sx={{ width: 400, p: 4, border: '1px solid #e5e7eb', borderRadius: 2 }}>
-        <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: '#dc2626' }}>
-          Zoho CRM
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: '#4f46e5' }}>
+          Orbit CRM
         </Typography>
         <Outlet />
       </Paper>

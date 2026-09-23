@@ -55,8 +55,9 @@ function ActivitiesListPage() {
       key: 'actions',
       header: '',
       width: 100,
+      align: 'right',
       render: (r) => (
-        <Box sx={{ display: 'flex', gap: 0.5 }}>
+        <Box sx={{ display: 'flex', gap: 0.5, justifyContent: 'flex-end' }}>
           {r.status === ActivityStatus.PENDING && (
             <Tooltip title={t('activities.markComplete')}>
               <IconButton size="small" onClick={(e) => { e.stopPropagation(); completeActivity.mutate(r.id); }}>

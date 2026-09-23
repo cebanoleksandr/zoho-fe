@@ -11,32 +11,21 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import CustomFieldsSection from '../../components/common/CustomFieldsSection';
+import InlineEditField from '../../components/common/InlineEditField';
 import {
   useLead,
+  useUpdateLead,
   useUpdateLeadStatus,
   useConvertLead,
   useDeleteLead,
   useUser,
 } from '../../hooks/queries';
-import { CrmEntityType, LeadStatus } from '../../types';
-import LeadFormDialog from './LeadFormDialog';
-
-function Field({ label, value }: { label: string; value: string }) {
-  return (
-    <Box>
-      <Typography variant="caption" color="text.secondary">
-        {label}
-      </Typography>
-      <Typography variant="body2">{value}</Typography>
-    </Box>
-  );
-}
+import { CrmEntityType, LeadSource, LeadStatus, type UpdateLeadPayload } from '../../types';
 
 function LeadDetailPage() {
   const { t } = useTranslation();
@@ -44,12 +33,16 @@ function LeadDetailPage() {
   const navigate = useNavigate();
   const { data: lead, isLoading, isError } = useLead(id);
   const { data: owner } = useUser(lead?.ownerId ?? '', !!lead?.ownerId);
+  const updateLead = useUpdateLead();
   const updateStatus = useUpdateLeadStatus();
   const convertLead = useConvertLead();
   const deleteLead = useDeleteLead();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [convertConfirmOpen, setConvertConfirmOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
+
+  const saveField = (field: keyof UpdateLeadPayload) => (value: string) => {
+    updateLead.mutate({ id, payload: { [field]: value } as UpdateLeadPayload });
+  };
 
   if (isLoading) {
     return (
@@ -80,9 +73,6 @@ function LeadDetailPage() {
                 {t('leads.detail.convert')}
               </Button>
             )}
-            <Button variant="outlined" startIcon={<EditOutlinedIcon />} onClick={() => setEditOpen(true)}>
-              {t('common.edit')}
-            </Button>
             <Button
               variant="outlined"
               color="error"
@@ -100,22 +90,46 @@ function LeadDetailPage() {
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('common.email')} value={lead.email ?? '—'} />
+                <InlineEditField label={t('auth.firstName')} value={lead.firstName} onSave={saveField('firstName')} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('common.phone')} value={lead.phone ?? '—'} />
+                <InlineEditField label={t('auth.lastName')} value={lead.lastName} onSave={saveField('lastName')} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('common.title')} value={lead.title ?? '—'} />
+                <InlineEditField label={t('leads.form.company')} value={lead.company ?? ''} onSave={saveField('company')} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('leads.detail.source')} value={lead.source ?? '—'} />
+                <InlineEditField label={t('common.email')} value={lead.email ?? ''} onSave={saveField('email')} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('common.owner')} value={owner ? `${owner.firstName} ${owner.lastName}` : '—'} />
+                <InlineEditField label={t('common.phone')} value={lead.phone ?? ''} onSave={saveField('phone')} />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <InlineEditField label={t('common.title')} value={lead.title ?? ''} onSave={saveField('title')} />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <InlineEditField
+                  label={t('leads.detail.source')}
+                  value={lead.source ?? ''}
+                  onSave={saveField('source')}
+                  options={Object.values(LeadSource).map((s) => ({ value: s, label: s }))}
+                />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <Box>
+                  <Typography variant="caption" color="text.secondary" display="block">
+                    {t('common.owner')}
+                  </Typography>
+                  <Typography variant="body2">{owner ? `${owner.firstName} ${owner.lastName}` : '—'}</Typography>
+                </Box>
               </Grid>
               <Grid size={{ xs: 12 }}>
-                <Field label={t('leads.detail.notes')} value={lead.notes ?? '—'} />
+                <InlineEditField
+                  label={t('leads.detail.notes')}
+                  value={lead.notes ?? ''}
+                  onSave={saveField('notes')}
+                  multiline
+                />
               </Grid>
             </Grid>
           </Paper>
@@ -147,8 +161,6 @@ function LeadDetailPage() {
           </Paper>
         </Grid>
       </Grid>
-
-      <LeadFormDialog open={editOpen} lead={lead} onClose={() => setEditOpen(false)} />
 
       <ConfirmDialog
         open={confirmOpen}
