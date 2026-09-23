@@ -25,6 +25,7 @@
     "phone": "Teléfono",
     "title": "Cargo",
     "description": "Descripción",
+    "owner": "Propietario",
     "notFound": "No se encontró: {{entity}}."
   },
   "nav": {
@@ -241,7 +242,10 @@
       "typeRequired": "El tipo es obligatorio",
       "subjectRequired": "El asunto es obligatorio"
     },
-    "deleteTitle": "¿Eliminar actividad?"
+    "deleteTitle": "¿Eliminar actividad?",
+    "detail": {
+      "title": "Actividad"
+    }
   },
   "pipelines": {
     "title": "Embudos",
@@ -327,6 +331,13 @@
         "urlInvalid": "Debe ser una URL válida",
         "urlRequired": "La URL es obligatoria",
         "eventsRequired": "Selecciona al menos un evento"
+      },
+      "deliveries": {
+        "view": "Ver entregas",
+        "title": "Entregas — {{url}}",
+        "empty": "Aún no hay entregas.",
+        "success": "Éxito",
+        "failed": "Fallo"
       }
     },
     "customFields": {

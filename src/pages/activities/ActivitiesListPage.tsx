@@ -17,6 +17,7 @@ import ConfirmDialog from '../../components/common/ConfirmDialog';
 import { useActivities, useCompleteActivity, useDeleteActivity } from '../../hooks/queries';
 import { ActivityStatus, type Activity } from '../../types';
 import ActivityFormDialog from './ActivityFormDialog';
+import ActivityDetailDialog from './ActivityDetailDialog';
 
 function ActivitiesListPage() {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ function ActivitiesListPage() {
   const [formOpen, setFormOpen] = useState(false);
   const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [viewingId, setViewingId] = useState<string | null>(null);
 
   const { data, isLoading, isError } = useActivities({
     status: status === 'ALL' ? undefined : status,
@@ -107,6 +109,7 @@ function ActivitiesListPage() {
         columns={columns}
         rows={data?.data ?? []}
         getRowId={(r) => r.id}
+        onRowClick={(r) => setViewingId(r.id)}
         isLoading={isLoading}
         isError={isError}
         emptyMessage={t('activities.empty')}
@@ -119,6 +122,8 @@ function ActivitiesListPage() {
           setPage(0);
         }}
       />
+
+      <ActivityDetailDialog activityId={viewingId} onClose={() => setViewingId(null)} />
 
       <ActivityFormDialog open={formOpen} onClose={() => setFormOpen(false)} />
 

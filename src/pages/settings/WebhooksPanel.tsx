@@ -20,10 +20,12 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import HistoryIcon from '@mui/icons-material/HistoryOutlined';
 import DataTable, { type DataTableColumn } from '../../components/common/DataTable';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import { useWebhooks, useCreateWebhook, useDeleteWebhook, useUpdateWebhook } from '../../hooks/queries';
 import { WebhookEvent, type CreateWebhookPayload, type Webhook } from '../../types';
+import WebhookDeliveriesDialog from './WebhookDeliveriesDialog';
 
 function WebhooksPanel() {
   const { t } = useTranslation();
@@ -33,6 +35,7 @@ function WebhooksPanel() {
   const deleteWebhook = useDeleteWebhook();
   const [formOpen, setFormOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deliveriesForId, setDeliveriesForId] = useState<string | null>(null);
 
   const schema = yup.object({
     url: yup.string().url(t('settings.webhooks.validation.urlInvalid')).required(t('settings.webhooks.validation.urlRequired')),
@@ -82,13 +85,20 @@ function WebhooksPanel() {
     {
       key: 'actions',
       header: '',
-      width: 60,
+      width: 90,
       render: (r) => (
-        <Tooltip title={t('common.delete')}>
-          <IconButton size="small" onClick={() => setDeleteId(r.id)}>
-            <DeleteOutlineIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        <Box sx={{ display: 'flex', gap: 0.5 }}>
+          <Tooltip title={t('settings.webhooks.deliveries.view')}>
+            <IconButton size="small" onClick={() => setDeliveriesForId(r.id)}>
+              <HistoryIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={t('common.delete')}>
+            <IconButton size="small" onClick={() => setDeleteId(r.id)}>
+              <DeleteOutlineIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
       ),
     },
   ];
@@ -168,6 +178,8 @@ function WebhooksPanel() {
           </DialogActions>
         </form>
       </Dialog>
+
+      <WebhookDeliveriesDialog webhookId={deliveriesForId} onClose={() => setDeliveriesForId(null)} />
 
       <ConfirmDialog
         open={!!deleteId}

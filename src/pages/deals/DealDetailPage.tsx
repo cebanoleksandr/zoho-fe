@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
@@ -16,7 +16,7 @@ import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import CustomFieldsSection from '../../components/common/CustomFieldsSection';
-import { useDeal, useDeleteDeal, useUpdateDealStage, usePipelines, useContact } from '../../hooks/queries';
+import { useDeal, useDeleteDeal, useUpdateDealStage, usePipeline, useContact, useUser } from '../../hooks/queries';
 import { CrmEntityType } from '../../types';
 import DealFormDialog from './DealFormDialog';
 
@@ -40,14 +40,13 @@ function DealDetailPage() {
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const { data: deal, isLoading, isError } = useDeal(id);
-  const { data: pipelines } = usePipelines();
+  const { data: pipeline } = usePipeline(deal?.pipelineId ?? '', !!deal?.pipelineId);
   const { data: contact } = useContact(deal?.contactId ?? '', !!deal?.contactId);
+  const { data: owner } = useUser(deal?.ownerId ?? '', !!deal?.ownerId);
   const updateStage = useUpdateDealStage();
   const deleteDeal = useDeleteDeal();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-
-  const pipeline = useMemo(() => pipelines?.find((p) => p.id === deal?.pipelineId), [pipelines, deal]);
 
   if (isLoading) {
     return (
@@ -88,11 +87,14 @@ function DealDetailPage() {
               <Grid size={{ xs: 6 }}>
                 <Field label={t('deals.detail.closedAt')} value={formatDate(deal.closedAt)} />
               </Grid>
-              <Grid size={{ xs: 12 }}>
+              <Grid size={{ xs: 6 }}>
                 <Field
                   label={t('deals.detail.dealWith')}
                   value={contact ? `${contact.firstName} ${contact.lastName}`.trim() : '—'}
                 />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <Field label={t('common.owner')} value={owner ? `${owner.firstName} ${owner.lastName}` : '—'} />
               </Grid>
               <Grid size={{ xs: 12 }}>
                 <Field label={t('deals.detail.description')} value={deal.description ?? '—'} />

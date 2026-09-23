@@ -14,7 +14,7 @@ import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import CustomFieldsSection from '../../components/common/CustomFieldsSection';
-import { useContact, useDeleteContact } from '../../hooks/queries';
+import { useContact, useDeleteContact, useAccount, useUser } from '../../hooks/queries';
 import { CrmEntityType } from '../../types';
 import ContactFormDialog from './ContactFormDialog';
 
@@ -34,6 +34,8 @@ function ContactDetailPage() {
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const { data: contact, isLoading, isError } = useContact(id);
+  const { data: account } = useAccount(contact?.accountId ?? '', !!contact?.accountId);
+  const { data: owner } = useUser(contact?.ownerId ?? '', !!contact?.ownerId);
   const deleteContact = useDeleteContact();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -76,7 +78,10 @@ function ContactDetailPage() {
             <Field label={t('common.phone')} value={contact.phone ?? '—'} />
           </Grid>
           <Grid size={{ xs: 6 }}>
-            <Field label={t('contacts.detail.account')} value={contact.accountId ?? '—'} />
+            <Field label={t('contacts.detail.account')} value={account?.name ?? '—'} />
+          </Grid>
+          <Grid size={{ xs: 6 }}>
+            <Field label={t('common.owner')} value={owner ? `${owner.firstName} ${owner.lastName}` : '—'} />
           </Grid>
           <Grid size={{ xs: 12 }}>
             <Field label={t('contacts.detail.notes')} value={contact.notes ?? '—'} />

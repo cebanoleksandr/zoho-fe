@@ -25,6 +25,7 @@
     "phone": "Телефон",
     "title": "Посада",
     "description": "Опис",
+    "owner": "Відповідальний",
     "notFound": "{{entity}} не знайдено."
   },
   "nav": {
@@ -241,7 +242,10 @@
       "typeRequired": "Тип обов'язковий",
       "subjectRequired": "Тема обов'язкова"
     },
-    "deleteTitle": "Видалити активність?"
+    "deleteTitle": "Видалити активність?",
+    "detail": {
+      "title": "Активність"
+    }
   },
   "pipelines": {
     "title": "Воронки",
@@ -327,6 +331,13 @@
         "urlInvalid": "Некоректний URL",
         "urlRequired": "URL обов'язковий",
         "eventsRequired": "Оберіть принаймні одну подію"
+      },
+      "deliveries": {
+        "view": "Переглянути доставки",
+        "title": "Доставки — {{url}}",
+        "empty": "Доставок ще немає.",
+        "success": "Успішно",
+        "failed": "Помилка"
       }
     },
     "customFields": {

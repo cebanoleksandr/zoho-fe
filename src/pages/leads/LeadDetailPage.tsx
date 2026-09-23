@@ -22,6 +22,7 @@ import {
   useUpdateLeadStatus,
   useConvertLead,
   useDeleteLead,
+  useUser,
 } from '../../hooks/queries';
 import { CrmEntityType, LeadStatus } from '../../types';
 import LeadFormDialog from './LeadFormDialog';
@@ -42,6 +43,7 @@ function LeadDetailPage() {
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const { data: lead, isLoading, isError } = useLead(id);
+  const { data: owner } = useUser(lead?.ownerId ?? '', !!lead?.ownerId);
   const updateStatus = useUpdateLeadStatus();
   const convertLead = useConvertLead();
   const deleteLead = useDeleteLead();
@@ -108,6 +110,9 @@ function LeadDetailPage() {
               </Grid>
               <Grid size={{ xs: 6 }}>
                 <Field label={t('leads.detail.source')} value={lead.source ?? '—'} />
+              </Grid>
+              <Grid size={{ xs: 6 }}>
+                <Field label={t('common.owner')} value={owner ? `${owner.firstName} ${owner.lastName}` : '—'} />
               </Grid>
               <Grid size={{ xs: 12 }}>
                 <Field label={t('leads.detail.notes')} value={lead.notes ?? '—'} />

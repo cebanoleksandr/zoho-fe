@@ -25,6 +25,7 @@
     "phone": "Phone",
     "title": "Title",
     "description": "Description",
+    "owner": "Owner",
     "notFound": "{{entity}} not found."
   },
   "nav": {
@@ -241,7 +242,10 @@
       "typeRequired": "Type is required",
       "subjectRequired": "Subject is required"
     },
-    "deleteTitle": "Delete activity?"
+    "deleteTitle": "Delete activity?",
+    "detail": {
+      "title": "Activity"
+    }
   },
   "pipelines": {
     "title": "Pipelines",
@@ -327,6 +331,13 @@
         "urlInvalid": "Must be a valid URL",
         "urlRequired": "URL is required",
         "eventsRequired": "Select at least one event"
+      },
+      "deliveries": {
+        "view": "View deliveries",
+        "title": "Deliveries — {{url}}",
+        "empty": "No deliveries yet.",
+        "success": "Success",
+        "failed": "Failed"
       }
     },
     "customFields": {
