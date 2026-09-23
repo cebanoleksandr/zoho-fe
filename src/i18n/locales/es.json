@@ -188,11 +188,13 @@
       "currency": "Moneda",
       "pipeline": "Embudo",
       "stage": "Etapa",
+      "contact": "Negocio con (contacto)",
       "expectedCloseDate": "Fecha de cierre prevista"
     },
     "detail": {
       "expectedCloseDate": "Fecha de cierre prevista",
       "closedAt": "Cerrado el",
+      "dealWith": "Negocio con",
       "description": "Descripción",
       "stageOf": "Etapa ({{pipeline}})",
       "deleteTitle": "¿Eliminar negocio?",

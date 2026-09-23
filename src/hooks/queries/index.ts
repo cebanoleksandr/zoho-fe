@@ -8,3 +8,4 @@ export * from './usePipelines';
 export * from './useWebhooks';
 export * from './useApiKeys';
 export * from './useCustomFields';
+export * from './useUsers';

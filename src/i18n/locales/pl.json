@@ -188,11 +188,13 @@
       "currency": "Waluta",
       "pipeline": "Lejek sprzedaży",
       "stage": "Etap",
+      "contact": "Transakcja z (kontakt)",
       "expectedCloseDate": "Planowana data zamknięcia"
     },
     "detail": {
       "expectedCloseDate": "Planowana data zamknięcia",
       "closedAt": "Zamknięto",
+      "dealWith": "Transakcja z",
       "description": "Opis",
       "stageOf": "Etap ({{pipeline}})",
       "deleteTitle": "Usunąć transakcję?",

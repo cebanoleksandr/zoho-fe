@@ -16,9 +16,13 @@ import PageHeader from '../../components/common/PageHeader';
 import ConfirmDialog from '../../components/common/ConfirmDialog';
 import ActivitiesPanel from '../../components/common/ActivitiesPanel';
 import CustomFieldsSection from '../../components/common/CustomFieldsSection';
-import { useDeal, useDeleteDeal, useUpdateDealStage, usePipelines } from '../../hooks/queries';
+import { useDeal, useDeleteDeal, useUpdateDealStage, usePipelines, useContact } from '../../hooks/queries';
 import { CrmEntityType } from '../../types';
 import DealFormDialog from './DealFormDialog';
+
+function formatDate(value: string | null) {
+  return value ? new Date(value).toLocaleDateString() : '—';
+}
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
@@ -37,6 +41,7 @@ function DealDetailPage() {
   const navigate = useNavigate();
   const { data: deal, isLoading, isError } = useDeal(id);
   const { data: pipelines } = usePipelines();
+  const { data: contact } = useContact(deal?.contactId ?? '', !!deal?.contactId);
   const updateStage = useUpdateDealStage();
   const deleteDeal = useDeleteDeal();
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -78,10 +83,16 @@ function DealDetailPage() {
           <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('deals.detail.expectedCloseDate')} value={deal.expectedCloseDate ?? '—'} />
+                <Field label={t('deals.detail.expectedCloseDate')} value={formatDate(deal.expectedCloseDate)} />
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Field label={t('deals.detail.closedAt')} value={deal.closedAt ?? '—'} />
+                <Field label={t('deals.detail.closedAt')} value={formatDate(deal.closedAt)} />
+              </Grid>
+              <Grid size={{ xs: 12 }}>
+                <Field
+                  label={t('deals.detail.dealWith')}
+                  value={contact ? `${contact.firstName} ${contact.lastName}`.trim() : '—'}
+                />
               </Grid>
               <Grid size={{ xs: 12 }}>
                 <Field label={t('deals.detail.description')} value={deal.description ?? '—'} />

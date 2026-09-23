@@ -1,11 +1,4 @@
-export interface User {
-  id: string;
-  organizationId: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
+import type { User } from './user';
 
 export interface AuthTokens {
   accessToken: string;

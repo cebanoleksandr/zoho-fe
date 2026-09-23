@@ -8,3 +8,4 @@ export * from './pipelines.service';
 export * from './webhooks.service';
 export * from './apiKeys.service';
 export * from './customFields.service';
+export * from './users.service';

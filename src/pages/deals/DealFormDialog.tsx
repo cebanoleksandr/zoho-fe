@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { useCreateDeal, useUpdateDeal, usePipelines } from '../../hooks/queries';
+import { useCreateDeal, useUpdateDeal, usePipelines, useContacts } from '../../hooks/queries';
 import type { CreateDealPayload, Deal } from '../../types';
 
 interface DealFormDialogProps {
@@ -25,6 +25,7 @@ function DealFormDialog({ open, deal, onClose }: DealFormDialogProps) {
   const createDeal = useCreateDeal();
   const updateDeal = useUpdateDeal();
   const { data: pipelines } = usePipelines();
+  const { data: contacts } = useContacts();
   const isEditing = !!deal;
 
   const schema = yup.object({
@@ -63,6 +64,7 @@ function DealFormDialog({ open, deal, onClose }: DealFormDialogProps) {
         name: deal?.name ?? '',
         amount: deal?.amount ?? undefined,
         currency: deal?.currency ?? '',
+        contactId: deal?.contactId ?? '',
         pipelineId: deal?.pipelineId ?? '',
         stageId: deal?.stageId ?? '',
         expectedCloseDate: deal?.expectedCloseDate ?? '',
@@ -103,6 +105,21 @@ function DealFormDialog({ open, deal, onClose }: DealFormDialogProps) {
               <TextField label={t('deals.form.amount')} type="number" fullWidth {...register('amount')} />
               <TextField label={t('deals.form.currency')} fullWidth {...register('currency')} placeholder="USD" />
             </Stack>
+            <Controller
+              name="contactId"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField select label={t('deals.form.contact')} fullWidth {...field}>
+                  <MenuItem value="">—</MenuItem>
+                  {(contacts?.data ?? []).map((c) => (
+                    <MenuItem key={c.id} value={c.id}>
+                      {c.firstName} {c.lastName}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
             <Controller
               name="pipelineId"
               control={control}

@@ -51,6 +51,12 @@ export const queryKeys = {
     all: ['apiKeys'] as const,
     lists: () => [...queryKeys.apiKeys.all, 'list'] as const,
   },
+  users: {
+    all: ['users'] as const,
+    lists: () => [...queryKeys.users.all, 'list'] as const,
+    details: () => [...queryKeys.users.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.users.details(), id] as const,
+  },
   customFields: {
     all: ['customFields'] as const,
     definitions: (entityType?: string) => [...queryKeys.customFields.all, 'definitions', entityType] as const,

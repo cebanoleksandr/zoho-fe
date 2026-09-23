@@ -188,11 +188,13 @@
       "currency": "Currency",
       "pipeline": "Pipeline",
       "stage": "Stage",
+      "contact": "Deal with (contact)",
       "expectedCloseDate": "Expected close date"
     },
     "detail": {
       "expectedCloseDate": "Expected close date",
       "closedAt": "Closed at",
+      "dealWith": "Deal with",
       "description": "Description",
       "stageOf": "Stage ({{pipeline}})",
       "deleteTitle": "Delete deal?",

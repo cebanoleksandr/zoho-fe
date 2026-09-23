@@ -188,11 +188,13 @@
       "currency": "Валюта",
       "pipeline": "Воронка",
       "stage": "Етап",
+      "contact": "Угода з (контакт)",
       "expectedCloseDate": "Очікувана дата закриття"
     },
     "detail": {
       "expectedCloseDate": "Очікувана дата закриття",
       "closedAt": "Закрито",
+      "dealWith": "Угода з",
       "description": "Опис",
       "stageOf": "Етап ({{pipeline}})",
       "deleteTitle": "Видалити угоду?",
