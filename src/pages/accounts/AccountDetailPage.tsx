@@ -59,25 +59,25 @@ function AccountDetailPage() {
 
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 8 }}>
-          <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
               <Grid size={{ xs: 12 }}>
                 <InlineEditField label={t('common.name')} value={account.name} onSave={saveField('name')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('accounts.detail.website')} value={account.website ?? ''} onSave={saveField('website')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('accounts.detail.phone')} value={account.phone ?? ''} onSave={saveField('phone')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField
                   label={t('accounts.form.industry')}
                   value={account.industry ?? ''}
                   onSave={saveField('industry')}
                 />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Box>
                   <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                     {t('common.owner')}
@@ -109,7 +109,7 @@ function AccountDetailPage() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2, mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2, mb: 2 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
               {t('accounts.detail.contactsCount', { count: contacts?.total ?? 0 })}
             </Typography>
@@ -119,7 +119,7 @@ function AccountDetailPage() {
               </Typography>
             ))}
           </Paper>
-          <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
               {t('accounts.detail.dealsCount', { count: deals?.total ?? 0 })}
             </Typography>

@@ -70,7 +70,7 @@ function LeadsListPage() {
           setSearch(e.target.value);
           setPage(0);
         }}
-        sx={{ mb: 2, width: 320 }}
+        sx={{ mb: 2, width: { xs: '100%', sm: 320 } }}
       />
 
       <DataTable

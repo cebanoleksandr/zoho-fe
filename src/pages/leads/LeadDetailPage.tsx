@@ -87,27 +87,27 @@ function LeadDetailPage() {
 
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 8 }}>
-          <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('auth.firstName')} value={lead.firstName} onSave={saveField('firstName')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('auth.lastName')} value={lead.lastName} onSave={saveField('lastName')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('leads.form.company')} value={lead.company ?? ''} onSave={saveField('company')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('common.email')} value={lead.email ?? ''} onSave={saveField('email')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('common.phone')} value={lead.phone ?? ''} onSave={saveField('phone')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('common.title')} value={lead.title ?? ''} onSave={saveField('title')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField
                   label={t('leads.detail.source')}
                   value={lead.source ?? ''}
@@ -115,7 +115,7 @@ function LeadDetailPage() {
                   options={Object.values(LeadSource).map((s) => ({ value: s, label: s }))}
                 />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Box>
                   <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                     {t('common.owner')}
@@ -140,7 +140,7 @@ function LeadDetailPage() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Typography variant="caption" color="text.secondary">
               {t('leads.detail.status')}
             </Typography>

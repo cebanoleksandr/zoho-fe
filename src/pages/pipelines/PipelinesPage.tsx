@@ -92,9 +92,9 @@ function PipelinesPage() {
         (pipelines ?? []).map((pipeline) => {
           const sortedStages = pipeline.stages.slice().sort((a, b) => a.orderIndex - b.orderIndex);
           return (
-            <Paper key={pipeline.id} elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2, mb: 2 }}>
+            <Paper key={pipeline.id} elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2, mb: 2 }}>
               <Stack direction="row" spacing={1} sx={{ mb: 2, alignItems: 'center' }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, minWidth: 0, wordBreak: 'break-word' }}>
                   {pipeline.name}
                 </Typography>
                 {pipeline.isDefault ? (
@@ -129,13 +129,15 @@ function PipelinesPage() {
                 </Tooltip>
               </Stack>
 
-              <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1, alignItems: 'center' }}>
+              <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1, alignItems: 'center' }}>
                 {sortedStages.map((stage, index) => (
                   <Box
                     key={stage.id}
                     sx={{
                       display: 'flex',
+                      flexWrap: 'wrap',
                       alignItems: 'center',
+                      maxWidth: '100%',
                       border: '1px solid #e5e7eb',
                       borderRadius: 4,
                       pl: 1.5,

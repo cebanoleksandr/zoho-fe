@@ -138,7 +138,7 @@ function ActivityFormDialog({ open, onClose, activity, defaultEntityType, defaul
               )}
             />
             {!lockedToEntity && (
-              <Stack direction="row" spacing={2}>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <Controller
                   name="entityType"
                   control={control}

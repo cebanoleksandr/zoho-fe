@@ -40,7 +40,7 @@ function CustomFieldsSection({ entityType, entityId }: CustomFieldsSectionProps)
   };
 
   return (
-    <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2, mt: 2 }}>
+    <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2, mt: 2 }}>
       <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
         {t('customFields.title')}
       </Typography>

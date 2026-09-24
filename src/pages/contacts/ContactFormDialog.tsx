@@ -79,7 +79,7 @@ function ContactFormDialog({ open, contact, onClose }: ContactFormDialogProps) {
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
-            <Stack direction="row" spacing={2}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField
                 label={t('auth.firstName')}
                 fullWidth

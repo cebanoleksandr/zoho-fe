@@ -10,9 +10,18 @@ interface PageHeaderProps {
 
 function PageHeader({ title, subtitle, actions }: PageHeaderProps) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-      <Box>
-        <Typography variant="h5" sx={{ fontWeight: 700 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        alignItems: { xs: 'stretch', sm: 'center' },
+        justifyContent: 'space-between',
+        gap: 2,
+        mb: 3,
+      }}
+    >
+      <Box sx={{ minWidth: 0 }}>
+        <Typography variant="h5" sx={{ fontWeight: 700, fontSize: { xs: '1.25rem', sm: '1.5rem' }, wordBreak: 'break-word' }}>
           {title}
         </Typography>
         {subtitle && (
@@ -21,7 +30,7 @@ function PageHeader({ title, subtitle, actions }: PageHeaderProps) {
           </Typography>
         )}
       </Box>
-      {actions && <Box sx={{ display: 'flex', gap: 1 }}>{actions}</Box>}
+      {actions && <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, flexShrink: 0 }}>{actions}</Box>}
     </Box>
   );
 }

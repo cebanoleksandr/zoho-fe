@@ -53,7 +53,7 @@ function RegisterPage() {
           error={!!errors.organizationName}
           helperText={errors.organizationName?.message}
         />
-        <Stack direction="row" spacing={2}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
           <TextField
             label={t('auth.firstName')}
             fullWidth

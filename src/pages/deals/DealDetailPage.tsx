@@ -77,12 +77,12 @@ function DealDetailPage() {
 
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 8 }}>
-          <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Grid container spacing={3}>
               <Grid size={{ xs: 12 }}>
                 <InlineEditField label={t('common.name')} value={deal.name} onSave={saveField('name')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField
                   label={t('deals.form.amount')}
                   type="number"
@@ -90,10 +90,10 @@ function DealDetailPage() {
                   onSave={saveField('amount')}
                 />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField label={t('deals.form.currency')} value={deal.currency ?? ''} onSave={saveField('currency')} />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField
                   label={t('deals.form.expectedCloseDate')}
                   type="date"
@@ -101,7 +101,7 @@ function DealDetailPage() {
                   onSave={saveField('expectedCloseDate')}
                 />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Box>
                   <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                     {t('deals.detail.closedAt')}
@@ -109,7 +109,7 @@ function DealDetailPage() {
                   <Typography variant="body2">{formatDate(deal.closedAt)}</Typography>
                 </Box>
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <InlineEditField
                   label={t('deals.detail.dealWith')}
                   value={deal.contactId ?? ''}
@@ -122,7 +122,7 @@ function DealDetailPage() {
                   ]}
                 />
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Box>
                   <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                     {t('common.owner')}
@@ -147,7 +147,7 @@ function DealDetailPage() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2 }}>
             <Typography variant="caption" color="text.secondary">
               {t('deals.detail.stageOf', { pipeline: pipeline?.name ?? '—' })}
             </Typography>

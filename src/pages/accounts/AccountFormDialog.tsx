@@ -85,7 +85,7 @@ function AccountFormDialog({ open, account, onClose }: AccountFormDialogProps) {
               error={!!errors.name}
               helperText={errors.name?.message}
             />
-            <Stack direction="row" spacing={2}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField label={t('accounts.form.industry')} fullWidth {...register('industry')} />
               <TextField label={t('accounts.form.website')} fullWidth {...register('website')} />
             </Stack>

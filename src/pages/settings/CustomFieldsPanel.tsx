@@ -157,14 +157,14 @@ function CustomFieldsPanel() {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 1, mb: 2 }}>
         <TextField
           select
           size="small"
           label={t('settings.customFields.filterEntity')}
           value={entityType}
           onChange={(e) => setEntityType(e.target.value as CrmEntityType | 'ALL')}
-          sx={{ minWidth: 200 }}
+          sx={{ minWidth: 200, flexGrow: { xs: 1, sm: 0 } }}
         >
           <MenuItem value="ALL">{t('common.all')}</MenuItem>
           {Object.values(CrmEntityType).map((ty) => (
@@ -262,7 +262,7 @@ function CustomFieldsPanel() {
                   helperText={t('settings.customFields.form.optionsHelper')}
                 />
               )}
-              <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+              <Stack direction="row" spacing={1} sx={{ alignItems: 'center', flexWrap: 'wrap', rowGap: 1 }}>
                 <Controller
                   name="required"
                   control={control}

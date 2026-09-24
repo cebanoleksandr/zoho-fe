@@ -28,11 +28,12 @@ const CustomAlert = () => {
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           sx={{
             position: "fixed",
-            top: 24,
-            right: 24,
+            top: { xs: 16, sm: 24 },
+            right: { xs: 16, sm: 24 },
+            left: { xs: 16, sm: "auto" },
             zIndex: 9999,
-            maxWidth: "400px",
-            minWidth: "300px",
+            maxWidth: { sm: "400px" },
+            minWidth: { sm: "300px" },
           }}
         >
           <Alert

@@ -45,10 +45,10 @@ function ActivityDetailDialog({ activityId, onClose }: ActivityDetailDialogProps
 
         {!isLoading && activity && (
           <Grid container spacing={2} sx={{ mt: 0.5 }}>
-            <Grid size={{ xs: 6 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Field label={t('activities.columns.type')} value={activity.type} />
             </Grid>
-            <Grid size={{ xs: 6 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Box>
                 <Typography variant="caption" color="text.secondary" component="div">
                   {t('activities.columns.status')}
@@ -58,13 +58,13 @@ function ActivityDetailDialog({ activityId, onClose }: ActivityDetailDialogProps
                 </Box>
               </Box>
             </Grid>
-            <Grid size={{ xs: 6 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Field
                 label={t('activities.columns.due')}
                 value={activity.dueDate ? new Date(activity.dueDate).toLocaleDateString() : '—'}
               />
             </Grid>
-            <Grid size={{ xs: 6 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Field label={t('common.owner')} value={owner ? `${owner.firstName} ${owner.lastName}` : '—'} />
             </Grid>
             <Grid size={{ xs: 12 }}>

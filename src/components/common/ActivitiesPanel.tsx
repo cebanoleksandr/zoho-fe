@@ -32,7 +32,7 @@ function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
   const deleteActivity = useDeleteActivity();
 
   return (
-    <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2, mt: 2 }}>
+    <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2, mt: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
           {t('activities.title')}
@@ -51,9 +51,16 @@ function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
         {activities?.data.map((a) => (
           <Box
             key={a.id}
-            sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 0.5 }}
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              columnGap: 1,
+              py: 0.5,
+            }}
           >
-            <Box>
+            <Box sx={{ minWidth: 0, wordBreak: 'break-word' }}>
               <Typography variant="body2">
                 {a.type} — {a.subject}
               </Typography>
@@ -63,7 +70,7 @@ function ActivitiesPanel({ entityType, entityId }: ActivitiesPanelProps) {
                 </Typography>
               )}
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, ml: 'auto' }}>
               <StatusChip status={a.status} />
               {a.status === ActivityStatus.PENDING && (
                 <Tooltip title={t('activities.markComplete')}>

@@ -101,7 +101,7 @@ function DealFormDialog({ open, deal, onClose }: DealFormDialogProps) {
               error={!!errors.name}
               helperText={errors.name?.message}
             />
-            <Stack direction="row" spacing={2}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField label={t('deals.form.amount')} type="number" fullWidth {...register('amount')} />
               <TextField label={t('deals.form.currency')} fullWidth {...register('currency')} placeholder="USD" />
             </Stack>

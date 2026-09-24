@@ -23,7 +23,7 @@ function WebhookDeliveriesDialog({ webhookId, onClose }: WebhookDeliveriesDialog
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{t('settings.webhooks.deliveries.title', { url: webhook?.url ?? '' })}</DialogTitle>
+      <DialogTitle sx={{ wordBreak: 'break-all' }}>{t('settings.webhooks.deliveries.title', { url: webhook?.url ?? '' })}</DialogTitle>
       <DialogContent>
         {isLoading && (
           <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
@@ -37,7 +37,7 @@ function WebhookDeliveriesDialog({ webhookId, onClose }: WebhookDeliveriesDialog
 
         {!isLoading &&
           (deliveries ?? []).map((d) => (
-            <Box key={d.id} sx={{ display: 'flex', alignItems: 'center', gap: 1, py: 1, borderBottom: '1px solid #e5e7eb' }}>
+            <Box key={d.id} sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, py: 1, borderBottom: '1px solid #e5e7eb' }}>
               <Chip
                 size="small"
                 label={d.success ? t('settings.webhooks.deliveries.success') : t('settings.webhooks.deliveries.failed')}

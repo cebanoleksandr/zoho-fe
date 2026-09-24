@@ -85,7 +85,7 @@ function LeadFormDialog({ open, lead, onClose }: LeadFormDialogProps) {
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 0.5 }}>
-            <Stack direction="row" spacing={2}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField
                 label={t('auth.firstName')}
                 fullWidth
@@ -109,7 +109,7 @@ function LeadFormDialog({ open, lead, onClose }: LeadFormDialogProps) {
               helperText={errors.email?.message}
             />
             <TextField label={t('common.phone')} fullWidth {...register('phone')} />
-            <Stack direction="row" spacing={2}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField label={t('leads.form.company')} fullWidth {...register('company')} />
               <TextField label={t('common.title')} fullWidth {...register('title')} />
             </Stack>

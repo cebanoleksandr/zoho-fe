@@ -15,12 +15,14 @@ function AuthLayout() {
         justifyContent: 'center',
         bgcolor: '#f9fafb',
         position: 'relative',
+        px: 2,
+        py: 8,
       }}
     >
       <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
         <LanguageSwitcher />
       </Box>
-      <Paper elevation={0} sx={{ width: 400, p: 4, border: '1px solid #e5e7eb', borderRadius: 2 }}>
+      <Paper elevation={0} sx={{ width: '100%', maxWidth: 400, p: { xs: 3, sm: 4 }, border: '1px solid #e5e7eb', borderRadius: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, color: '#4f46e5' }}>
           Orbit CRM
         </Typography>

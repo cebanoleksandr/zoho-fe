@@ -14,6 +14,9 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/DashboardOutlined';
 import LeadsIcon from '@mui/icons-material/PersonSearchOutlined';
 import ContactsIcon from '@mui/icons-material/ContactsOutlined';
@@ -34,7 +37,10 @@ function MainLayout() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const logout = useLogout();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
     { to: '/app', label: t('nav.dashboard'), icon: <DashboardIcon />, end: true },
@@ -65,7 +71,12 @@ function MainLayout() {
         elevation={0}
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, borderBottom: '1px solid #e5e7eb' }}
       >
-        <Toolbar>
+        <Toolbar sx={{ px: { xs: 1.5, sm: 3 } }}>
+          {!isDesktop && (
+            <IconButton edge="start" onClick={() => setMobileOpen(true)} sx={{ mr: 1 }} aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography variant="h6" noWrap sx={{ flexGrow: 1, fontWeight: 700, color: '#4f46e5' }}>
             Orbit CRM
           </Typography>
@@ -85,9 +96,12 @@ function MainLayout() {
       </AppBar>
 
       <Drawer
-        variant="permanent"
+        variant={isDesktop ? 'permanent' : 'temporary'}
+        open={isDesktop || mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        ModalProps={{ keepMounted: true }}
         sx={{
-          width: DRAWER_WIDTH,
+          width: isDesktop ? DRAWER_WIDTH : undefined,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: { width: DRAWER_WIDTH, boxSizing: 'border-box' },
         }}
@@ -100,6 +114,7 @@ function MainLayout() {
               component={NavLink}
               to={item.to}
               end={item.end}
+              onClick={() => setMobileOpen(false)}
               sx={{
                 borderRadius: 1,
                 mb: 0.5,
@@ -114,9 +129,9 @@ function MainLayout() {
         </List>
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, bgcolor: '#f9fafb', minHeight: '100vh' }}>
+      <Box component="main" sx={{ flexGrow: 1, minWidth: 0, bgcolor: '#f9fafb', minHeight: '100vh' }}>
         <Toolbar />
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: { xs: 2, sm: 3 } }}>
           <Outlet />
         </Box>
       </Box>

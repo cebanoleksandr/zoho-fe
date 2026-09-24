@@ -56,24 +56,24 @@ function ContactDetailPage() {
         }
       />
 
-      <Paper elevation={0} sx={{ p: 3, border: '1px solid #e5e7eb', borderRadius: 2 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, border: '1px solid #e5e7eb', borderRadius: 2 }}>
         <Grid container spacing={3}>
-          <Grid size={{ xs: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <InlineEditField label={t('auth.firstName')} value={contact.firstName} onSave={saveField('firstName')} />
           </Grid>
-          <Grid size={{ xs: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <InlineEditField label={t('auth.lastName')} value={contact.lastName} onSave={saveField('lastName')} />
           </Grid>
-          <Grid size={{ xs: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <InlineEditField label={t('common.title')} value={contact.title ?? ''} onSave={saveField('title')} />
           </Grid>
-          <Grid size={{ xs: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <InlineEditField label={t('common.email')} value={contact.email ?? ''} onSave={saveField('email')} />
           </Grid>
-          <Grid size={{ xs: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <InlineEditField label={t('common.phone')} value={contact.phone ?? ''} onSave={saveField('phone')} />
           </Grid>
-          <Grid size={{ xs: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <Box>
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                 {t('contacts.detail.account')}
@@ -81,7 +81,7 @@ function ContactDetailPage() {
               <Typography variant="body2">{account?.name ?? '—'}</Typography>
             </Box>
           </Grid>
-          <Grid size={{ xs: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <Box>
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                 {t('common.owner')}
