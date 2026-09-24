@@ -8,7 +8,7 @@ import {
   useCustomFieldValues,
   useSetCustomFieldValues,
 } from '../../hooks/queries';
-import { CustomFieldType, type CrmEntityType, type CustomFieldValueType } from '../../types';
+import { CustomFieldType, type CrmEntityType, type CustomFieldValueMap, type CustomFieldValueType } from '../../types';
 
 interface CustomFieldsSectionProps {
   entityType: CrmEntityType;
@@ -21,7 +21,7 @@ function CustomFieldsSection({ entityType, entityId }: CustomFieldsSectionProps)
   const { data: values } = useCustomFieldValues(entityType, entityId);
   const setValues = useSetCustomFieldValues();
 
-  const valuesMap: Record<string, unknown> = values ?? {};
+  const valuesMap: CustomFieldValueMap = values ?? {};
 
   if (!definitions || definitions.length === 0) return null;
 

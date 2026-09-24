@@ -32,7 +32,7 @@ function InlineEditField({ label, value, onSave, multiline, type = 'text', optio
 
   return (
     <Box>
-      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 0.5 }}>
+      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
         {label}
       </Typography>
       <TextField

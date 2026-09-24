@@ -79,7 +79,7 @@ function AccountDetailPage() {
               </Grid>
               <Grid size={{ xs: 6 }}>
                 <Box>
-                  <Typography variant="caption" color="text.secondary" display="block">
+                  <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                     {t('common.owner')}
                   </Typography>
                   <Typography variant="body2">{owner ? `${owner.firstName} ${owner.lastName}` : '—'}</Typography>
