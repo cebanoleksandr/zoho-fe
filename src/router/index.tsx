@@ -1,4 +1,4 @@
-import { createBrowserRouter, redirect } from 'react-router-dom';
+import { createHashRouter, redirect } from 'react-router-dom';
 import type { RouteObject } from 'react-router-dom';
 import { tokenStorage } from '../api/client';
 import MainLayout from '../components/layouts/MainLayout';
@@ -68,6 +68,6 @@ export const routes: RouteObject[] = [
   },
 ];
 
-const router = createBrowserRouter(routes);
+const router = createHashRouter(routes);
 
 export default router;
