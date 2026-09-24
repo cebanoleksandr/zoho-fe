@@ -37,7 +37,9 @@
     "activities": "Activities",
     "pipelines": "Pipelines",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "logoutConfirmTitle": "Log out?",
+    "logoutConfirmDescription": "You will need to sign in again to continue."
   },
   "auth": {
     "invalidCredentials": "Invalid email or password.",

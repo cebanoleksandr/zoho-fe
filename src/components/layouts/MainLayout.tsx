@@ -30,6 +30,7 @@ import { useLogout } from '../../hooks/queries';
 import { tokenStorage } from '../../api/client';
 import LanguageSwitcher from '../common/LanguageSwitcher';
 import CustomAlert from '../common/CustomAlert';
+import ConfirmDialog from '../common/ConfirmDialog';
 
 const DRAWER_WIDTH = 240;
 
@@ -41,6 +42,7 @@ function MainLayout() {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
 
   const navItems = [
     { to: '/app', label: t('nav.dashboard'), icon: <DashboardIcon />, end: true },
@@ -54,7 +56,6 @@ function MainLayout() {
   ];
 
   const handleLogout = async () => {
-    setAnchorEl(null);
     try {
       await logout.mutateAsync();
     } finally {
@@ -85,7 +86,12 @@ function MainLayout() {
             <Avatar sx={{ width: 32, height: 32, bgcolor: '#4f46e5', fontSize: 14 }}>U</Avatar>
           </IconButton>
           <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={() => setAnchorEl(null)}>
-            <MenuItem onClick={handleLogout}>
+            <MenuItem
+              onClick={() => {
+                setAnchorEl(null);
+                setLogoutConfirmOpen(true);
+              }}
+            >
               <ListItemIcon>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>
@@ -135,6 +141,16 @@ function MainLayout() {
           <Outlet />
         </Box>
       </Box>
+
+      <ConfirmDialog
+        open={logoutConfirmOpen}
+        title={t('nav.logoutConfirmTitle')}
+        description={t('nav.logoutConfirmDescription')}
+        confirmLabel={t('nav.logout')}
+        loading={logout.isPending}
+        onClose={() => setLogoutConfirmOpen(false)}
+        onConfirm={handleLogout}
+      />
 
       <CustomAlert />
     </Box>

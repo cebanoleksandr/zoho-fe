@@ -37,7 +37,9 @@
     "activities": "Активності",
     "pipelines": "Воронки",
     "settings": "Налаштування",
-    "logout": "Вийти"
+    "logout": "Вийти",
+    "logoutConfirmTitle": "Вийти з акаунту?",
+    "logoutConfirmDescription": "Щоб продовжити, потрібно буде увійти знову."
   },
   "auth": {
     "invalidCredentials": "Невірний email або пароль.",

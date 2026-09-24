@@ -37,7 +37,9 @@
     "activities": "Actividades",
     "pipelines": "Embudos",
     "settings": "Configuración",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "logoutConfirmTitle": "¿Cerrar sesión?",
+    "logoutConfirmDescription": "Tendrás que iniciar sesión de nuevo para continuar."
   },
   "auth": {
     "invalidCredentials": "Correo electrónico o contraseña incorrectos.",

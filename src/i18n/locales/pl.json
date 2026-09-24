@@ -37,7 +37,9 @@
     "activities": "Aktywności",
     "pipelines": "Lejki sprzedaży",
     "settings": "Ustawienia",
-    "logout": "Wyloguj"
+    "logout": "Wyloguj",
+    "logoutConfirmTitle": "Wylogować się?",
+    "logoutConfirmDescription": "Aby kontynuować, musisz zalogować się ponownie."
   },
   "auth": {
     "invalidCredentials": "Nieprawidłowy email lub hasło.",
